@@ -195,17 +195,25 @@ clojure-mode and CIDER.")
                 ,#~"" 
                 (MaildirStore personal-local)
                 (Path "~/.mail/personal/")
-                (Inbox "~/.mail/personal/Inbox")
+                (Inbox "~/.mail/personal/inbox")
                 ,#~"" 
-                (Channel personal)
-                (Far :personal-remote:)
-                (Near :personal-local:)
-                (Patterns *)
+                (Channel personal-inbox)
+                (Far ":personal-remote:INBOX")
+                (Near ":personal-local:inbox")
+                ,#~"" 
+                (Channel personal-sent)
+                (Far ":personal-remote:Sent")
+                (Near ":personal-local:sent")
+                ,#~""
+                (Channel personal-drafts)
+                (Far ":personal-remote:Drafts")
+                (Near ":personal-local:drafts")
                 ,#~""
                 (IMAPAccount school)
                 (Host "outlook.office365.com")
                 (User "rsiegel@wpi.edu")
                 (Pass ,(pass "wpi"))
+                (Port 993)
                 (SSLType "IMAPS")
                 ,#~""
                 (IMAPStore school-remote)
@@ -213,17 +221,39 @@ clojure-mode and CIDER.")
                 ,#~"" 
                 (MaildirStore school-local)
                 (Path "~/.mail/school/")
-                (Inbox "~/.mail/school/Inbox")
+                (Inbox "~/.mail/school/inbox")
+                (SubFolders Verbatim)
                 ,#~"" 
-                (Channel school)
-                (Far :school-remote:)
-                (Near :school-local:)
-                (Patterns *)))))
+                (Channel school-inbox)
+                (Far ":school-remote:INBOX")
+                (Near ":school-local:inbox")
+                ,#~"" 
+                (Channel school-sent)
+                (Far ":school-remote:Sent Items")
+                (Near ":school-local:sent")
+                ,#~"" 
+                (Channel school-drafts)
+                (Far ":school-remote:Drafts")
+                (Near ":school-local:drafts")))))
    (service home-notmuch-service-type
             (home-notmuch-configuration
              (pre-new
               (list
                #~(system "mbsync -a")))
+             (post-new
+              (list
+               ;; Tag messages with unsubscribe options as promotional
+               #~(system "notmuch tag +promotional -inbox unsubscribe")
+               ;; Tag messages from noreply as automated
+               ;; Use reply to catch all variations
+               #~(system "notmuch tag +automated -inbox from:reply")
+               #~(system "notmuch tag +automated -inbox from:noreply")
+               #~(system "notmuch tag +automated -inbox from:donotreply")
+               ;; Mail sent by me is sent
+               #~(system "notmuch tag +sent -inbox from:mail@reilysiegel.com")
+               #~(system "notmuch tag +sent -inbox from:rsiegel@wpi.edu")
+               ;; Remove unread from mail in an ignored thread.
+               #~(system "notmuch tag -unread tag:unread AND thread:{tag:ignore}")))
              (config
               '((user
                  ((name "Reily Siegel")
@@ -238,7 +268,7 @@ clojure-mode and CIDER.")
                  ((ignore ".mbsyncstate,.uivalidity")))))))
    (simple-service 'notmuch-cron
                    home-mcron-service-type
-                   (list #~(job "* * * * *" "notmuch new")))
+                   (list #~(job "*/5 * * * *" "notmuch new")))
    (service home-gnupg-service-type
 	    (home-gnupg-configuration
              (gpg-agent-config
