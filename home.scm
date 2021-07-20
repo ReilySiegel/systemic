@@ -1,4 +1,3 @@
-
 ;; -*- mode: scheme -*-
 (define-module (home))
 
@@ -302,4 +301,6 @@ clojure-mode and CIDER.")
    (service home-emacs-service-type
             (home-emacs-configuration
              (rebuild-elisp-packages? #f)
-             (elisp-packages emacs-packages))))))
+             (elisp-packages emacs-packages)
+             (init-el
+              (list (slurp-file-gexp (local-file "./init.el")))))))))
