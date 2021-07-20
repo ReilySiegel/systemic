@@ -35,29 +35,29 @@
 
 (define emacs-git-email
   (package
-   (name "emacs-git-email")
-   (version "0.2.0")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://git.sr.ht/~yoctocell/git-email")
-                  (commit (string-append "v" version))))
-            (snippet
-             ;; Not yet in Guix proper
-             '(delete-file "git-email-piem.el"))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32
-              "09vmh3x1rjxxl9g9p01afil1zlpk7rf0pjmzyvcbid9wczyllkhq"))))
-   (build-system emacs-build-system)
-   (propagated-inputs
-    `(("emacs-magit" ,emacs-magit)
-      ("notmuch" ,notmuch)))
-   (home-page "https://sr.ht/~yoctocell/git-email/")
-   (synopsis "Integrates git and email with Emacs")
-   (description "git-email provides functions for formatting and sending Git patches
+    (name "emacs-git-email")
+    (version "0.2.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://git.sr.ht/~yoctocell/git-email")
+                    (commit (string-append "v" version))))
+              (snippet
+               ;; Not yet in Guix proper
+               '(delete-file "git-email-piem.el"))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "09vmh3x1rjxxl9g9p01afil1zlpk7rf0pjmzyvcbid9wczyllkhq"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-magit" ,emacs-magit)
+       ("notmuch" ,notmuch)))
+    (home-page "https://sr.ht/~yoctocell/git-email/")
+    (synopsis "Integrates git and email with Emacs")
+    (description "git-email provides functions for formatting and sending Git patches
 via email, without leaving Emacs.")
-   (license license:gpl3+)))
+    (license license:gpl3+)))
 
 (define emacs-app-launcher
   (let ((commit "80a9ed37892ee6e21fe44487ed11f66a15e3f440")
@@ -160,14 +160,20 @@ clojure-mode and CIDER.")
 (home-environment
  (services
   (list
-   (simple-service 'picom
-                   home-shepherd-service-type
-                   (list
-                    (shepherd-service
-                     (documentation "Run picom.")
-                     (provision '(picom))
-                     (start #~(make-system-constructor "picom -b"))
-                     (stop #~(make-system-destructor "pkill picom -SIGKILL")))))
+   (home-generic-service
+    'picom
+    #:files `(("config/picom/picom.conf"
+               ,(local-file "./picom.conf")))
+    #:packages (list picom)
+    #:extensions
+    `((,home-shepherd-service-type
+       .
+       ,(list
+         (shepherd-service
+          (documentation "Run picom.")
+          (provision '(picom))
+          (start #~(make-system-constructor "picom -b"))
+          (stop #~(make-system-destructor "pkill picom -SIGKILL")))))))
    (simple-service 'syncthing
                    home-shepherd-service-type
                    (list (shepherd-service
