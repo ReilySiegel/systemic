@@ -177,13 +177,6 @@ clojure-mode and CIDER.")
                                                                 "-no-browser"
                                                                 "-no-restart")))
                           (stop #~(make-kill-destructor)))))
-   ;; (simple-service 'offlineimap
-   ;;                 home-shepherd-service-type
-   ;;                 (list (shepherd-service
-   ;;                        (documentation "Run offlinimap.")
-   ;;                        (provision '(offlineimap))
-   ;;                        (start #~(make-forkexec-constructor '("offlineimap")))
-   ;;                        (stop #~(make-kill-destructor)))))
    (service home-isync-service-type
             (home-isync-configuration
              (config
