@@ -468,7 +468,9 @@ Passes NAME and ARGS to use-package."
 
 (use-package magit
   :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch)))
+         ("C-x M-g" . magit-dispatch))
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1 ""))
 
 (use-package forge
   :after magit
