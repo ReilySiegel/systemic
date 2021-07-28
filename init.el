@@ -560,7 +560,8 @@ Passes NAME and ARGS to use-package."
 ;;; ERC
 (use-feature erc
   :config
-  (setq erc-prompt-for-password nil))
+  (setq erc-prompt-for-password nil
+        erc-default-server "irc.libera.chat"))
 ;;; Notmuch
 (use-package notmuch
   :bind
