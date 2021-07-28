@@ -486,6 +486,8 @@ Passes NAME and ARGS to use-package."
 (use-package git-email-magit
   :demand t)
 
+(magit-todos-mode 1)
+
 ;;;; Paredit
 (use-package paredit
   :hook (prog-mode . enable-paredit-mode))
