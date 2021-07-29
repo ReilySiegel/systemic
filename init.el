@@ -99,19 +99,6 @@ Passes NAME and ARGS to use-package."
   
   (global-ligature-mode 't))
 ;;;; Color theme
-(use-package doom-themes
-  :demand t
-  :disabled t
-  :config
-  (setq doom-one-padded-modeline t
-	doom-one-brighter-modeline nil)
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-		(lambda (frame)
-		  (select-frame frame)
-		  (load-theme 'doom-one t)))
-    (load-theme 'doom-one t)))
-
 (use-package nord-theme
   :demand t
   :config
@@ -141,19 +128,6 @@ Passes NAME and ARGS to use-package."
   (doom-modeline-buffer-modification-icon nil)
   (doom-modeline-buffer-state-icon nil))
 
-;;;; Posframe
-(use-package ivy-posframe
-  :after ivy
-  :disabled t
-  :hook (after-init . ivy-posframe-mode)
-  :custom-face
-  (ivy-posframe-border ((t (:inherit ivy-posframe))))
-  :config
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))
-        ivy-posframe-height-alist '((t . 20))
-        ivy-posframe-parameters '((internal-border-width . 10)
-                                  (parent-frame . nil)))
-  (setq ivy-posframe-width 90))
 ;;; System
 ;;;; exwm-randr
 (use-feature exwm-randr
@@ -385,20 +359,6 @@ Passes NAME and ARGS to use-package."
 
 ;; Enable auto-fill-mode in text-mode.
 (add-hook 'text-mode-hook #'auto-fill-mode)
-;;;; Undo/redo
-(use-package undo-tree
-  :demand t
-  :disabled t
-  :bind (;; By default, `undo' (and by extension `undo-tree-undo') is
-         ;; bound to C-_ and C-/, and `undo-tree-redo' is bound to
-         ;; M-_. It's logical to also bind M-/ to `undo-tree-redo'.
-	 ;; This overrides the default binding of M-/, which is to
-         ;; `dabbrev-expand'.
-         :map undo-tree-map
-	 ("M-/" . undo-tree-redo))
-  :config
-  (global-undo-tree-mode 1))
-
 ;;;; Inter-program Killing
 (setq save-interprogram-paste-before-kill t)
 ;;; IDE Features
@@ -521,12 +481,6 @@ Passes NAME and ARGS to use-package."
   :config
   (cljr-add-keybindings-with-prefix "C-c C-r")
   (add-hook 'clojure-mode-hook #'clj-refactor-mode))
-
-(use-package flycheck-clj-kondo
-  :after flycheck
-  :disabled t
-  :demand t)
-
 ;;;; Gnuplot
 (use-package gnuplot)
 ;;;; Java
@@ -600,12 +554,6 @@ Passes NAME and ARGS to use-package."
           (:name "[d]rafts" :query "tag:draft" :key "d")
           (:name "[a]ll mail" :query "*" :key "a"))))
 ;;; Pass
-(use-package transient-pass
-  :disabled t
-  :bind ("C-c p" . transient-pass)
-  :config
-  (setq password-store-password-length 16))
-
 (use-feature auth-source-pass
   :defer 1
   :config
@@ -658,95 +606,6 @@ Passes NAME and ARGS to use-package."
     "Refresh org-agenda."
     (org-agenda-refresh)))
 
-;;;; Org agenda
-(use-feature org-agenda
-  :after org
-  :preface
-  (defun org-agenda-show-agenda-and-todo (&optional arg)
-    (interactive "P")
-    (org-agenda arg "n"))
-  :bind
-  (("C-c a" . org-agenda-show-agenda-and-todo)
-   ("C-c o" . org-capture))
-  :config
-  (setq
-   org-agenda-window-setup 'current-window
-   org-agenda-files '("~/Dropbox/org/" "~/WPI/2020/")
-   org-agenda-span 'week
-   org-enforce-todo-dependencies t
-   org-log-done (quote time)
-   org-log-schedule (quote time)
-   org-log-redeadline (quote time)
-   org-agenda-skip-scheduled-if-done t
-   org-agenda-skip-deadline-if-done t
-   org-agenda-skip-deadline-prewarning-if-scheduled (quote pre-scheduled)
-   org-agenda-todo-ignore-deadlines (quote all)
-   org-agenda-todo-ignore-scheduled (quote all))
-  (setq
-   org-capture-templates
-   `(("t" "Task" entry
-      (file+headline "organizer.org" "Tasks")
-      "** TODO %?"
-      :prepend t)
-     ("e" "Email" entry
-      (file+headline "organizer.org" "Tasks")
-      "** %a %?"
-      :prepend t)
-     ("p" "Page" entry
-      (file+headline "axp.org" "Book")
-      ,(string-join '("** %^{Scroll Number} - %^{Name}"
-                      ":PROPERTIES:"
-                      ":CUSTOM_ID: %\\1"
-                      ":END:"
-                      "| Big Brother | [[#%^{Big's Scroll Number}][%^{Big's Name}]] |"
-                      "| Birthday | %^{Birthday}t |"
-                      "| Phone Number | %^{Phone Number} |"
-                      "| WPI Email | %^{WPI Email} |"
-                      "| Email | %^{Email} |"
-                      "| Local Address | %^{Local Address} |"
-                      "| Home Address | %^{Home Address} |"
-                      "| Major | %^{Major} |"
-                      "| Minor | %^{Minor} |"
-                      "| Concentration | %^{Concentration} |"
-                      "| Year of Graduation | %^{Year of Graduation} |"
-                      "| IQP | %^{IQP} |"
-                      "| MQP | %^{MQP} |"
-                      "| Humanities Project | %^{HUA Project} |"
-                      "| Clubs and Organizations | %^{Clubs and Organizations} |"
-                      "| House Positions | %^{Positions} |"
-                      "| Nicknames | %^{Nicknames} %?|")
-                    "\n")))
-   org-refile-targets `((nil . (:level . 1))
-                        (,(org-agenda-files) . (:maxlevel . 1)))))
-;;;;; Org Super Agenda
-(use-package org-super-agenda
-  :after org-agenda
-  :demand t
-  :disabled t
-  :config
-  (setq org-super-agenda-groups
-        '((:name "Today"
-                 :time-grid t
-                 :scheduled today
-                 ;; Scheduled tasks will only be shown on day.
-                 :scheduled future)
-          (:name "Due today"
-                 :deadline today)
-          (:name "Important"
-                 :priority "A")
-          (:name "Overdue"
-                 :deadline past)
-          (:name "Due soon"
-                 :deadline future)
-          (:name "Other items"
-                 :priority<= "B")))
-  (org-super-agenda-mode))
-;;;; Org habit
-(use-feature org-habit
-  :after org-agenda
-  :config
-  (add-to-list 'org-modules 'org-habit))
-;;;; Org ox-latex
 (use-feature ox-latex
   :config
   (add-to-list 'org-latex-classes
@@ -775,32 +634,10 @@ Passes NAME and ARGS to use-package."
                                           :html-background "Transparent"
                                           :html-scale 1.0 :matchers
                                           ("begin" "$1" "$" "$$" "\\(" "\\["))))
-;;;; Org recur
-(use-package org-recur
-  :after org-agenda
-  :disabled t
-  :hook ((org-mode . org-recur-mode)
-         (org-agenda-mode . org-recur-agenda-mode))
-  :config
-  (define-key org-recur-mode-map (kbd "C-c d") 'org-recur-finish)
-
-  ;; Rebind the 'd' key in org-agenda (default: `org-agenda-day-view').
-  (define-key org-recur-agenda-mode-map (kbd "d") 'org-recur-finish)
-  (define-key org-recur-agenda-mode-map (kbd "C-c d") 'org-recur-finish)
-
-  (setq org-recur-finish-done t
-        org-recur-finish-archive t))
-;;;; Org Latex
-(use-package calctex
-  :disabled t)
 
 ;; Auto toggle latex fragments
 (use-package org-fragtog
   :hook ((org-mode . org-fragtog-mode)))
-;; Use CDLaTeX for common shortcuts
-(use-package cdlatex
-  :disabled t
-  :hook (org-mode . turn-on-org-cdlatex))
 ;;; Reading
 ;;;; PDF
 (use-package pdf-tools
