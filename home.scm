@@ -107,40 +107,63 @@ plural")
 
 (define emacs-clj-refactor
   (package
-    (name "emacs-clj-refactor")
-    (version "2.5.1")
-    (home-page "https://github.com/clojure-emacs/clj-refactor.el")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url home-page)
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "1pyskl9xcqrk6r2zbp5i9402inngqps7wwb4nbdbrgi4di9b8in7"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("yasnippet" ,emacs-yasnippet)
-       ("paredit" ,emacs-paredit)
-       ("multiple-cursors" ,emacs-multiple-cursors)
-       ("clojure-mode" ,emacs-clojure-mode)
-       ("cider" ,emacs-cider)
-       ("parseedn" ,emacs-parseedn)
-       ("inflections" ,emacs-inflections)
-       ("hydra" ,emacs-hydra)))
-    (synopsis "Support for refactoring Clojure code in Emacs.")
-    (description "@code{clj-refactor} provides refactoring support for Clojure
+   (name "emacs-clj-refactor")
+   (version "2.5.1")
+   (home-page "https://github.com/clojure-emacs/clj-refactor.el")
+   (source (origin
+            (method git-fetch)
+            (uri (git-reference
+                  (url home-page)
+                  (commit (string-append "v" version))))
+            (file-name (git-file-name name version))
+            (sha256
+             (base32
+              "1pyskl9xcqrk6r2zbp5i9402inngqps7wwb4nbdbrgi4di9b8in7"))))
+   (build-system emacs-build-system)
+   (propagated-inputs
+    `(("yasnippet" ,emacs-yasnippet)
+      ("paredit" ,emacs-paredit)
+      ("multiple-cursors" ,emacs-multiple-cursors)
+      ("clojure-mode" ,emacs-clojure-mode)
+      ("cider" ,emacs-cider)
+      ("parseedn" ,emacs-parseedn)
+      ("inflections" ,emacs-inflections)
+      ("hydra" ,emacs-hydra)))
+   (synopsis "Support for refactoring Clojure code in Emacs.")
+   (description "@code{clj-refactor} provides refactoring support for Clojure
 projects. It complements the refactoring functionality you'd find in
 clojure-mode and CIDER.")
-    (license license:gpl3+)))
+   (license license:gpl3+)))
+
+(define emacs-org-transclusion
+  (package
+   (name "emacs-org-transclusion")
+   (version "0.2.0")
+   (home-page "https://github.com/nobiot/org-transclusion")
+   (source (origin
+            (method git-fetch)
+            (uri (git-reference
+                  (url home-page)
+                  (commit "8bf2ecc2dffc9d365e0f14d45158f44df587fb12")))
+            (file-name (git-file-name name version))
+            (sha256
+             (base32 "12rl97n2w35np6ifslh92d3sbcynfjn94lm4p59202sipqyrv7dv"))))
+   (build-system emacs-build-system)
+   (propagated-inputs
+    `(("org" ,emacs-org)))
+   (synopsis "Support for refactoring Clojure code in Emacs.")
+   (description "@code{clj-refactor} provides refactoring support for Clojure
+projects. It complements the refactoring functionality you'd find in
+clojure-mode and CIDER.")
+   (license license:gpl3+)))
+
 
 
 (define emacs-packages
   (list
    emacs-nord-theme emacs-use-package emacs-exwm emacs-vertico emacs-orderless
    emacs-marginalia emacs-consult emacs-doom-modeline emacs-pinentry 
-   emacs-exec-path-from-shell emacs-avy emacs-undo-tree emacs-app-launcher
+   emacs-exec-path-from-shell emacs-avy emacs-app-launcher
    emacs-company emacs-git-auto-commit-mode emacs-outshine emacs-aggressive-indent
    emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit
    emacs-magit-todos emacs-forge emacs-paredit emacs-yasnippet
@@ -149,7 +172,7 @@ clojure-mode and CIDER.")
    emacs-yaml-mode emacs-plantuml-mode emacs-org emacs-org-super-agenda
    emacs-org-fragtog emacs-pdf-tools emacs-auctex emacs-which-key
    emacs-discover-my-major emacs-no-littering emacs-guix emacs-git-email
-   emacs-clj-refactor emacs-origami-el notmuch))
+   emacs-clj-refactor emacs-origami-el notmuch emacs-org-roam emacs-org-transclusion))
 
 (define (pass service)
   (let* ((port (open-input-pipe (string-append "pass " service)))

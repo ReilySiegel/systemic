@@ -73,6 +73,8 @@ Passes NAME and ARGS to use-package."
   (show-paren-mode 1))
 
 (setq-default fill-column 80)
+
+(setq-default undo-limit (* 10 1024 1024))
 ;;; Theme
 ;;;; Font
 (use-package ligature
@@ -529,7 +531,6 @@ Passes NAME and ARGS to use-package."
                   ((string-match "mail@reilysiegel.com" from) "smtp.zoho.com")
                   ((string-match "rsiegel@wpi.edu" from) "smtp.office365.com"))))
       (setq smtpmail-smtp-server smtp)
-      (message smtp)
       (smtpmail-send-it)))
   :init
   (setq message-send-mail-function 'reily/select-smtp-send-it
@@ -578,10 +579,10 @@ Passes NAME and ARGS to use-package."
   (setq org-file-apps
         (butlast org-file-apps))
 
-  (setq org-directory "~/Dropbox/org"
+  (setq org-directory "~/Sync/org"
         org-plantuml-jar-path
         plantuml-jar-path
-        
+
         ;; org-latex-pdf-process
         ;; '("xelatex -interaction nonstopmode %f"
         ;;   "xelatex -interaction nonstopmode %f")
@@ -615,14 +616,6 @@ Passes NAME and ARGS to use-package."
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-               '("per-file-class"
-                 "\\documentclass{moderncv}"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (setq org-src-fontify-natively t
         org-latex-listings 'minted)
   (add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -638,6 +631,23 @@ Passes NAME and ARGS to use-package."
 ;; Auto toggle latex fragments
 (use-package org-fragtog
   :hook ((org-mode . org-fragtog-mode)))
+
+(use-package org-roam
+  :custom
+  (org-roam-directory (file-truename "~/Sync/org"))
+  (org-roam-v2-ack t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (org-roam-setup))
+
+(use-package org-transclusion
+  :bind (("C-c n t" . org-transclusion-mode)))
 ;;; Reading
 ;;;; PDF
 (use-package pdf-tools
