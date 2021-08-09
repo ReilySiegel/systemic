@@ -536,6 +536,7 @@ Passes NAME and ARGS to use-package."
   (setq message-send-mail-function 'reily/select-smtp-send-it
         starttls-use-gnutls t
         smtpmail-stream-type 'starttls
+        smtpmail-smtp-service 587
         message-cite-reply-position 'below
         message-kill-buffer-on-exit t
         notmuch-search-oldest-first nil
