@@ -7,17 +7,6 @@
 ;;; Disable GC during startup
 (setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 2 1000 1000))))
-;;; Networking
-(require 'gnutls)
-(with-eval-after-load 'gnutls
-
-  ;; Do not allow insecure TLS connections.
-  (setq gnutls-verify-error t)
-
-  ;; Bump the required security level for TLS to an acceptably modern
-  ;; value.
-  (setq gnutls-min-prime-bits 3072))
-
 ;;; Packaging
 ;;;; use-package
 (require 'use-package)
@@ -62,19 +51,6 @@ Passes NAME and ARGS to use-package."
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (load custom-file))
 
-;;; Defaults
-(setq inhibit-startup-screen t)
-
-(when (display-graphic-p)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (winner-mode 1)
-  (show-paren-mode 1))
-
-(setq-default fill-column 80)
-
-(setq-default undo-limit (* 10 1024 1024))
 ;;; Theme
 ;;;; Font
 (use-package ligature
