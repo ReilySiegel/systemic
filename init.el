@@ -520,40 +520,6 @@ Passes NAME and ARGS to use-package."
   :config
   (setq erc-prompt-for-password nil
         erc-default-server "irc.libera.chat"))
-;;; Notmuch
-(use-package notmuch
-  :bind
-  ("C-c m" . notmuch)
-  :preface
-  (defun reily/select-smtp-send-it ()
-    (let* ((from (message-fetch-field "From"))
-           (smtp (cond
-                  ((string-match "mail@reilysiegel.com" from) "smtp.mailbox.org")
-                  ((string-match "rsiegel@wpi.edu" from) "smtp.office365.com"))))
-      (setq smtpmail-smtp-server smtp)
-      (smtpmail-send-it)))
-  :init
-  (setq message-send-mail-function 'reily/select-smtp-send-it
-        starttls-use-gnutls t
-        smtpmail-stream-type 'starttls
-        smtpmail-smtp-service 587
-        message-cite-reply-position 'below
-        message-kill-buffer-on-exit t
-        notmuch-search-oldest-first nil
-        notmuch-show-logo nil
-        notmuch-hello-sections '(notmuch-hello-insert-header
-                                 notmuch-hello-insert-saved-searches)
-        notmuch-saved-searches
-        '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
-          (:name "[w]atching" :query "tag:unread AND thread{tag:flagged}" :key "w")
-          ;;Show unread automated messages
-          (:name "auto[m]ated" :query "tag:unread AND tag:automated" :key "m")
-          ;;Show unread promotional messages
-          (:name "[p]romotional" :query "tag:unread AND tag:promotional" :key "p")
-          (:name "[f]lagged" :query "tag:flagged" :key "f")
-          (:name "[s]ent" :query "tag:sent" :key "s")
-          (:name "[d]rafts" :query "tag:draft" :key "d")
-          (:name "[a]ll mail" :query "*" :key "a"))))
 ;;; Pass
 (use-feature auth-source-pass
   :defer 1

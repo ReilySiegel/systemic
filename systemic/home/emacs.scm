@@ -1,8 +1,6 @@
 (define-module (systemic home emacs)
-  #:use-module (gnu home-services emacs)
   #:use-module (gnu packages emacs-xyz)
-  ;; For Notmuch
-  #:use-module (gnu packages mail)
+  #:use-module (systemic home mail)
   #:use-module (systemic packages emacs-xyz)
   #:export (emacs-packages))
 
@@ -19,4 +17,5 @@
    emacs-yaml-mode emacs-plantuml-mode emacs-org emacs-org-super-agenda
    emacs-org-fragtog emacs-pdf-tools emacs-auctex emacs-which-key
    emacs-discover-my-major emacs-no-littering emacs-guix emacs-git-email
-   emacs-clj-refactor emacs-origami-el notmuch emacs-org-roam emacs-org-transclusion))
+   emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion
+   notmuch-emacs-configuration))
