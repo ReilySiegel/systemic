@@ -23,26 +23,14 @@
  (gnu packages pulseaudio)
  (guix gexp)
  (srfi srfi-26)
+ (systemic home desktop)
  (systemic home emacs)
  (systemic home mail))
 
 (home-environment
  (services
   (list
-   (home-generic-service
-    'picom
-    #:files `(("config/picom/picom.conf"
-               ,(local-file "./picom.conf")))
-    #:packages (list picom)
-    #:extensions
-    `((,home-shepherd-service-type
-       .
-       ,(list
-         (shepherd-service
-          (documentation "Run picom.")
-          (provision '(picom))
-          (start #~(make-system-constructor "picom -b"))
-          (stop #~(make-system-destructor "pkill picom -SIGKILL")))))))
+   picom-service
    (simple-service 'syncthing
                    home-shepherd-service-type
                    (list (shepherd-service
