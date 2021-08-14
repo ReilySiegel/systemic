@@ -67,9 +67,9 @@
                 (SyncState *)
                 ,#~""
                 (IMAPAccount personal)
-                (Host "imappro.zoho.com")
+                (Host "imap.mailbox.org")
                 (User "mail@reilysiegel.com")
-                (Pass ,(pass "zoho"))
+                (Pass ,(pass "mailbox.org"))
                 (SSLType "IMAPS")
                 ,#~""
                 (IMAPStore personal-remote)

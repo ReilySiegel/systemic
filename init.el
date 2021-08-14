@@ -528,7 +528,7 @@ Passes NAME and ARGS to use-package."
   (defun reily/select-smtp-send-it ()
     (let* ((from (message-fetch-field "From"))
            (smtp (cond
-                  ((string-match "mail@reilysiegel.com" from) "smtp.zoho.com")
+                  ((string-match "mail@reilysiegel.com" from) "smtp.mailbox.org")
                   ((string-match "rsiegel@wpi.edu" from) "smtp.office365.com"))))
       (setq smtpmail-smtp-server smtp)
       (smtpmail-send-it)))
@@ -541,7 +541,6 @@ Passes NAME and ARGS to use-package."
         message-kill-buffer-on-exit t
         notmuch-search-oldest-first nil
         notmuch-show-logo nil
-        notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
         notmuch-hello-sections '(notmuch-hello-insert-header
                                  notmuch-hello-insert-saved-searches)
         notmuch-saved-searches
