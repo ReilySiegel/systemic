@@ -28,10 +28,45 @@
    #:elisp-packages (list emacs-no-littering)
    #:autoloads? #t))
 
+(define emacs-theme-configuration
+  (elisp-configuration-package
+   "theme"
+   `((set-frame-font "Fira Code-11")
+
+     (require 'nord-theme)
+     (if (daemonp)
+         (add-hook 'after-make-frame-functions
+		   (lambda (frame)
+		     (select-frame frame)
+		     (load-theme 'nord t)))
+         (load-theme 'nord t))
+
+     (line-number-mode 0)
+
+     (require 'time)
+     (require 'doom-modeline)
+
+     (doom-modeline-mode 1)
+     
+     (setq display-time-24hr-format t
+           display-time-interval 5
+           display-time-default-load-average nil
+           doom-modeline-buffer-file-name-style 'truncate-with-project
+           doom-modeline-enable-word-count t
+           doom-modeline-percent-position nil
+           doom-modeline-buffer-encoding nil
+           doom-modeline-major-mode-icon nil
+           doom-modeline-buffer-modification-icon nil
+           doom-modeline-buffer-state-icon nil)
+     (display-time-mode 1))
+   #:elisp-packages (list emacs-doom-modeline
+                          emacs-nord-theme)
+   #:autoloads? #t))
+
 (define emacs-packages
   (list
-   emacs-nord-theme emacs-use-package emacs-exwm emacs-vertico emacs-orderless
-   emacs-marginalia emacs-consult emacs-doom-modeline emacs-pinentry 
+   emacs-use-package emacs-exwm emacs-vertico emacs-orderless
+   emacs-marginalia emacs-consult emacs-pinentry 
    emacs-exec-path-from-shell emacs-avy emacs-app-launcher
    emacs-company emacs-git-auto-commit-mode emacs-outshine emacs-aggressive-indent
    emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit
@@ -43,4 +78,5 @@
    emacs-discover-my-major emacs-guix emacs-git-email
    emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion
    emacs-default-configuration
+   emacs-theme-configuration
    notmuch-emacs-configuration))

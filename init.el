@@ -50,62 +50,6 @@ Passes NAME and ARGS to use-package."
   :config
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (load custom-file))
-
-;;; Theme
-;;;; Font
-(use-package ligature
-  :demand t
-  :disabled t
-  :config
-  (set-frame-font "Fira Code-11")
-  ;; Enable the www ligature in every possible major mode
-  (ligature-set-ligatures 't '("www"))
-
-  ;; Enable ligatures in programming modes                                                           
-  (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
-                                       ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
-                                       "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
-                                       "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
-                                       "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
-                                       "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
-                                       "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
-                                       "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
-                                       "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
-                                       "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
-  ;; Add hex ligatures
-  (add-to-list 'ligature-composition-table `(t ("0" . ,(rx "x" (+ (or hex-digit hex))))))
-  
-  (global-ligature-mode 't))
-;;;; Color theme
-(use-package nord-theme
-  :demand t
-  :config
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-		(lambda (frame)
-		  (select-frame frame)
-		  (load-theme 'nord t)))
-    (load-theme 'nord t)))
-;;;; Modeline
-(use-package doom-modeline
-  :demand t
-  :hook ((after-init . doom-modeline-mode)
-         (after-init . display-time-mode))
-  :config
-  (line-number-mode 0)
-  :custom
-  (display-time-24hr-format t)
-  (display-time-interval 5)
-  (display-time-update)
-  (display-time-default-load-average nil)
-  (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-enable-word-count t)
-  (doom-modeline-percent-position nil)
-  (doom-modeline-buffer-encoding nil)
-  (doom-modeline-major-mode-icon nil)
-  (doom-modeline-buffer-modification-icon nil)
-  (doom-modeline-buffer-state-icon nil))
-
 ;;; System
 ;;;; exwm-randr
 (use-feature exwm-randr
