@@ -12,23 +12,12 @@
              (guix inferior)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
-             (srfi srfi-1))
+             (srfi srfi-1)
+             (systemic system bluetooth))
 (use-service-modules desktop cups pm networking ssh xorg)
 
 (operating-system
- (kernel (let*
-             ((channels
-               (list (channel
-                      (name 'nonguix)
-                      (url "https://gitlab.com/nonguix/nonguix")
-                      (commit "d81564f21e7d8800e6f6187fe2e1f6476e06bc30"))
-                     (channel
-                      (name 'guix)
-                      (url "https://git.savannah.gnu.org/git/guix.git")
-                      (commit "299c3c18603f4f92f187908ad48eeb6e5b3b6630"))))
-              (inferior
-               (inferior-for-channels channels)))
-           (first (lookup-inferior-packages inferior "linux" "5.12.9"))))
+ (kernel linux)
  (initrd microcode-initrd)
  (firmware (list linux-firmware))
  (locale "en_US.utf8")
@@ -58,8 +47,8 @@
    (list 
     (service openssh-service-type)
     (udev-rules-service 'backlight brightnessctl)
-    (service bluetooth-service-type
-             (bluetooth-configuration
+    (service systemic-bluetooth-service-type
+             (systemic-bluetooth-configuration
               (auto-enable? #t)))
     (service tlp-service-type)
     (service cups-service-type
