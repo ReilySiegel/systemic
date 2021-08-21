@@ -1,12 +1,13 @@
 (define-module (systemic home emacs)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (systemic home desktop)
   #:use-module (systemic home mail)
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic packages emacs-xyz)
   #:export (emacs-packages))
 
 
-(define emacs-default-configuration
+(define default-configuration
   (elisp-configuration-package
    "defaults"
    `(;; Use reasonable defaults
@@ -28,7 +29,7 @@
    #:elisp-packages (list emacs-no-littering)
    #:autoloads? #t))
 
-(define emacs-theme-configuration
+(define theme-configuration
   (elisp-configuration-package
    "theme"
    `((set-frame-font "Fira Code-11")
@@ -58,16 +59,17 @@
            doom-modeline-major-mode-icon nil
            doom-modeline-buffer-modification-icon nil
            doom-modeline-buffer-state-icon nil)
-     (display-time-mode 1))
+     (display-time-mode 1)
+     (display-battery-mode 1))
    #:elisp-packages (list emacs-doom-modeline
                           emacs-nord-theme)
    #:autoloads? #t))
 
 (define emacs-packages
   (list
-   emacs-use-package emacs-exwm emacs-vertico emacs-orderless
-   emacs-marginalia emacs-consult emacs-pinentry 
-   emacs-exec-path-from-shell emacs-avy emacs-app-launcher
+   emacs-use-package emacs-vertico emacs-orderless
+   emacs-marginalia emacs-consult
+   emacs-avy emacs-no-littering
    emacs-company emacs-git-auto-commit-mode emacs-outshine emacs-aggressive-indent
    emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit
    emacs-magit-todos emacs-forge emacs-paredit emacs-yasnippet
@@ -77,6 +79,8 @@
    emacs-org-fragtog emacs-pdf-tools emacs-auctex emacs-which-key
    emacs-discover-my-major emacs-guix emacs-git-email
    emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion
-   emacs-default-configuration
-   emacs-theme-configuration
+   emacs-pass
+   default-configuration
+   theme-configuration
+   exwm-configuration
    notmuch-emacs-configuration))

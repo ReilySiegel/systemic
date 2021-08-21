@@ -2,8 +2,12 @@
   #:use-module (gnu home-services base)
   #:use-module (gnu home-services shepherd)
   #:use-module (gnu packages compton)
+  #:use-module (gnu packages emacs-xyz)
   #:use-module (guix gexp)
-  #:export (picom-service))
+  #:use-module (systemic home emacs-utils)
+  #:use-module (systemic packages emacs-xyz)
+  #:export (picom-service
+            exwm-configuration))
 
 (define picom-config
   "backend = \"glx\";
@@ -96,5 +100,95 @@ wintypes:
          (documentation "Run picom.")
          (provision '(picom))
          (start #~(make-system-constructor "picom -b"))
-         (stop #~(make-system-destructor "pkill picom -SIGKILL")))))))
-  )
+         (stop #~(make-system-destructor "pkill picom -SIGKILL"))))))))
+
+(define exwm-configuration
+  (elisp-configuration-package
+   "exwm"
+   `((require 'exwm)
+     (require 'exwm-config)
+     (require 'exwm-randr)
+     
+     ;; Start a server for external processes to communicate with.
+     (server-start)
+     ;; Make class name the buffer name
+     (add-hook 'exwm-update-class-hook
+               (lambda ()
+                 (unless (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
+                             (string= "gimp" exwm-instance-name))
+                   (exwm-workspace-rename-buffer exwm-class-name))))
+     (add-hook 'exwm-update-title-hook
+               (lambda ()
+                 (when (or (not exwm-instance-name)
+                           (string-prefix-p "sun-awt-X11-" exwm-instance-name)
+                           (string= "gimp" exwm-instance-name))
+                   (exwm-workspace-rename-buffer exwm-title))))
+     ;; 's-r': Reset
+     (exwm-input-set-key (kbd "s-r") ,#~"#'exwm-reset")
+     ;; Line-editing shortcuts
+     (setq
+      exwm-manage-force-tiling t
+      exwm-input-simulation-keys
+      '(
+        ;; movement
+        ([?\C-b] . [left])
+        ([?\M-b] . [C-left])
+        ([?\C-f] . [right])
+        ([?\M-f] . [C-right])
+        ([?\C-p] . [up])
+        ([?\C-n] . [down])
+        ([?\C-a] . [home])
+        ([?\C-e] . [end])
+        ([?\M-v] . [prior])
+        ([?\C-v] . [next])
+        ([?\C-d] . [delete])
+        ([?\C-k] . [S-end delete])
+        ;; cut/paste.
+        ([?\C-w] . [?\C-x])
+        ([?\M-w] . [?\C-c])
+        ([?\C-y] . [?\C-v])
+        ;; search
+        ([?\C-s] . [?\C-f])
+        ;; save
+        ([?\C-x?\C-s] . [?\C-s])
+        ;; quit
+        ([?\C-g] . [escape])))
+     ;; Enable EXWM
+     (exwm-enable)
+     
+     ;; EXWM Randr
+     (setq exwm-workspace-number 1)
+     (setq exwm-randr-workspace-output-plist '(1 "eDP-1"))
+     (add-hook 'exwm-randr-screen-change-hook
+               (lambda ()
+                 (start-process-shell-command
+                  "xrandr" nil "xrandr --output eDP-1 --right-of HDMI-1 --auto")))
+     (exwm-randr-enable)
+
+     ;; Desktop Environment
+     (require 'desktop-environment)
+     (desktop-environment-mode)
+
+     ;; Use pinentry in emacs
+     (add-hook 'after-init-hook 'pinentry-start)
+     (setenv "PINENTRY_USER_DATA" "USE_CURSES=0")
+     (setenv "GPG_TTY" "/dev/pts/1")
+     (setq epa-pinentry-mode 'loopback
+           pinentry-popup-prompt-window nil)
+
+     (require 'exec-path-from-shell)
+
+     (setq exec-path-from-shell-variables
+           (append
+            '("SSH_AUTH_SOCK" "SSH_AGENT_PID")
+            exec-path-from-shell-variables))
+     (add-hook 'after-init-hook 'exec-path-from-shell-initialize)
+     
+     ;; Enable launching apps
+     (global-set-key (kbd "s-SPC") 'app-launcher-run-app))
+   #:elisp-packages (list emacs-app-launcher
+                          emacs-exec-path-from-shell
+                          emacs-exwm
+                          emacs-pinentry
+                          systemic-emacs-desktop-environment)
+   #:autoloads? #t))
