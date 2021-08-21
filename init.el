@@ -416,8 +416,4 @@ Passes NAME and ARGS to use-package."
 (use-package discover-my-major
   :bind ("C-h C-m" . discover-my-major))
 ;;; Miscelenious
-;;;; y-or-n-p
-;; Replace `yes-or-no-p' with `y-or-n-p`, as I cannot be bothered to
-;; type 2 or 3 characters.
-(defalias 'yes-or-no-p 'y-or-n-p)
 ;;; init.el ends here

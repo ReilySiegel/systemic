@@ -25,8 +25,11 @@
      ;; Bump the required security level for TLS to an acceptably modern value.
      (require 'gnutls)
      (setq gnutls-verify-error t
-           gnutls-min-prime-bits 3072))
-   #:elisp-packages (list emacs-no-littering)
+           gnutls-min-prime-bits 3072)
+
+     ;; Replace `yes-or-no-p' with `y-or-n-p`, as I cannot be bothered to
+     ;; type 2 or 3 characters.
+     (defalias 'yes-or-no-p 'y-or-n-p))
    #:autoloads? #t))
 
 (define theme-configuration
