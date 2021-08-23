@@ -3,6 +3,7 @@
   #:use-module (systemic home desktop)
   #:use-module (systemic home mail)
   #:use-module (systemic home emacs-utils)
+  #:use-module (systemic home emacs org)
   #:use-module (systemic packages emacs-xyz)
   #:export (emacs-packages))
 
@@ -86,4 +87,5 @@
    default-configuration
    theme-configuration
    exwm-configuration
-   notmuch-emacs-configuration))
+   notmuch-emacs-configuration
+   org-agenda-configuration))
