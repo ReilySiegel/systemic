@@ -159,7 +159,7 @@ Emacs >= 23, which has a nice font rendering engine.")
 (define-public systemic-emacs-desktop-environment
   (package
     (inherit emacs-desktop-environment)
-    (inputs
+    (propagated-inputs
      `(("alsa-utils" ,alsa-utils)
        ("brightnessctl" ,brightnessctl)
        ("scrot" ,scrot)
