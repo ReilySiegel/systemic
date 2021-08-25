@@ -120,21 +120,25 @@
      (defun reily/select-smtp-send-it ()
        (let* ((from (message-fetch-field "From"))
               (smtp (cond
-                     ((string-match "mail@reilysiegel.com" from) "smtp.mailbox.org")
-                     ((string-match "rsiegel@wpi.edu" from) "smtp.office365.com"))))
-         (setq smtpmail-smtp-server smtp)
+                     ((string-match "mail@reilysiegel.com" from)
+                      '("smtp.mailbox.org" "mail@reilysiegel.com" 465 ssl))
+                     ((string-match "rsiegel@wpi.edu" from)
+                      '("smtp.office365.com" "rsiegel@wpi.edu" 587 starttls)))))
+         (setq smtpmail-smtp-server (car smtp)
+               smtpmail-smtp-user (cadr smtp)
+               smtpmail-smtp-service (caddr smtp)
+               smtpmail-stream-type (cadddr smtp))
          (smtpmail-send-it)))
 
      (setq message-send-mail-function 'reily/select-smtp-send-it
            starttls-use-gnutls t
-           smtpmail-stream-type 'starttls
-           smtpmail-smtp-service 587
            message-cite-reply-position 'below
            message-kill-buffer-on-exit t
            notmuch-search-oldest-first nil
            notmuch-show-logo nil
            notmuch-hello-sections '(notmuch-hello-insert-header
                                     notmuch-hello-insert-saved-searches)
+           notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
            notmuch-saved-searches
            '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
              (:name "[w]atching" :query "tag:unread AND thread{tag:flagged}" :key "w")
