@@ -314,7 +314,8 @@ Passes NAME and ARGS to use-package."
         (butlast org-file-apps))
 
   (setq org-directory "~/Sync/org"
-        org-agenda-files (list org-directory)
+        org-agenda-files (list org-directory
+                               (concat org-directory "/daily"))
 
         org-plantuml-jar-path
         plantuml-jar-path
