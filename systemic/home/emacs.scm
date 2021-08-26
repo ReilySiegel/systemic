@@ -56,6 +56,7 @@
      (setq display-time-24hr-format t
            display-time-interval 5
            display-time-default-load-average nil
+           doom-modeline-enable-word-count nil
            doom-modeline-buffer-file-name-style 'truncate-with-project
            doom-modeline-enable-word-count t
            doom-modeline-percent-position nil
