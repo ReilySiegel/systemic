@@ -321,8 +321,8 @@ Passes NAME and ARGS to use-package."
         plantuml-jar-path
 
         org-latex-pdf-process
-        '("xelatex -interaction nonstopmode %f"
-          "xelatex -interaction nonstopmode %f"))
+        '("xelatex -shell-escape -interaction nonstopmode %f"
+          "xelatex -shell-escape -interaction nonstopmode %f"))
   ;; Set (no) indentation
   (setq org-adapt-indentation nil)
   ;; Log time a task was set to Done.
