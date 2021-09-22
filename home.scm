@@ -77,4 +77,13 @@
              (rebuild-elisp-packages? #f)
              (elisp-packages emacs-packages)
              (init-el
-              (list (slurp-file-gexp (local-file "./init.el")))))))))
+              (list (slurp-file-gexp (local-file "./init.el"))))))
+   ((@ (gnu services) simple-service)
+    'make-guix-aware-of-guix-home-subcommand
+    (@ (gnu home-services) home-environment-variables-service-type)
+    '(("GUILE_LOAD_PATH" .
+       "$XDG_CONFIG_HOME/guix/current/share/guile/site/3.0\
+:$GUILE_LOAD_PATH")
+      ("GUILE_LOAD_COMPILED_PATH" .
+       "$XDG_CONFIG_HOME/guix/current/lib/guile/3.0/site-ccache\
+:$GUILE_LOAD_COMPILED_PATH"))))))
