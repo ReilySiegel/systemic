@@ -1,7 +1,9 @@
 (define-module (systemic home emacs org)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (systemic home emacs-utils)
-  #:export (org-agenda-configuration))
+  #:use-module (systemic packages emacs-xyz)
+  #:export (org-agenda-configuration
+            org-minutes-configuration))
 
 
 (define org-agenda-configuration
@@ -32,3 +34,11 @@
                    days)))
    #:autoloads? #t
    #:elisp-packages (list emacs-org-super-agenda)))
+
+(define org-minutes-configuration
+  (elisp-configuration-package
+   "org-minutes"
+   `((require 'org-minutes-roam)
+     (org-minutes-roam-init))
+   #:autoloads? #t
+   #:elisp-packages (list emacs-org-minutes)))

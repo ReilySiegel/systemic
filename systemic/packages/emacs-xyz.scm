@@ -7,6 +7,7 @@
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages xdisorg)
   #:use-module (guix build-system emacs)
+  #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module ((guix licenses) #:prefix license:))
@@ -135,35 +136,33 @@ projects. It complements the refactoring functionality you'd find in
 clojure-mode and CIDER.")
    (license license:gpl3+)))
 
-(define-public emacs-epresent
+(define-public systemic-emacs-desktop-environment
   (package
-    (name "emacs-epresent")
-    (version "0.2.0")
-    (home-page "https://github.com/eschulte/epresent")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url home-page)
-                    (commit "cd95b86c7bf40ea4451952577e263ecf84dec0fa")))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32 "1y9mwshg5bml6bfz288df55b3r69n7nyvlnjksjym6qag7mj4hh8"))))
+   (inherit emacs-desktop-environment)
+   (propagated-inputs
+    `(("alsa-utils" ,alsa-utils)
+      ("brightnessctl" ,brightnessctl)
+      ("scrot" ,scrot)
+      ("slock" ,slock)
+      ("upower" ,upower)
+      ("tlp" ,tlp)
+      ("playerctl" ,playerctl)))))
+
+(define-public emacs-org-minutes
+  (package
+    (name "emacs-org-minutes")
+    (version "0.0.1")
+    (home-page "")
+    (source (local-file "/home/reily/src/org-minutes"
+                        #:recursive? #t))
     (build-system emacs-build-system)
+    (arguments
+     `(#:include (cons* "^snippets\\/" %default-include))) 
     (propagated-inputs
-     `(("org" ,emacs-org)))
+     `(("org" ,emacs-org)
+       ("org-roam" ,emacs-org-roam)
+       ("yasnippet" ,emacs-yasnippet)))
     (synopsis "Simple presentation mode for Emacs Org-mode.")
     (description "This is a simple presentation mode for Emacs. It works best in
 Emacs >= 23, which has a nice font rendering engine.")
     (license license:gpl3+)))
-
-(define-public systemic-emacs-desktop-environment
-  (package
-    (inherit emacs-desktop-environment)
-    (propagated-inputs
-     `(("alsa-utils" ,alsa-utils)
-       ("brightnessctl" ,brightnessctl)
-       ("scrot" ,scrot)
-       ("slock" ,slock)
-       ("upower" ,upower)
-       ("tlp" ,tlp)
-       ("playerctl" ,playerctl)))))

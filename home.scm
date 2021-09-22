@@ -6,7 +6,6 @@
  (gnu home)
  (gnu home-services base)
  (gnu home-services emacs)
- (gnu home-services files)
  (gnu home-services gnupg)
  (gnu home-services mail)
  (gnu home-services password-utils)

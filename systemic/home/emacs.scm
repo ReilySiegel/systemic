@@ -89,4 +89,5 @@
    theme-configuration
    exwm-configuration
    notmuch-emacs-configuration
-   org-agenda-configuration))
+   org-agenda-configuration
+   org-minutes-configuration))
