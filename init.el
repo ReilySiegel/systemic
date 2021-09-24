@@ -167,7 +167,9 @@ Passes NAME and ARGS to use-package."
 (setq-default indent-tabs-mode nil)
 
 (use-package aggressive-indent
-  :hook (prog-mode . aggressive-indent-mode))
+  :hook (prog-mode . aggressive-indent-mode)
+  :init
+  (electric-indent-mode -1))
 
 ;;;; Linting
 (use-package flycheck
