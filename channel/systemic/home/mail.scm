@@ -150,5 +150,5 @@
              (:name "[s]ent" :query "tag:sent" :key "s")
              (:name "[d]rafts" :query "tag:draft" :key "d")
              (:name "[a]ll mail" :query "*" :key "a"))))
-   #:elisp-packages (list notmuch)
+   #:elisp-packages (list emacs-notmuch)
    #:autoloads? #t))
