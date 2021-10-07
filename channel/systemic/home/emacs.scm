@@ -80,7 +80,7 @@
    emacs-magit-todos emacs-forge emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
    emacs-lsp-java emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
-   emacs-yaml-mode emacs-plantuml-mode emacs-org emacs-org-super-agenda
+   emacs-yaml-mode emacs-plantuml-mode emacs-org
    emacs-org-fragtog emacs-pdf-tools emacs-auctex emacs-which-key
    emacs-discover-my-major emacs-guix emacs-git-email
    emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion

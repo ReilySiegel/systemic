@@ -2,6 +2,7 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic packages emacs-xyz)
+  #:use-module (guix transformations)
   #:export (org-agenda-configuration
             org-minutes-configuration))
 
@@ -33,7 +34,9 @@
        (seq-filter (lambda (day) (org-class y1 m1 d1 y2 m2 d2 day))
                    days)))
    #:autoloads? #t
-   #:elisp-packages (list emacs-org-super-agenda)))
+   #:elisp-packages (list ((options->transformation
+                            '((without-tests . "emacs-org-super-agenda")))
+                           emacs-org-super-agenda))))
 
 (define org-minutes-configuration
   (elisp-configuration-package
