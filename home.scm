@@ -4,17 +4,17 @@
 
 (use-modules
  (gnu home)
- (gnu home-services base)
  (gnu home-services emacs)
  (gnu home-services gnupg)
  (gnu home-services mail)
  (gnu home-services password-utils)
- (gnu home-services shells)
- (gnu home-services shepherd)
+ (gnu home services shells)
+ (gnu home services shepherd)
  (gnu home-services ssh)
  (gnu home-services version-control)
  (gnu home-services-utils)
- (gnu home-services)
+ (gnu home services)
+ (gnu services)
  (gnu packages compton)
  (gnu packages gnupg)
  (gnu packages linux)
@@ -29,7 +29,7 @@
 (home-environment
  (services
   (list
-   picom-service
+   (service picom-service-type #f)
    (simple-service 'syncthing
                    home-shepherd-service-type
                    (list (shepherd-service
@@ -77,13 +77,4 @@
              (rebuild-elisp-packages? #f)
              (elisp-packages emacs-packages)
              (init-el
-              (list (slurp-file-gexp (local-file "./init.el"))))))
-   ((@ (gnu services) simple-service)
-    'make-guix-aware-of-guix-home-subcommand
-    (@ (gnu home-services) home-environment-variables-service-type)
-    '(("GUILE_LOAD_PATH" .
-       "$XDG_CONFIG_HOME/guix/current/share/guile/site/3.0\
-:$GUILE_LOAD_PATH")
-      ("GUILE_LOAD_COMPILED_PATH" .
-       "$XDG_CONFIG_HOME/guix/current/lib/guile/3.0/site-ccache\
-:$GUILE_LOAD_COMPILED_PATH"))))))
+              (list (slurp-file-gexp (local-file "./init.el")))))))))

@@ -1,12 +1,13 @@
 (define-module (systemic home desktop)
-  #:use-module (gnu home-services base)
-  #:use-module (gnu home-services shepherd)
+  #:use-module (gnu home services shepherd)
+  #:use-module (gnu home services)
   #:use-module (gnu packages compton)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic packages emacs-xyz)
-  #:export (picom-service
+  #:export (picom-service-type
             exwm-configuration))
 
 (define picom-config
@@ -86,21 +87,26 @@ wintypes:
  dnd = { shadow = false; };
 };")
 
-(define picom-service
-  (home-generic-service
-   'picom
-   #:files `(("config/picom/picom.conf"
-              ,(mixed-text-file "picom.conf" picom-config)))
-   #:packages (list picom)
-   #:extensions
-   `((,home-shepherd-service-type
-      .
-      ,(list
-        (shepherd-service
-         (documentation "Run picom.")
-         (provision '(picom))
-         (start #~(make-system-constructor "picom -b"))
-         (stop #~(make-system-destructor "pkill picom -SIGKILL"))))))))
+(define picom-service-type
+  (service-type
+   (name 'picom)
+   (extensions
+    (list
+     (service-extension
+      home-files-service-type
+      (const `(("config/picom/picom.conf"
+                ,(mixed-text-file "picom.conf" picom-config)))))
+     (service-extension
+      home-profile-service-type
+      (const (list picom)))
+     (service-extension
+      home-shepherd-service-type
+      (const (list
+              (shepherd-service
+               (documentation "Run picom.")
+               (provision '(picom))
+               (start #~(make-system-constructor "picom -b"))
+               (stop #~(make-system-destructor "pkill picom -SIGKILL"))))))))))
 
 (define exwm-configuration
   (elisp-configuration-package

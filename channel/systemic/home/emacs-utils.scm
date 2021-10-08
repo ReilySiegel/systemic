@@ -1,5 +1,7 @@
 (define-module (systemic home emacs-utils)
   #:use-module (gnu home-services-utils)
+  #:use-module (gnu home services utils)
+  #:use-module (gnu services configuration)
   #:use-module (guix build-system emacs)
   #:use-module (guix gexp)
   #:use-module ((guix licenses) #:prefix license:)
