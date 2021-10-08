@@ -84,7 +84,7 @@
    emacs-org-fragtog emacs-pdf-tools emacs-auctex emacs-which-key
    emacs-discover-my-major emacs-guix emacs-git-email
    emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion
-   emacs-pass
+   emacs-pass emacs-project
    default-configuration
    theme-configuration
    exwm-configuration
