@@ -315,7 +315,7 @@ Passes NAME and ARGS to use-package."
   (setq org-file-apps
         (butlast org-file-apps))
 
-  (setq org-directory "~/Sync/org"
+  (setq org-directory "~/org"
         org-agenda-files (list org-directory
                                (concat org-directory "/daily"))
 
@@ -372,7 +372,7 @@ Passes NAME and ARGS to use-package."
 
 (use-package org-roam
   :custom
-  (org-roam-directory (file-truename "~/Sync/org"))
+  (org-roam-directory (file-truename "~/org"))
   (org-roam-v2-ack t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
