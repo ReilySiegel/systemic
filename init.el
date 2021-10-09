@@ -4,20 +4,9 @@
 ;; Nothing to see here...
 ;;; Code:
 ;; This section makes the linter happy.
-;;; Disable GC during startup
-(set 'gc-cons-threshold most-positive-fixnum)
-(add-hook 'emacs-startup-hook (lambda () (set 'gc-cons-threshold (* 2 1000 1000))))
 ;;; Packaging
 ;;;; use-package
 (require 'use-package)
-
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "Emacs ready in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
 
 ;; Tell `use-package' to always load features lazily unless told
 ;; otherwise. It's nicer to have this kind of thing be deterministic:

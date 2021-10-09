@@ -77,4 +77,9 @@
              (rebuild-elisp-packages? #f)
              (elisp-packages emacs-packages)
              (init-el
-              (list (slurp-file-gexp (local-file "./init.el")))))))))
+              (list (slurp-file-gexp (local-file "./init.el"))))
+             (early-init-el
+              '((set 'gc-cons-threshold most-positive-fixnum)
+                (run-at-time "20 sec" nil
+                             (lambda ()
+                               (set 'gc-cons-threshold 800000))))))))))
