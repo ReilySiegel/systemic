@@ -3,6 +3,7 @@
   #:use-module (systemic home desktop)
   #:use-module (systemic home mail)
   #:use-module (systemic home emacs-utils)
+  #:use-module (systemic home emacs completion)
   #:use-module (systemic home emacs org)
   #:use-module (systemic packages emacs-xyz)
   #:export (emacs-packages))
@@ -72,8 +73,7 @@
 
 (define emacs-packages
   (list
-   emacs-use-package emacs-vertico emacs-orderless
-   emacs-marginalia emacs-consult
+   emacs-use-package
    emacs-avy emacs-no-littering
    emacs-company emacs-git-auto-commit-mode emacs-outshine emacs-aggressive-indent
    emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit
@@ -81,7 +81,7 @@
    emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
    emacs-lsp-java emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
    emacs-yaml-mode emacs-plantuml-mode emacs-org
-   emacs-org-fragtog emacs-pdf-tools emacs-auctex emacs-which-key
+   emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix emacs-git-email
    emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion
    emacs-pass emacs-project
@@ -90,4 +90,5 @@
    exwm-configuration
    notmuch-emacs-configuration
    org-agenda-configuration
-   org-minutes-configuration))
+   org-minutes-configuration
+   candidate-configuration))

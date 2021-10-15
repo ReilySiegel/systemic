@@ -39,51 +39,6 @@ Passes NAME and ARGS to use-package."
   :config
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (load custom-file))
-;;; Candidate selection
-(use-package vertico
-  :init
-  (defun crm-indicator (args)
-    (cons (concat "[CRM] " (car args)) (cdr args)))
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-  ;; Grow and shrink minibuffer
-  ;;(setq resize-mini-windows t)
-
-  ;; Do not allow the cursor in the minibuffer prompt
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
-  ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t)
-  (setq vertico-cycle t)
-  
-  (vertico-mode))
-
-(use-package consult
-  :bind ("C-s" . consult-line))
-
-(use-package orderless
-  :init
-  (setq completion-styles '(basic orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
-
-(use-package savehist
-  :init
-  (savehist-mode))
-
-(use-package marginalia
-  ;; Either bind `marginalia-cycle` globally or only in the minibuffer
-  :bind (("M-A" . marginalia-cycle)
-         :map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
-
-  ;; The :init configuration is always executed (Not lazy!)
-  :init
-  ;; Must be in the :init section of use-package such that the mode gets
-  ;; enabled right away. Note that this forces loading the package.
-  (marginalia-mode))
 ;;; Avy
 (use-package avy
   :preface
@@ -401,11 +356,6 @@ Passes NAME and ARGS to use-package."
 ;;; Calc
 (use-feature calc
   :bind ("C-c c" . calc))
-;;; Feature discovery
-(use-package which-key
-  :config
-  (which-key-mode 1))
-
 (use-package discover-my-major
   :bind ("C-h C-m" . discover-my-major))
 ;;; Miscelenious
