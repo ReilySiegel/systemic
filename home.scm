@@ -82,4 +82,13 @@
               '((set 'gc-cons-threshold most-positive-fixnum)
                 (run-at-time "20 sec" nil
                              (lambda ()
-                               (set 'gc-cons-threshold 800000))))))))))
+                               (set 'gc-cons-threshold 800000)))
+                
+                (setq package-enable-at-startup nil)
+                
+                (defvar my/file-name-handler-alist file-name-handler-alist)
+                (setq file-name-handler-alist nil)
+                (add-hook 'emacs-startup-hook
+                          (lambda ()
+                            (setq file-name-handler-alist
+                                  my/file-name-handler-alist))))))))))

@@ -73,7 +73,7 @@
 
 (define emacs-packages
   (list
-   emacs-use-package
+   emacs-use-package emacs-esup
    emacs-avy emacs-no-littering
    emacs-company emacs-git-auto-commit-mode emacs-outshine emacs-aggressive-indent
    emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit

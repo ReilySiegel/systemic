@@ -90,19 +90,18 @@ Passes NAME and ARGS to use-package."
             '(:with company-yasnippet))))
 
 (use-package company
+  :defer 5
   :custom
   (company-idle-delay t)
-  :init
-  (global-company-mode)
+  :config
   ;; Add yasnippet support for all company backends
   ;; https://github.com/syl20bnr/spacemacs/pull/179
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+  (setq company-backends (mapcar #'company-mode/backend-with-yas
+                                 company-backends))
+  (global-company-mode))
 
 ;;;; Auto commit
 (use-package git-auto-commit-mode)
-;;;; Folding
-(use-package outshine
-  :hook (prog-mode . outshine-mode))
 ;;;; Indentation
 ;; Don't use tabs for indentation. Use only spaces. Frankly, the fact
 ;; that `indent-tabs-mode' is even *available* as an *option* disgusts
@@ -117,10 +116,11 @@ Passes NAME and ARGS to use-package."
 
 ;;;; Linting
 (use-package flycheck
-  :hook (after-init . global-flycheck-mode)
+  :defer 10
   :config
   ;; Enable proselint for emails.
-  (flycheck-add-mode 'proselint 'mu4e-compose-mode))
+  (flycheck-add-mode 'proselint 'mu4e-compose-mode)
+  (global-flycheck-mode))
 ;;;; LSP
 (use-package lsp-mode
   :commands lsp
@@ -146,7 +146,9 @@ Passes NAME and ARGS to use-package."
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch))
   :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1 ""))
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1 "")
+  :config
+  (magit-todos-mode 1))
 
 (use-package forge
   :after magit
@@ -155,14 +157,13 @@ Passes NAME and ARGS to use-package."
         '(("ReilySiegel" . nil))))
 
 (use-package git-email
-  :demand t
+  :after magit
   :config
   (git-email-notmuch-mode 1))
 
 (use-package git-email-magit
-  :demand t)
+  :after magit)
 
-(magit-todos-mode 1)
 
 ;;;; Paredit
 (use-package paredit
@@ -171,7 +172,9 @@ Passes NAME and ARGS to use-package."
 (use-package yasnippet-snippets) 
 
 (use-package yasnippet
-  :hook (after-init . yas-global-mode)) 
+  :defer 5
+  :config
+  (yas-global-mode)) 
 ;;; Language Support
 ;;;; Clojure
 (use-package clojure-mode
@@ -219,7 +222,6 @@ Passes NAME and ARGS to use-package."
 ;;; Eshell
 (use-feature eshell
   :bind ("C-c s" . eshell)
-  :demand t
   :config
   (require 'esh-module)
   (add-to-list 'eshell-modules-list 'eshell-tramp)
@@ -240,7 +242,6 @@ Passes NAME and ARGS to use-package."
   :config
   (auth-source-pass-enable))
 ;;; Org Mode
-(require 'plantuml-mode)
 
 (use-feature org
   :hook ((org-clock-in . save-buffer)
@@ -252,10 +253,11 @@ Passes NAME and ARGS to use-package."
      (scheme . t)
      (gnuplot . t)
      (java . t)
-     (python . t)
      (clojure . t)
      (R . t)))
-
+  
+  (require 'plantuml-mode)
+  
   (setq org-file-apps
         (butlast org-file-apps))
 
@@ -323,7 +325,7 @@ Passes NAME and ARGS to use-package."
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
-         ;; Dailies
+         ;; Dailiesf
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (org-roam-setup))
@@ -333,7 +335,9 @@ Passes NAME and ARGS to use-package."
 ;;; Reading
 ;;;; PDF
 (use-package pdf-tools
-  :hook (after-init . pdf-loader-install))
+  :defer 20
+  :config
+  (pdf-loader-install))
 ;;; AUCtex
 (use-package auctex)
 ;;; QREncode
@@ -358,5 +362,4 @@ Passes NAME and ARGS to use-package."
   :bind ("C-c c" . calc))
 (use-package discover-my-major
   :bind ("C-h C-m" . discover-my-major))
-;;; Miscelenious
 ;;; init.el ends here
