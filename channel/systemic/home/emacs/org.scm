@@ -4,6 +4,7 @@
   #:use-module (systemic packages emacs-xyz)
   #:use-module (guix transformations)
   #:export (org-agenda-configuration
+            org-roam-configuration
             org-minutes-configuration))
 
 
@@ -39,6 +40,27 @@
    #:elisp-packages (list ((options->transformation
                             '((without-tests . "emacs-org-super-agenda")))
                            emacs-org-super-agenda))))
+
+(define org-directory '(file-truename "~/org"))
+
+(define org-roam-configuration
+  (elisp-configuration-package
+   "org-roam"
+   `((setq org-roam-directory ,org-directory)
+     (setq org-roam-v2-ack t)
+
+     (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)
+     (global-set-key (kbd "C-c n f") 'org-roam-node-find)
+     (global-set-key (kbd "C-c n g") 'org-roam-graph)
+     (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
+     (global-set-key (kbd "C-c n c") 'org-roam-capture)
+     (global-set-key (kbd "C-c n d") 'org-roam-dailies-capture-today)
+
+     (with-eval-after-load
+      'org-roam
+      (org-roam-setup)))
+   #:autoloads? #t
+   #:elisp-packages (list emacs-org-roam)))
 
 (define org-minutes-configuration
   (elisp-configuration-package

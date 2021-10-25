@@ -316,20 +316,6 @@ Passes NAME and ARGS to use-package."
 (use-package org-fragtog
   :hook ((org-mode . org-fragtog-mode)))
 
-(use-package org-roam
-  :custom
-  (org-roam-directory (file-truename "~/org"))
-  (org-roam-v2-ack t)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ;; Dailiesf
-         ("C-c n j" . org-roam-dailies-capture-today))
-  :config
-  (org-roam-setup))
-
 (use-package org-transclusion
   :bind (("C-c n t" . org-transclusion-mode)))
 ;;; Reading

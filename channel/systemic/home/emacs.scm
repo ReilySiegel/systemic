@@ -83,12 +83,13 @@
    emacs-yaml-mode emacs-plantuml-mode emacs-org
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix emacs-git-email
-   emacs-clj-refactor emacs-origami-el emacs-org-roam emacs-org-transclusion
+   emacs-clj-refactor emacs-origami-el emacs-org-transclusion
    emacs-pass emacs-project
    default-configuration
    theme-configuration
    exwm-configuration
    notmuch-emacs-configuration
    org-agenda-configuration
+   org-roam-configuration
    org-minutes-configuration
    candidate-configuration))
