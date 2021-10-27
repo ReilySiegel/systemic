@@ -149,6 +149,10 @@
              (:name "[f]lagged" :query "tag:flagged" :key "f")
              (:name "[s]ent" :query "tag:sent" :key "s")
              (:name "[d]rafts" :query "tag:draft" :key "d")
-             (:name "[a]ll mail" :query "*" :key "a"))))
+             (:name "[a]ll mail" :query "*" :key "a")))
+     ;; Notmuch abuses internal details of the CRM API, which breaks 3rd party
+     ;; implementations. This should eventually be fixed upstream.
+     (advice-add (function notmuch-read-tag-changes)
+                 :filter-return (lambda (x) (mapcar (function string-trim) x))))
    #:elisp-packages (list emacs-notmuch)
    #:autoloads? #t))
