@@ -87,17 +87,17 @@ plural")
 (define-public emacs-clj-refactor
   (package
    (name "emacs-clj-refactor")
-   (version "2.5.1")
+   (version "3.0.0")
    (home-page "https://github.com/clojure-emacs/clj-refactor.el")
    (source (origin
             (method git-fetch)
             (uri (git-reference
                   (url home-page)
-                  (commit (string-append "v" version))))
+                  (commit version)))
             (file-name (git-file-name name version))
             (sha256
              (base32
-              "1pyskl9xcqrk6r2zbp5i9402inngqps7wwb4nbdbrgi4di9b8in7"))))
+              "0i759k6qm752lmdsxrgp0bh3akl01as8k8q6x1a7cpdh6yddwajs"))))
    (build-system emacs-build-system)
    (propagated-inputs
     `(("yasnippet" ,emacs-yasnippet)
