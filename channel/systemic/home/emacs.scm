@@ -1,5 +1,6 @@
 (define-module (systemic home emacs)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (guix transformations)
   #:use-module (systemic home desktop)
   #:use-module (systemic home mail)
   #:use-module (systemic home emacs-utils)
@@ -71,6 +72,10 @@
                           emacs-nord-theme)
    #:autoloads? #t))
 
+(define emacs-lsp-java-transform
+  (options->transformation
+   '((with-branch . "emacs-lsp-java=master"))))
+
 (define emacs-packages
   (list
    emacs-use-package emacs-esup
@@ -79,7 +84,9 @@
    emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit
    emacs-magit-todos emacs-forge emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
-   emacs-lsp-java emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
+   (emacs-lsp-java-transform emacs-lsp-java)
+
+   emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
    emacs-yaml-mode emacs-plantuml-mode emacs-org
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix emacs-git-email
