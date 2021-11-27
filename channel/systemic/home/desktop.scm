@@ -130,7 +130,7 @@ wintypes:
                            (string= "gimp" exwm-instance-name))
                    (exwm-workspace-rename-buffer exwm-title))))
      ;; 's-r': Reset
-     (exwm-input-set-key (kbd "s-r") ,#~"#'exwm-reset")
+     (exwm-input-set-key (kbd "s-r") (function exwm-reset))
      ;; Line-editing shortcuts
      (setq
       exwm-manage-force-tiling t
@@ -191,7 +191,8 @@ wintypes:
      (add-hook 'after-init-hook 'exec-path-from-shell-initialize)
      
      ;; Enable launching apps
-     (global-set-key (kbd "s-SPC") 'app-launcher-run-app))
+     (global-set-key (kbd "s-SPC") 'app-launcher-run-app)
+     (global-set-key (kbd "C-c l") 'app-launcher-run-app))
    #:elisp-packages (list emacs-app-launcher
                           emacs-exec-path-from-shell
                           emacs-exwm
