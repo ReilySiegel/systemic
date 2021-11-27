@@ -254,7 +254,9 @@ Passes NAME and ARGS to use-package."
      (gnuplot . t)
      (java . t)
      (clojure . t)
+     (python . t)
      (R . t)))
+  (setq org-confirm-babel-evaluate nil)
   
   (require 'plantuml-mode)
   
