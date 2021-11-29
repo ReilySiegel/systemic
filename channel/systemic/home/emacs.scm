@@ -24,7 +24,8 @@
        (show-paren-mode 1))
 
      (setq-default fill-column 80
-                   undo-limit (* 10 1024 1024))
+                   undo-limit (* 10 1024 1024)
+                   browse-url-browser-function (function browse-url-chromium))
 
      ;; Bump the required security level for TLS to an acceptably modern value.
      (require 'gnutls)
