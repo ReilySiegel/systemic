@@ -68,6 +68,10 @@
    `((with-eval-after-load
       'org
       (require 'org-minutes-roam)
-      (org-minutes-roam-init)))
+      (org-minutes-roam-init)
+      
+      ;; Add a keybinding to insert inactive time-stamps. This is useful for
+      ;; having a uniform way to insert dates/times of events into a document.
+      (define-key org-mode-map (kbd "C-c M-.") 'org-time-stamp-inactive)))
    #:autoloads? #t
    #:elisp-packages (list emacs-org-minutes)))
