@@ -7,6 +7,7 @@
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic home emacs completion)
   #:use-module (systemic home emacs org)
+  #:use-module (systemic home emacs pass)
   #:use-module (systemic packages emacs-xyz)
   #:export (emacs-packages))
 
@@ -93,7 +94,7 @@
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix emacs-git-email
    emacs-clj-refactor emacs-origami-el emacs-org-transclusion
-   emacs-pass emacs-project
+   emacs-project
    default-configuration
    theme-configuration
    exwm-configuration
@@ -101,4 +102,5 @@
    org-agenda-configuration
    org-roam-configuration
    org-minutes-configuration
-   candidate-configuration))
+   candidate-configuration
+   pass-configuration))
