@@ -3,7 +3,6 @@
   #:use-module (gnu packages statistics)
   #:use-module (guix transformations)
   #:use-module (systemic home desktop)
-  #:use-module (systemic home mail)
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic home emacs completion)
   #:use-module (systemic home emacs org)
@@ -98,7 +97,6 @@
    default-configuration
    theme-configuration
    exwm-configuration
-   notmuch-emacs-configuration
    org-agenda-configuration
    org-roam-configuration
    org-minutes-configuration

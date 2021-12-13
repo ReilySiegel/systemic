@@ -39,9 +39,7 @@
                                                                 "-no-browser"
                                                                 "-no-restart")))
                           (stop #~(make-kill-destructor)))))
-   isync-service
-   notmuch-service
-   notmuch-cron-service 
+   (service systemic-mail-service-type)
    (service home-gnupg-service-type
 	    (home-gnupg-configuration
              (gpg-agent-config
@@ -69,7 +67,8 @@
    (service home-ssh-service-type
             (home-ssh-configuration
              (toplevel-options
-              '((match . "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
+              '((match .
+                  "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
    (service home-bash-service-type
             (home-bash-configuration))
    (service home-emacs-service-type
