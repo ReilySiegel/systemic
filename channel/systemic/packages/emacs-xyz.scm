@@ -29,9 +29,7 @@
              (base32
               "09vmh3x1rjxxl9g9p01afil1zlpk7rf0pjmzyvcbid9wczyllkhq"))))
    (build-system emacs-build-system)
-   (propagated-inputs
-    `(("emacs-magit" ,emacs-magit)
-      ("notmuch" ,notmuch)))
+   (propagated-inputs (list emacs-magit notmuch))
    (home-page "https://sr.ht/~yoctocell/git-email/")
    (synopsis "Integrates git and email with Emacs")
    (description "git-email provides functions for formatting and sending Git patches
@@ -99,15 +97,14 @@ plural")
              (base32
               "0i759k6qm752lmdsxrgp0bh3akl01as8k8q6x1a7cpdh6yddwajs"))))
    (build-system emacs-build-system)
-   (propagated-inputs
-    `(("yasnippet" ,emacs-yasnippet)
-      ("paredit" ,emacs-paredit)
-      ("multiple-cursors" ,emacs-multiple-cursors)
-      ("clojure-mode" ,emacs-clojure-mode)
-      ("cider" ,emacs-cider)
-      ("parseedn" ,emacs-parseedn)
-      ("inflections" ,emacs-inflections)
-      ("hydra" ,emacs-hydra)))
+   (propagated-inputs (list emacs-yasnippet
+                            emacs-paredit
+                            emacs-multiple-cursors
+                            emacs-clojure-mode
+                            emacs-cider
+                            emacs-parseedn
+                            emacs-inflections
+                            emacs-hydra))
    (synopsis "Support for refactoring Clojure code in Emacs.")
    (description "@code{clj-refactor} provides refactoring support for Clojure
 projects. It complements the refactoring functionality you'd find in
@@ -128,8 +125,7 @@ clojure-mode and CIDER.")
             (sha256
              (base32 "12rl97n2w35np6ifslh92d3sbcynfjn94lm4p59202sipqyrv7dv"))))
    (build-system emacs-build-system)
-   (propagated-inputs
-    `(("org" ,emacs-org)))
+   (propagated-inputs (list emacs-org))
    (synopsis "Support for refactoring Clojure code in Emacs.")
    (description "@code{clj-refactor} provides refactoring support for Clojure
 projects. It complements the refactoring functionality you'd find in
@@ -139,30 +135,28 @@ clojure-mode and CIDER.")
 (define-public systemic-emacs-desktop-environment
   (package
    (inherit emacs-desktop-environment)
-   (propagated-inputs
-    `(("alsa-utils" ,alsa-utils)
-      ("brightnessctl" ,brightnessctl)
-      ("scrot" ,scrot)
-      ("slock" ,slock)
-      ("upower" ,upower)
-      ("tlp" ,tlp)
-      ("playerctl" ,playerctl)))))
+   (propagated-inputs (list alsa-utils
+                            brightnessctl
+                            scrot
+                            slock
+                            upower
+                            tlp
+                            playerctl))))
 
 (define-public emacs-org-minutes
   (package
-    (name "emacs-org-minutes")
-    (version "0.0.1")
-    (home-page "")
-    (source (local-file "/home/reily/src/org-minutes"
-                        #:recursive? #t))
-    (build-system emacs-build-system)
-    (arguments
-     `(#:include (cons* "^snippets\\/" %default-include))) 
-    (propagated-inputs
-     `(("org" ,emacs-org)
-       ("org-roam" ,emacs-org-roam)
-       ("yasnippet" ,emacs-yasnippet)))
-    (synopsis "Simple presentation mode for Emacs Org-mode.")
-    (description "This is a simple presentation mode for Emacs. It works best in
+   (name "emacs-org-minutes")
+   (version "0.0.1")
+   (home-page "")
+   (source (local-file "/home/reily/src/org-minutes"
+                       #:recursive? #t))
+   (build-system emacs-build-system)
+   (arguments
+    `(#:include (cons* "^snippets\\/" %default-include))) 
+   (propagated-inputs (list emacs-org
+                            emacs-org-roam
+                            emacs-yasnippet))
+   (synopsis "Simple presentation mode for Emacs Org-mode.")
+   (description "This is a simple presentation mode for Emacs. It works best in
 Emacs >= 23, which has a nice font rendering engine.")
-    (license license:gpl3+)))
+   (license license:gpl3+)))
