@@ -29,7 +29,7 @@ Passes NAME and ARGS to use-package."
 ;;   (guix-emacs-autoload-packages))
 
 (use-package guix
-  :bind ("C-c C-g" . guix))
+  :bind ("C-c g" . guix))
 ;;; Configure ~/.emacs.d paths
 ;; Package `no-littering' changes the default paths for lots of
 ;; different packages, with the net result that the ~/.emacs.d folder
