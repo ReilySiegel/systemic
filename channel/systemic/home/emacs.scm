@@ -82,16 +82,16 @@
   (list
    emacs-use-package emacs-esup
    emacs-avy emacs-no-littering
-   emacs-company emacs-git-auto-commit-mode emacs-outshine emacs-aggressive-indent
-   emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode emacs-magit
-   emacs-magit-todos emacs-forge emacs-paredit emacs-yasnippet
+   emacs-company emacs-outshine emacs-aggressive-indent
+   emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode
+   emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
    (emacs-lsp-java-transform emacs-lsp-java)
    emacs-ess
    emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
    emacs-yaml-mode emacs-plantuml-mode emacs-org
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
-   emacs-discover-my-major emacs-guix emacs-git-email
+   emacs-discover-my-major emacs-guix
    emacs-clj-refactor emacs-origami-el emacs-org-transclusion
    emacs-project
    default-configuration

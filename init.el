@@ -100,8 +100,6 @@ Passes NAME and ARGS to use-package."
                                  company-backends))
   (global-company-mode))
 
-;;;; Auto commit
-(use-package git-auto-commit-mode)
 ;;;; Indentation
 ;; Don't use tabs for indentation. Use only spaces. Frankly, the fact
 ;; that `indent-tabs-mode' is even *available* as an *option* disgusts
@@ -139,33 +137,6 @@ Passes NAME and ARGS to use-package."
   :after lsp-mode
   :config
   (dap-mode 1))
-;;;; Git
-(setq user-full-name "Reily Siegel")
-(setq user-mail-address "mail@reilysiegel.com")
-
-(use-package magit
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch))
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1 "")
-  :config
-  (magit-todos-mode 1))
-
-(use-package forge
-  :after magit
-  :config
-  (setq forge-owned-accounts
-        '(("ReilySiegel" . nil))))
-
-(use-package git-email
-  :after magit
-  :config
-  (git-email-notmuch-mode 1))
-
-(use-package git-email-magit
-  :after magit)
-
-
 ;;;; Paredit
 (use-package paredit
   :hook (prog-mode . enable-paredit-mode))

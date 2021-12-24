@@ -11,12 +11,10 @@
  (gnu home services shells)
  (gnu home services shepherd)
  (gnu home-services ssh)
- (gnu home-services version-control)
  (gnu home-services-utils)
  (gnu home services)
  (gnu services)
  (gnu packages compton)
- (gnu packages gnupg)
  (gnu packages linux)
  (gnu packages mail)
  (gnu packages pulseaudio)
@@ -24,6 +22,7 @@
  (srfi srfi-26)
  (systemic home desktop)
  (systemic home emacs)
+ (systemic home git)
  (systemic home mail))
 
 (home-environment
@@ -46,24 +45,7 @@
               (home-gpg-agent-configuration
                (ssh-agent? #t)
                (pinentry-flavor 'emacs)))))
-   (service home-git-service-type
-	    (home-git-configuration
-	     (config
-	      `((core
-                 ((checkStat . "minimal")))
-                (user
-                 ((name . "Reily Siegel")
-                  (email . "mail@reilysiegel.com")))
-	        (gpg
-		 ((program . ,(file-append gnupg "/bin/gpg"))))
-	        (sendmail
-		 ((annotate . #t)))
-                (commit
-                 ((gpgsign . #t)))
-                (lfs
-                 ((storage . "/home/reily/.local/share/lfs/")))))
-             (config-extra-content (slurp-file-gexp
-                                    (local-file "./gitconfig")))))
+   (service systemic-git-service-type)
    (service home-ssh-service-type
             (home-ssh-configuration
              (toplevel-options

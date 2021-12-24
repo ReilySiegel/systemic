@@ -127,7 +127,7 @@
       notmuch-show-logo nil
       notmuch-hello-sections '(notmuch-hello-insert-header
                                notmuch-hello-insert-saved-searches)
-      notmuch-fcc-dirs '(("mail@reilysiegel.com" . "+sent personal/sent"))
+      notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
       notmuch-saved-searches
       '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
         (:name "[l]ists" :query "tag:unread AND tag:lists" :key "l")
