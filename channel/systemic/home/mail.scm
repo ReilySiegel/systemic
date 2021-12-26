@@ -73,6 +73,9 @@
   (home-notmuch-extension
    (pre-new
     (list
+     #~(system (string-append "notmuch search --output=files --format=text0"
+                              " tag:deleted | "
+                              "xargs -r0 rm"))
      #~(system "mbsync -a")))
    (post-new
     (list
