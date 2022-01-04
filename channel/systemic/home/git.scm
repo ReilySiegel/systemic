@@ -25,6 +25,7 @@
             (function magit-display-buffer-same-window-except-diff-v1))
       (magit-todos-mode 1)
 
+      (require 'magit-extras)
       (require 'git-email))
 
      (with-eval-after-load
