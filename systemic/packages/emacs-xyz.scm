@@ -111,27 +111,6 @@ projects. It complements the refactoring functionality you'd find in
 clojure-mode and CIDER.")
    (license license:gpl3+)))
 
-(define-public emacs-org-transclusion
-  (package
-   (name "emacs-org-transclusion")
-   (version "0.2.0")
-   (home-page "https://github.com/nobiot/org-transclusion")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url home-page)
-                  (commit "8bf2ecc2dffc9d365e0f14d45158f44df587fb12")))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32 "12rl97n2w35np6ifslh92d3sbcynfjn94lm4p59202sipqyrv7dv"))))
-   (build-system emacs-build-system)
-   (propagated-inputs (list emacs-org))
-   (synopsis "Support for refactoring Clojure code in Emacs.")
-   (description "@code{clj-refactor} provides refactoring support for Clojure
-projects. It complements the refactoring functionality you'd find in
-clojure-mode and CIDER.")
-   (license license:gpl3+)))
-
 (define-public systemic-emacs-desktop-environment
   (package
    (inherit emacs-desktop-environment)
