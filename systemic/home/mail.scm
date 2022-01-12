@@ -133,6 +133,8 @@
       notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
       notmuch-saved-searches
       '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
+        (:name "[e]xcuses" :query "tag:unread AND tag:excuse" :key "e")
+        (:name "a[g]enda items" :query "tag:unread AND tag:agenda" :key "g")
         (:name "[l]ists" :query "tag:unread AND tag:lists" :key "l")
         ;;Show unread automated messages
         (:name "auto[m]ated" :query "tag:unread AND tag:automated" :key "m")
@@ -165,6 +167,22 @@
 [SentMailsFilter]
 sent_tag = sent
 [ArchiveSentMailsFilter]
+[HeaderMatchingFilter.1]
+header = Subject
+pattern = PATCH
+tags = +patch
+[HeaderMatchingFilter.2]
+header = Subject
+pattern = RFC
+tags = +rfc
+[HeaderMatchingFilter.3]
+header = Subject
+pattern = EXCUSE
+tags = +excuse
+[HeaderMatchingFilter.4]
+header = Subject
+pattern = AGENDA
+tags = +agenda
 [InboxFilter]"))))
 
 (define systemic-mail-service-type
