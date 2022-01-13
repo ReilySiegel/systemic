@@ -126,16 +126,23 @@ clojure-mode and CIDER.")
   (package
    (name "emacs-org-minutes")
    (version "0.0.1")
-   (home-page "")
-   (source (local-file "/home/reily/src/org-minutes"
-                       #:recursive? #t))
+   (home-page "https://github.com/ReilySiegel/org-minutes")
+   (source (origin
+            (method git-fetch)
+            (uri (git-reference
+                  (url home-page)
+                  (commit "ae152797cf959228e450d5d4bdb72b70003538ed")))
+            (file-name (git-file-name name version))
+            (sha256
+             (base32
+              "0c96bg2gw8nn98d696bvk4jnk4p6zvcnqk684izjnnh79hl48icd"))))
    (build-system emacs-build-system)
    (arguments
     `(#:include (cons* "^snippets\\/" %default-include))) 
    (propagated-inputs (list emacs-org
                             emacs-org-roam
                             emacs-yasnippet))
-   (synopsis "Simple presentation mode for Emacs Org-mode.")
-   (description "This is a simple presentation mode for Emacs. It works best in
-Emacs >= 23, which has a nice font rendering engine.")
+   (synopsis "Tools for taking minutes in org-mode")
+   (description "Tools for taking minutes in org-mode. Designed to work with
+org-roam and yasnippet.")
    (license license:gpl3+)))
