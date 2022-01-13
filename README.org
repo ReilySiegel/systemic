@@ -1,2 +1,14 @@
 #+TITLE: Systemic
-#+SUBTITLE: Guix (System) configuration
+
+* Channel Introduction
+
+#+begin_src scheme
+(channel
+ (name 'systemic)
+ (url "https://github.com/ReilySiegel/systemic")
+ (introduction
+  (make-channel-introduction
+   "89ff5b4374e472194eff08f2a69153d5cde6784e"
+   (openpgp-fingerprint
+    "0FA2 FE4C 164F 60C6 7F6B  EA7E 508A 5AD0 A50F 88AF"))))
+#+end_src
