@@ -3,9 +3,47 @@
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic packages emacs-xyz)
   #:use-module (guix transformations)
-  #:export (org-agenda-configuration
+  #:export (org-configuration
+            org-agenda-configuration
             org-roam-configuration
             org-minutes-configuration))
+
+(define org-directory '(file-truename "~/org"))
+
+(define org-configuration
+  (elisp-configuration-package
+   "org"
+   `((with-eval-after-load
+      'org
+      (require 'plantuml-mode)
+      (setq org-directory ,org-directory
+            org-edit-src-content-indentation 0
+            org-confirm-babel-evaluate nil
+            org-adapt-indentation nil
+            org-log-done (quote time)
+            org-log-redeadline nil
+            org-log-reschedule nil
+            ;; Force use emacs for PDF files.
+            org-file-apps (butlast org-file-apps)
+            org-plantuml-jar-path plantuml-jar-path
+            org-latex-pdf-process
+            '("xelatex -shell-escape -interaction nonstopmode %f"
+              "xelatex -shell-escape -interaction nonstopmode %f"))
+      
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((plantuml . t)
+         (scheme . t)
+         (gnuplot . t)
+         (java . t)
+         (clojure . t)
+         (python . t)
+         (R . t)))
+      ;; Save buffer after clocking
+      (add-hook 'org-clock-in-hook 'save-buffer)
+      (add-hook 'org-clock-out-hook 'save-buffer)))
+   #:autoloads? #t
+   #:elisp-packages (list emacs-org emacs-plantuml-mode)))
 
 
 (define org-agenda-configuration
@@ -32,14 +70,14 @@
               (:name "Due soon"
                :deadline future)
               (:name "Todo"
-	       :todo "TODO")))
+	       :todo "TODO"))
+            org-agenda-files (list ,org-directory
+                                   (concat ,org-directory "/daily")))
       (defun org-class-days (y1 m1 d1 y2 m2 d2 days)
         (seq-filter (lambda (day) (org-class y1 m1 d1 y2 m2 d2 day))
                     days))))
    #:autoloads? #t
    #:elisp-packages (list emacs-org-super-agenda)))
-
-(define org-directory '(file-truename "~/org"))
 
 (define org-roam-configuration
   (elisp-configuration-package

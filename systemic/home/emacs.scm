@@ -89,7 +89,7 @@
    (emacs-lsp-java-transform emacs-lsp-java)
    emacs-ess
    emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
-   emacs-yaml-mode emacs-plantuml-mode emacs-org
+   emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix
    emacs-clj-refactor emacs-origami-el emacs-org-transclusion
@@ -97,6 +97,7 @@
    default-configuration
    theme-configuration
    exwm-configuration
+   org-configuration
    org-agenda-configuration
    org-roam-configuration
    org-minutes-configuration

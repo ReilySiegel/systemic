@@ -213,61 +213,9 @@ Passes NAME and ARGS to use-package."
         erc-default-server "irc.libera.chat"))
 ;;; Pass
 (use-feature auth-source-pass
-      :defer 1
-      :config
-      (auth-source-pass-enable))
-;;; Org Mode
-
-(use-feature org
-  :hook ((org-clock-in . save-buffer)
-         (org-clock-out . save-buffer))
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((plantuml . t)
-     (scheme . t)
-     (gnuplot . t)
-     (java . t)
-     (clojure . t)
-     (python . t)
-     (R . t)))
-  (setq org-confirm-babel-evaluate nil)
-  
-  (require 'plantuml-mode)
-  
-  (setq org-file-apps
-        (butlast org-file-apps))
-
-  (setq org-directory "~/org"
-        org-agenda-files (list org-directory
-                               (concat org-directory "/daily"))
-
-        org-plantuml-jar-path
-        plantuml-jar-path
-
-        org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode %f"
-          "xelatex -shell-escape -interaction nonstopmode %f"))
-  ;; Set (no) indentation
-  (setq org-adapt-indentation nil)
-  ;; Log time a task was set to Done.
-  (setq org-log-done (quote time))
-
-  ;; Don't log the time a task was rescheduled or redeadlined.
-  (setq org-log-redeadline nil)
-  (setq org-log-reschedule nil)
-  ;; Refresh org-agenda after rescheduling a task.
-  (defun org-agenda-refresh ()
-    "Refresh all `org-agenda' buffers."
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        (when (derived-mode-p 'org-agenda-mode)
-          (org-agenda-maybe-redo)))))
-
-  (defadvice org-schedule (after refresh-agenda activate)
-    "Refresh org-agenda."
-    (org-agenda-refresh)))
-
+          :defer 1
+          :config
+          (auth-source-pass-enable))
 (use-feature ox-latex
   :config
   (add-to-list 'org-latex-classes
