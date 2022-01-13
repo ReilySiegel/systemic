@@ -37,9 +37,7 @@
         (seq-filter (lambda (day) (org-class y1 m1 d1 y2 m2 d2 day))
                     days))))
    #:autoloads? #t
-   #:elisp-packages (list ((options->transformation
-                            '((without-tests . "emacs-org-super-agenda")))
-                           emacs-org-super-agenda))))
+   #:elisp-packages (list emacs-org-super-agenda)))
 
 (define org-directory '(file-truename "~/org"))
 
