@@ -147,7 +147,26 @@
      ;; Notmuch abuses internal details of the CRM API, which breaks 3rd party
      ;; implementations. This should eventually be fixed upstream.
      (advice-add (function notmuch-read-tag-changes)
-                 :filter-return (lambda (x) (mapcar (function string-trim) x))))
+                 :filter-return (lambda (x) (mapcar (function string-trim) x)))
+
+     ;; Set message signature based on files in config.
+     (with-eval-after-load
+      'message
+      (setq message-signature-directory "~/.config/signatures")
+
+      (defun reily/message-signature-setup-hook ()
+        (let ((from (message-field-value "From"))
+              (signatures (when message-signature-directory
+                            (directory-files message-signature-directory))))
+          (setq-local message-signature-file
+                      (seq-some (lambda (signature)
+                                  (when (and (not (string-equal "." signature))
+                                             (not (string-equal ".." signature))
+                                             (string-match signature from))
+                                    signature))
+                                signatures))))
+
+      (add-hook 'message-signature-setup-hook 'reily/message-signature-setup-hook)))
    #:elisp-packages (list emacs-notmuch)
    #:autoloads? #t))
 
