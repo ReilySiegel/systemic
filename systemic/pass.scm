@@ -7,4 +7,6 @@
   (let* ((port (open-input-pipe (string-append "pass " service)))
          (str (read-line port)))
     (close-pipe port)
-    str))
+    (if (eof-object? str)
+        ""
+        str)))
