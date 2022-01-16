@@ -65,7 +65,9 @@
       (sendmail
        ((annotate . #t)))
       (commit
-       ((gpgsign . #t)))))))
+       ((gpgsign . #t)))
+      (diff
+       ((algorithm . "histogram")))))))
 
 (define systemic-git-service-type
   (service-type
