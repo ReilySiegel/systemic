@@ -11,7 +11,6 @@
   #:use-module (gnu home services)
   #:use-module (gnu services)
   #:use-module (gnu packages compton)
-  #:use-module (gnu packages gnupg)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages mail)
   #:use-module (gnu packages pulseaudio)
@@ -20,7 +19,7 @@
   #:use-module (systemic home desktop)
   #:use-module (systemic home emacs)
   #:use-module (systemic home git)
-  #:use-module (systemic home mail))
+  #:use-module   (systemic home mail))
 
 (define-public reily-home-environment
   (home-environment
@@ -39,8 +38,6 @@
      (service systemic-mail-service-type)
      (service home-gnupg-service-type
 	      (home-gnupg-configuration
-               ;; HACK: See https://issues.guix.gnu.org/52744
-               (package gnupg-2.2.32)
                (gpg-agent-config
                 (home-gpg-agent-configuration
                  (ssh-agent? #t)
