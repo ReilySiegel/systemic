@@ -197,11 +197,11 @@ tags = +rfc
 [HeaderMatchingFilter.3]
 header = Subject
 pattern = EXCUSE
-tags = +excuse
+tags = +excuse;-new
 [HeaderMatchingFilter.4]
 header = Subject
 pattern = AGENDA
-tags = +agenda
+tags = +agenda;-new
 [InboxFilter]"))))
 
 (define systemic-mail-service-type
