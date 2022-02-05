@@ -16,6 +16,7 @@
   #:use-module (gnu packages pulseaudio)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-26)
+  #:use-module (systemic home bibliography)
   #:use-module (systemic home desktop)
   #:use-module (systemic home emacs)
   #:use-module (systemic home git)
@@ -36,6 +37,9 @@
                                                                   "-no-restart")))
                             (stop #~(make-kill-destructor)))))
      (service systemic-mail-service-type)
+     (service bibliography-service-type
+              (bibliography-configuration
+               (bibtex-file "~/org/references.bib")))
      (service home-gnupg-service-type
 	      (home-gnupg-configuration
                (gpg-agent-config
