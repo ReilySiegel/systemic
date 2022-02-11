@@ -1,4 +1,4 @@
-(define-module (systemic users reily)
+(define-module (systemic home luden)
   #:use-module (gnu home)
   #:use-module (gnu home-services emacs)
   #:use-module (gnu home-services gnupg)
@@ -20,7 +20,7 @@
   #:use-module (systemic home desktop)
   #:use-module (systemic home emacs)
   #:use-module (systemic home git)
-  #:use-module   (systemic home mail))
+  #:use-module (systemic home mail))
 
 (define-public reily-home-environment
   (home-environment
