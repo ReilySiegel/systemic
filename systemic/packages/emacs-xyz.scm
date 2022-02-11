@@ -131,11 +131,11 @@ clojure-mode and CIDER.")
             (method git-fetch)
             (uri (git-reference
                   (url home-page)
-                  (commit "ae152797cf959228e450d5d4bdb72b70003538ed")))
+                  (commit "d9ca4340061c9fe1dcd04e6a1320054f7506dc3a")))
             (file-name (git-file-name name version))
             (sha256
              (base32
-              "0c96bg2gw8nn98d696bvk4jnk4p6zvcnqk684izjnnh79hl48icd"))))
+              "0l9r1i86xzdhifqn58xg1f6rndi8rqhzc3kgs3842kkwd31d9lp5"))))
    (build-system emacs-build-system)
    (arguments
     `(#:include (cons* "^snippets\\/" %default-include))) 

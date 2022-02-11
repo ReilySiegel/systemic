@@ -170,7 +170,12 @@
                            "Fraternal Chairman"
                            "Activities Chairman"
                            "Membership Development"
-                           "IFC Delegate"))
+                           "IFC Delegate")
+                :agenda '("Unfinished Business"
+                          "New Business"
+                          "Serious Discussion"
+                          "Announcements"
+                          "Out of Orders"))
               ,(make-org-minutes-organization
                 :name "Alpha Chi Rho Executive Council"
                 :key "e"
@@ -201,6 +206,10 @@
                            "Risk Manager"
                            "Social Officer"
                            "Secretary"
-                           "Chaplain"))))))
+                           "Chaplain")
+                :agenda '("Unfinished Business"
+                          "New Business"
+                          "Serious Discussion"
+                          "Action Items"))))))
    #:autoloads? #t
    #:elisp-packages (list emacs-org-minutes)))
