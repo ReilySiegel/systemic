@@ -100,6 +100,5 @@
    org-configuration
    org-agenda-configuration
    org-roam-configuration
-   org-minutes-configuration
    candidate-configuration
    pass-configuration))
