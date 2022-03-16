@@ -27,6 +27,7 @@
    (services
     (list
      (service picom-service-type #f)
+     (service exwm-service-type)
      (simple-service 'syncthing
                      home-shepherd-service-type
                      (list (shepherd-service

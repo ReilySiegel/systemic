@@ -2,7 +2,6 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages statistics)
   #:use-module (guix transformations)
-  #:use-module (systemic home desktop)
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic home emacs completion)
   #:use-module (systemic home emacs org)
@@ -96,7 +95,6 @@
    emacs-project
    default-configuration
    theme-configuration
-   exwm-configuration
    org-configuration
    org-agenda-configuration
    org-roam-configuration
