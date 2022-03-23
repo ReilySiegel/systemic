@@ -152,7 +152,18 @@ Passes NAME and ARGS to use-package."
 (use-package clojure-mode
   :custom
   (clojure-align-forms-automatically t)
-  (clojure-toplevel-inside-comment-form t))
+  (clojure-toplevel-inside-comment-form t)
+  :config
+  ;; Define indentation for guardrails macros
+  (put-clojure-indent '>def :defn)
+  (put-clojure-indent '>defn :defn)
+  (put-clojure-indent '>defn- :defn)
+  (put-clojure-indent '>fdef :defn)
+
+  ;; Define docstring positions for guardrails macros
+  (put '>def 'clojure-doc-string-elt 2)
+  (put '>defn 'clojure-doc-string-elt 2)
+  (put '>defn- 'clojure-doc-string-elt 2))
 
 (use-package cider
   :hook (cider-mode . eldoc-mode)
