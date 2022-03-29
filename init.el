@@ -251,9 +251,6 @@ Passes NAME and ARGS to use-package."
 ;; Auto toggle latex fragments
 (use-package org-fragtog
   :hook ((org-mode . org-fragtog-mode)))
-
-(use-package org-transclusion
-  :bind (("C-c n t" . org-transclusion-mode)))
 ;;; Reading
 ;;;; PDF
 (use-package pdf-tools

@@ -91,7 +91,7 @@
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix
-   emacs-clj-refactor emacs-origami-el emacs-org-transclusion
+   emacs-clj-refactor emacs-origami-el
    emacs-project
    default-configuration
    theme-configuration
