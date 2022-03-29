@@ -90,7 +90,8 @@
      (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
      (global-set-key (kbd "C-c n c") 'org-roam-capture)
      (global-set-key (kbd "C-c n d") 'org-roam-dailies-capture-today)
-
+     (global-set-key (kbd "C-c n t") 'org-roam-tag-add)
+     
      (with-eval-after-load
       'org-roam
       (org-roam-setup)))
