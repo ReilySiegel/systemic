@@ -197,9 +197,10 @@ wintypes:
               ("S-<f2>" . desktop-environment-brightness-increment-slowly)
               ("S-<f5>" . desktop-environment-volume-decrement-slowly)
               ("S-<f6>" . desktop-environment-volume-increment-slowly))
-       :hook after-init
+       :defer 5
        :config
-       (setq desktop-environment-update-exwm-global-keys :prefix))
+       (setq desktop-environment-update-exwm-global-keys :prefix)
+       (desktop-environment-mode))
 
       (use-package
        app-launcher
