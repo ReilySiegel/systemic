@@ -39,7 +39,7 @@
 (define theme-configuration
   (elisp-configuration-package
    "theme"
-   `((set-frame-font "Fira Code-11")
+   `((set-frame-font "Hack-11")
 
      (require 'nord-theme)
      (if (daemonp)
