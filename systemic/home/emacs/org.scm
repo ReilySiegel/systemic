@@ -25,9 +25,13 @@
             ;; Force use emacs for PDF files.
             org-file-apps (butlast org-file-apps)
             org-plantuml-jar-path plantuml-jar-path
-            org-latex-pdf-process
-            '("xelatex -shell-escape -interaction nonstopmode %f"
-              "xelatex -shell-escape -interaction nonstopmode %f"))
+            org-latex-compiler "xelatex")
+
+      ;; Default to using /tmp as export 
+      (define-advice org-export-output-file-name
+        (:filter-args (r) org-add-export-dir)
+        (pcase-let ((`(,r1 ,r2 ,export-dir) r))
+                   (list r1 r2 (or export-dir "/tmp"))))
       
       (org-babel-do-load-languages
        'org-babel-load-languages
