@@ -40,7 +40,8 @@
      (service systemic-mail-service-type)
      (service bibliography-service-type
               (bibliography-configuration
-               (bibtex-file "~/org/references.bib")))
+               (bibtex-file "~/org/references.bib")
+               (csl-directory "~/org/csl")))
      (service home-gnupg-service-type
 	      (home-gnupg-configuration
                (gpg-agent-config
