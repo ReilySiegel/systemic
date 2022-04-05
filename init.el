@@ -230,12 +230,18 @@ Passes NAME and ARGS to use-package."
 (use-feature ox-latex
   :config
   (add-to-list 'org-latex-classes
-               '("paper" "\\documentclass[12pt]{report} \\PassOptionsToPackage{hyphens}{url} \n [DEFAULT-PACKAGES] [PACKAGES] [EXTRA] \n \\usepackage{setspace} \\doublespacing \\usepackage{fontspec} \\usepackage[margin=1.25in]{geometry}"
-                 ("\\part{%s}" . "\\part*{%s}")
+               '("paper" "\\documentclass[12pt]{report}
+               \\PassOptionsToPackage{hyphens}{url} \n
+               [DEFAULT-PACKAGES] [PACKAGES] [EXTRA] \n
+               \\usepackage{setspace} \\doublespacing
+               \\usepackage{fontspec}
+               \\usepackage[margin=1.25in]{geometry}
+               \\usepackage{xurl}
+               \\usepackage[section]{placeins}"
                  ("\\chapter{%s}" . "\\chapter*{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")))
   (setq org-src-fontify-natively t
         org-latex-listings 'minted)
   (add-to-list 'org-latex-packages-alist '("" "minted"))
