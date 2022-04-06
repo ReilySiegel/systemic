@@ -25,28 +25,8 @@
             (function magit-display-buffer-same-window-except-diff-v1))
       (magit-todos-mode 1)
 
-      (require 'magit-extras)
-      (require 'git-email))
-
-     (with-eval-after-load
-      'git-email
-      (require 'git-email-magit)
-      (git-email-notmuch-mode 1)
-      (setq git-email-headers '(subject cc in-reply-to message-id references))
-
-      (defvar my/git-email-to)
-      (advice-add 'git-email--compose-email 
-                  :before
-                  (lambda (patch)
-                    (let ((to (with-temp-buffer
-                               (insert-file-contents patch)
-                               (git-email--extract-header 'to))))
-                      (setq my/git-email-to
-                            (and (not (string-equal to "")) to)))))
-
-      (add-to-list 'git-email-get-to-address-functions
-                   (lambda nil my/git-email-to))))
-   #:elisp-packages (list emacs-magit emacs-magit-todos emacs-git-email)
+      (require 'magit-extras)))
+   #:elisp-packages (list emacs-magit emacs-magit-todos emacs-magit-email)
    #:autoloads? #t))
 
 (define (emacs-extension config)
