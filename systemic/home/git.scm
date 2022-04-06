@@ -47,7 +47,9 @@
       (commit
        ((gpgsign . #t)))
       (diff
-       ((algorithm . "histogram")))))))
+       ((algorithm . "histogram")))
+      (format
+       ((signature . "")))))))
 
 (define systemic-git-service-type
   (service-type
