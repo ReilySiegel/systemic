@@ -200,11 +200,6 @@ Passes NAME and ARGS to use-package."
 (use-feature geiser
   :custom
   (geiser-default-implementation 'guile))
-
-(use-feature geiser-guile
-  :config
-  (add-to-list 'geiser-guile-load-path
-               "~/.config/guix/current/share/guile/site/3.0/"))
 ;;; Eshell
 (use-feature eshell
                               :bind ("C-c s" . eshell)
