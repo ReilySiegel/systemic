@@ -176,7 +176,7 @@
     (list emacs-notmuch-configuration))))
 
 (define (add-afew-config-file config)
-  `(("config/afew/config"
+  `(("afew/config"
      ,(mixed-text-file
        "config"
        "[SpamFilter]
@@ -216,4 +216,5 @@ tags = +agenda;-new
      (service-extension home-profile-service-type (lambda _ (list afew)))
      (service-extension home-mcron-service-type
                         (lambda _ (list #~(job "*/5 * * * *" "notmuch new"))))
-     (service-extension home-files-service-type add-afew-config-file)))))
+     (service-extension home-xdg-configuration-files-service-type
+                        add-afew-config-file)))))

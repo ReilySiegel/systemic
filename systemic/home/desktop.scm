@@ -94,8 +94,8 @@ wintypes:
    (extensions
     (list
      (service-extension
-      home-files-service-type
-      (const `(("config/picom/picom.conf"
+      home-xdg-configuration-files-service-type
+      (const `(("picom/picom.conf"
                 ,(mixed-text-file "picom.conf" picom-config)))))
      (service-extension
       home-profile-service-type
