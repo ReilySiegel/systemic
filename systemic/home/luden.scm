@@ -76,8 +76,11 @@
                             (lambda ()
                               (setq file-name-handler-alist
                                     my/file-name-handler-alist)))))))
-     (simple-service 'some-useful-env-vars-service
-		     home-environment-variables-service-type
-		     `(("PATH" . "$HOME/.local/bin:$PATH")
-                       ("npm_config_prefix" . "$HOME/.local")
-                       ("NODE_PATH" . "$HOME/.local/lib/node_modules:$NODE_PATH")))))))
+     (simple-service
+      'some-useful-env-vars-service
+      home-environment-variables-service-type
+      `(("PATH" . "$HOME/.local/bin:$PATH")
+        ("npm_config_prefix" . "$HOME/.local")
+        ("NODE_PATH" . "$HOME/.local/lib/node_modules:$NODE_PATH")
+        ;; HACK: https://issues.guix.gnu.org/52672
+        ("QTWEBENGINE_CHROMIUM_FLAGS" . "--disable-seccomp-filter-sandbox")))))))
