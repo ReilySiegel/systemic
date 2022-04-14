@@ -4,6 +4,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages aidc)
   #:use-module (gnu packages cups)
+  #:use-module (gnu packages emacs)
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
   #:use-module (gnu services base)
@@ -20,7 +21,12 @@
   #:use-module (gnu system nss)
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
-  #:use-module (nongnu packages linux))
+  #:use-module (guix packages)
+  #:use-module (nongnu packages linux)
+  #:use-module (systemic packages emacs))
+
+(define with-emacs-next
+  (package-input-rewriting `((,emacs . ,emacs-next-no-pgtk))))
 
 (define-public base-operating-system
   (operating-system
@@ -42,12 +48,12 @@
                  %base-user-accounts))
    (packages
     (append
-     (list (specification->package "emacs")
-           (specification->package "emacs-exwm")
-           (specification->package "nss-certs")
-           (specification->package "pulseaudio")
-           (specification->package "mesa")
-           (specification->package "alsa-utils"))
+     (list
+      (with-emacs-next (specification->package "emacs-exwm"))
+      (specification->package "nss-certs")
+      (specification->package "pulseaudio")
+      (specification->package "mesa")
+      (specification->package "alsa-utils"))
      %base-packages))
    (services
     (append

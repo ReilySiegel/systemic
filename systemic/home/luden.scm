@@ -20,7 +20,8 @@
   #:use-module (systemic home desktop)
   #:use-module (systemic home emacs)
   #:use-module (systemic home git)
-  #:use-module (systemic home mail))
+  #:use-module (systemic home mail)
+  #:use-module (systemic packages emacs))
 
 (define-public reily-home-environment
   (home-environment
@@ -58,6 +59,7 @@
               (home-bash-configuration))
      (service home-emacs-service-type
               (home-emacs-configuration
+               (package emacs-next-no-pgtk)
                (rebuild-elisp-packages? #f)
                (elisp-packages emacs-packages)
                (init-el
