@@ -53,8 +53,8 @@ Passes NAME and ARGS to use-package."
 (setq make-backup-files nil)
 
 ;; Don't make autosave files.
-(setq auto-save-default nil)
-
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 ;; Don't make lockfiles.
 (setq create-lockfiles nil)
 ;;; Editing
