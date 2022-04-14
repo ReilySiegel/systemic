@@ -120,7 +120,11 @@
              (rebuild-elisp-packages? #f)
              (elisp-packages packages)
              (init-el
-              (list (slurp-file-gexp (local-file "../../init.el"))))
+              (list
+               ;; #' exports a scheme (syntax ...) form. Treat this as a
+               ;; (function ...) form.
+               '(defalias 'syntax 'function)
+               (slurp-file-gexp (local-file "../../init.el"))))
              (early-init-el
               '((set 'gc-cons-threshold most-positive-fixnum)
                 (run-at-time "20 sec" nil
