@@ -10,29 +10,30 @@
   #:use-module (systemic packages emacs-xyz)
   #:export (systemic-git-service-type))
 
-(define emacs-git-configuration
-  (elisp-configuration-package
-   "git"
-   `((setq user-full-name "Reily Siegel")
-     (setq user-mail-address "mail@reilysiegel.com")
-
-     (global-set-key (kbd "C-x g") 'magit-status)
-     (global-set-key (kbd "C-x M-g") 'magit-dispatch)
-
-     (with-eval-after-load
-      'magit
-      (setq magit-display-buffer-function
-            (function magit-display-buffer-same-window-except-diff-v1))
-      (magit-todos-mode 1)
-
-      (require 'magit-extras)))
-   #:elisp-packages (list emacs-magit emacs-magit-todos emacs-magit-email)
-   #:autoloads? #t))
-
 (define (emacs-extension config)
-  (home-emacs-extension
-   (elisp-packages
-    (list emacs-git-configuration))))
+  (emacs-configuration-extension
+   ("git"
+    (setopt user-full-name "Reily Siegel")
+    (setopt user-mail-address "mail@reilysiegel.com"))
+   (emacs-magit
+    (keymap-global-set "C-x g" #'magit-status)
+    (keymap-global-set "C-x M-g" #'magit-dispatch)
+
+    (require 'project)
+    ;; Remove VC-DIR from project keymap
+    (keymap-unset project-prefix-map "v")
+    (assq-delete-all 'project-vc-dir project-switch-commands)
+    ;; Add magit in its place.
+    (keymap-set project-prefix-map "m" #'magit-project-status)
+    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
+
+
+    (setopt magit-display-buffer-function
+            (function magit-display-buffer-same-window-except-diff-v1)))
+   (emacs-magit-todos
+    (with-eval-after-load 'magit
+      (magit-todos-mode 1)))
+   (emacs-magit-email)))
 
 (define (git-extension config)
   (home-git-extension
