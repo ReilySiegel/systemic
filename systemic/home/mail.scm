@@ -121,7 +121,10 @@
               smtpmail-stream-type (cadddr smtp))
         (smtpmail-send-it)))
 
-    (setopt message-send-mail-function 'reily/select-smtp-send-it
+    (require 'notmuch-mua)
+
+    (setopt mail-user-agent 'notmuch-user-agent
+            message-send-mail-function 'reily/select-smtp-send-it
             starttls-use-gnutls t
             message-cite-reply-position 'below
             message-kill-buffer-on-exit t
