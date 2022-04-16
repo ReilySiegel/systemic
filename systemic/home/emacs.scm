@@ -8,39 +8,12 @@
   #:use-module (guix transformations)
   #:use-module (rrr packages emacs-xyz)
   #:use-module (systemic home emacs-utils)
-  #:use-module (systemic home emacs completion)
-  #:use-module (systemic home emacs org)
-  #:use-module (systemic home emacs pass)
+  #:use-module ((systemic home emacs completion) #:prefix completion:)
+  #:use-module ((systemic home emacs org) #:prefix org:)
+  #:use-module ((systemic home emacs pass) #:prefix pass:)
   #:use-module (systemic packages emacs)
   #:use-module (systemic packages emacs-xyz)
   #:export (services))
-
-(define default-configuration
-  (elisp-configuration-package
-   "defaults"
-   `(;; Use reasonable defaults
-     (setq inhibit-startup-screen t)
-     (when (display-graphic-p)
-       (menu-bar-mode -1)
-       (tool-bar-mode -1)
-       (scroll-bar-mode -1)
-       (line-number-mode -1)
-       (winner-mode 1)
-       (show-paren-mode 1))
-
-     (setq-default fill-column 80
-                   undo-limit (* 10 1024 1024)
-                   browse-url-browser-function (function browse-url-chromium))
-
-     ;; Bump the required security level for TLS to an acceptably modern value.
-     (require 'gnutls)
-     (setq gnutls-verify-error t
-           gnutls-min-prime-bits 3072)
-
-     ;; Replace `yes-or-no-p' with `y-or-n-p`, as I cannot be bothered to
-     ;; type 2 or 3 characters.
-     (defalias 'yes-or-no-p 'y-or-n-p))
-   #:autoloads? #t))
 
 (define theme-service
   (simple-service
@@ -103,40 +76,61 @@
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix
-   emacs-clj-refactor emacs-origami-el
-   emacs-project
-   default-configuration
-   org-configuration
-   org-agenda-configuration
-   org-roam-configuration
-   candidate-configuration
-   pass-configuration))
+   emacs-clj-refactor emacs-origami-el))
+
+(define emacs
+  (service home-emacs-service-type
+           (home-emacs-configuration
+            (package emacs-next-no-pgtk)
+            (rebuild-elisp-packages? #f)
+            (elisp-packages packages)
+            (init-el
+             `(;; #' exports a scheme (syntax ...) form. Treat this as a
+               ;; (function ...) form.
+               (defalias 'syntax 'function)
+               
+               (setq inhibit-startup-screen t)
+               (when (display-graphic-p)
+                 (menu-bar-mode -1)
+                 (tool-bar-mode -1)
+                 (scroll-bar-mode -1)
+                 (line-number-mode -1)
+                 (winner-mode 1)
+                 (show-paren-mode 1))
+
+               (setq-default fill-column 80
+                             undo-limit (* 10 1024 1024)
+                             browse-url-browser-function #'browse-url-chromium)
+
+               ;; Bump the required security level for TLS to an acceptably
+               ;; modern value.
+               (require 'gnutls)
+               (setq gnutls-verify-error t
+                     gnutls-min-prime-bits 3072)
+
+               ;; Replace `yes-or-no-p' with `y-or-n-p`, as I cannot be
+               ;; bothered to type 2 or 3 characters.
+               (defalias 'yes-or-no-p 'y-or-n-p)
+               ,(slurp-file-gexp (local-file "../../init.el"))))
+            (early-init-el
+             '((set 'gc-cons-threshold most-positive-fixnum)
+               (run-at-time "20 sec" nil
+                            (lambda ()
+                              (set 'gc-cons-threshold 800000)))
+               
+               (setq package-enable-at-startup nil)
+               
+               (defvar my/file-name-handler-alist file-name-handler-alist)
+               (setq file-name-handler-alist nil)
+               (add-hook 'emacs-startup-hook
+                         (lambda ()
+                           (setq file-name-handler-alist
+                                 my/file-name-handler-alist))))))))
 
 (define services
   (list
-   (service home-emacs-service-type
-            (home-emacs-configuration
-             (package emacs-next-no-pgtk)
-             (rebuild-elisp-packages? #f)
-             (elisp-packages packages)
-             (init-el
-              (list
-               ;; #' exports a scheme (syntax ...) form. Treat this as a
-               ;; (function ...) form.
-               '(defalias 'syntax 'function)
-               (slurp-file-gexp (local-file "../../init.el"))))
-             (early-init-el
-              '((set 'gc-cons-threshold most-positive-fixnum)
-                (run-at-time "20 sec" nil
-                             (lambda ()
-                               (set 'gc-cons-threshold 800000)))
-                
-                (setq package-enable-at-startup nil)
-                
-                (defvar my/file-name-handler-alist file-name-handler-alist)
-                (setq file-name-handler-alist nil)
-                (add-hook 'emacs-startup-hook
-                          (lambda ()
-                            (setq file-name-handler-alist
-                                  my/file-name-handler-alist)))))))
-   theme-service))
+   emacs
+   theme-service
+   org:service
+   completion:service
+   pass:service))

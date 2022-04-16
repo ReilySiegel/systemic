@@ -103,55 +103,54 @@
        ((ignore ".mbsyncstate,.uivalidity")
         (tags "new")))))))
 
-(define emacs-notmuch-configuration
-  (elisp-configuration-package
-   "notmuch"
-   `((global-set-key (kbd "C-c m") 'notmuch)
-     
-     (defun reily/select-smtp-send-it ()
-       (let* ((from (message-fetch-field "From"))
-              (smtp (cond
-                     ((string-match "mail@reilysiegel.com" from)
-                      '("smtp.mailbox.org" "mail@reilysiegel.com" 465 ssl))
-                     ((string-match "rsiegel@wpi.edu" from)
-                      '("smtp.office365.com" "rsiegel@wpi.edu" 587 starttls)))))
-         (setq smtpmail-smtp-server (car smtp)
-               smtpmail-smtp-user (cadr smtp)
-               smtpmail-smtp-service (caddr smtp)
-               smtpmail-stream-type (cadddr smtp))
-         (smtpmail-send-it)))
+(define (emacs-extension config)
+  (emacs-configuration-extension
+   (emacs-notmuch
+    (keymap-global-set "C-c m" 'notmuch)
+    
+    (defun reily/select-smtp-send-it ()
+      (let* ((from (message-fetch-field "From"))
+             (smtp (cond
+                    ((string-match "mail@reilysiegel.com" from)
+                     '("smtp.mailbox.org" "mail@reilysiegel.com" 465 ssl))
+                    ((string-match "rsiegel@wpi.edu" from)
+                     '("smtp.office365.com" "rsiegel@wpi.edu" 587 starttls)))))
+        (setq smtpmail-smtp-server (car smtp)
+              smtpmail-smtp-user (cadr smtp)
+              smtpmail-smtp-service (caddr smtp)
+              smtpmail-stream-type (cadddr smtp))
+        (smtpmail-send-it)))
 
-     (setq
-      message-send-mail-function 'reily/select-smtp-send-it
-      starttls-use-gnutls t
-      message-cite-reply-position 'below
-      message-kill-buffer-on-exit t
-      notmuch-search-oldest-first nil
-      notmuch-show-logo nil
-      notmuch-hello-sections '(notmuch-hello-insert-header
-                               notmuch-hello-insert-saved-searches)
-      notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
-      notmuch-saved-searches
-      '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
-        (:name "[e]xcuses" :query "tag:unread AND tag:excuse" :key "e")
-        (:name "a[g]enda items" :query "tag:unread AND tag:agenda" :key "g")
-        (:name "[l]ists" :query "tag:unread AND tag:lists" :key "l")
-        ;;Show unread automated messages
-        (:name "auto[m]ated" :query "tag:unread AND tag:automated" :key "m")
-        ;;Show unread promotional messages
-        (:name "[p]romotional" :query "tag:unread AND tag:promotional" :key "p")
-        (:name "[f]lagged" :query "tag:flagged" :key "f")
-        (:name "[s]ent" :query "tag:sent" :key "s")
-        (:name "[d]rafts" :query "tag:draft" :key "d")
-        (:name "[a]ll mail" :query "*" :key "a")))
-     ;; Notmuch abuses internal details of the CRM API, which breaks 3rd party
-     ;; implementations. This should eventually be fixed upstream.
-     (advice-add (function notmuch-read-tag-changes)
-                 :filter-return (lambda (x) (mapcar (function string-trim) x)))
+    (setopt message-send-mail-function 'reily/select-smtp-send-it
+            starttls-use-gnutls t
+            message-cite-reply-position 'below
+            message-kill-buffer-on-exit t
+            notmuch-search-oldest-first nil
+            notmuch-show-logo nil
+            notmuch-hello-sections '(notmuch-hello-insert-header
+                                     notmuch-hello-insert-saved-searches)
+            notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
+            notmuch-saved-searches
+            '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
+              (:name "[e]xcuses" :query "tag:unread AND tag:excuse" :key "e")
+              (:name "a[g]enda items" :query "tag:unread AND tag:agenda" :key "g")
+              (:name "[l]ists" :query "tag:unread AND tag:lists" :key "l")
+              ;;Show unread automated messages
+              (:name "auto[m]ated" :query "tag:unread AND tag:automated" :key "m")
+              ;;Show unread promotional messages
+              (:name "[p]romotional" :query "tag:unread AND tag:promotional" :key "p")
+              (:name "[f]lagged" :query "tag:flagged" :key "f")
+              (:name "[s]ent" :query "tag:sent" :key "s")
+              (:name "[d]rafts" :query "tag:draft" :key "d")
+              (:name "[a]ll mail" :query "*" :key "a")))
+    
+    ;; Notmuch abuses internal details of the CRM API, which breaks 3rd party
+    ;; implementations. This should eventually be fixed upstream.
+    (advice-add (function notmuch-read-tag-changes)
+                :filter-return (lambda (x) (mapcar (function string-trim) x)))
 
-     ;; Set message signature based on files in config.
-     (with-eval-after-load
-      'message
+    ;; Set message signature based on files in config.
+    (with-eval-after-load 'message
       (setq message-signature-directory "~/.config/signatures")
 
       (defun reily/message-signature-setup-hook ()
@@ -166,14 +165,7 @@
                                     signature))
                                 signatures))))
 
-      (add-hook 'message-signature-setup-hook 'reily/message-signature-setup-hook)))
-   #:elisp-packages (list emacs-notmuch)
-   #:autoloads? #t))
-
-(define (emacs-extension config)
-  (home-emacs-extension
-   (elisp-packages
-    (list emacs-notmuch-configuration))))
+      (add-hook 'message-signature-setup-hook 'reily/message-signature-setup-hook)))))
 
 (define (add-afew-config-file config)
   `(("afew/config"
