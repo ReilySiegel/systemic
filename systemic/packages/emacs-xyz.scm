@@ -148,22 +148,24 @@ org-roam and yasnippet.")
    (license license:gpl3+)))
 
 (define-public emacs-magit-email
-  (package
-   (name "emacs-magit-email")
-   (version "0.0.1")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://github.com/ReilySiegel/magit-email")
-                  (commit "198ac92f1e3d3de820869c05bde574189193a41f")))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32
-              "0zj4my3qs4dvz64z663dvmmmd9aiw6zm5h9jsvyw58cfiyl909kd"))))
-   (build-system emacs-build-system)
-   (propagated-inputs (list emacs-magit notmuch))
-   (home-page "https://github.com/ReilySiegel/magit-email")
-   (synopsis "Integrates magit and email with Emacs")
-   (description "magit-email provides facilities for sending git patches as
+  (let ((commit "5ea5fc1bba5366c463ef41d41cd1f551f4008de4")
+        (revision "1"))
+    (package
+      (name "emacs-magit-email")
+      (version (git-version "0.0.1" revision commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/ReilySiegel/magit-email")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0czvd5riibdxfzjiviwpgwq43clg32nbzkvz7ddha56qs5v5qqs0"))))
+      (build-system emacs-build-system)
+      (propagated-inputs (list emacs-magit notmuch))
+      (home-page "https://github.com/ReilySiegel/magit-email")
+      (synopsis "Integrates magit and email with Emacs")
+      (description "magit-email provides facilities for sending git patches as
 emails using a valid emacs mail user agent.")
-   (license license:mpl2.0)))
+      (license license:mpl2.0))))
