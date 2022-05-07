@@ -111,6 +111,13 @@
                ;; Replace `yes-or-no-p' with `y-or-n-p`, as I cannot be
                ;; bothered to type 2 or 3 characters.
                (defalias 'yes-or-no-p 'y-or-n-p)
+
+               ;; FIXME: Waiting on upstream emacs-next-pgtk fix
+               (require 'tramp)
+               (setopt tramp-remote-path '(tramp-default-remote-path
+                                           "~/.guix-profile/bin" "~/.guix-profile/sbin"
+                                           "/run/current-system/profile/bin"
+                                           "/run/current-system/profile/sbin"))
                ,(slurp-file-gexp (local-file "../../init.el"))))
             (early-init-el
              '((set 'gc-cons-threshold most-positive-fixnum)
