@@ -60,27 +60,27 @@ application installed on your machine and launch it.")
 
 (define-public emacs-inflections
   (package
-   (name "emacs-inflections")
-   (version "2.5")
-   (home-page "https://github.com/eschulte/jump.el")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url home-page)
-                  (commit version)))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32
-              "1ig1wdjg914p9ng1nir2fid4mb3xz2dbpmkdnfy1klq2zp0xw2s3"))
-            (snippet
-             '(begin (delete-file "jump.el")
-                     #t))))
-   (build-system emacs-build-system)
-   (synopsis "Emacs utility to convert english words between singular and
+    (name "emacs-inflections")
+    (version "2.5")
+    (home-page "https://github.com/eschulte/jump.el")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url home-page)
+                    (commit "55caa66a7cc6e0b1a76143fd40eff38416928941")))
+              (file-name (git-file-name name "55caa66a7cc6e0b1a76143fd40eff38416928941"))
+              (sha256
+               (base32
+                "03fh7i6blnbc0zbmp83fk095hr3q4fdvrvfxad74zghcbc2nk7b7"))
+              (snippet
+               '(begin (delete-file "jump.el")
+                       #t))))
+    (build-system emacs-build-system)
+    (synopsis "Emacs utility to convert english words between singular and
 plural")
-   (description "Emacs utility to convert english words between singular and
+    (description "Emacs utility to convert english words between singular and
 plural")
-   (license license:gpl3+)))
+    (license license:gpl3+)))
 
 (define-public emacs-clj-refactor
   (package
