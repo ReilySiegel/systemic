@@ -58,19 +58,14 @@
      (display-time-mode)
      (display-battery-mode)))))
 
-(define emacs-lsp-java-transform
-  (options->transformation
-   '((with-branch . "emacs-lsp-java=master"))))
-
 (define packages
   (list
    emacs-use-package emacs-esup
    emacs-avy emacs-no-littering
    emacs-company emacs-outshine emacs-aggressive-indent
-   emacs-flycheck emacs-lsp-mode emacs-lsp-ui emacs-dap-mode
+   emacs-flycheck
    emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
-   (emacs-lsp-java-transform emacs-lsp-java)
    emacs-ess
    emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
    emacs-yaml-mode
