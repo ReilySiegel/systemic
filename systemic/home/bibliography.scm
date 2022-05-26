@@ -42,6 +42,7 @@
 (define bibliography-service-type
   (service-type
    (name 'bibliography)
+   (description "A basic bibliography service.")
    (extensions
     (list
      (service-extension home-emacs-service-type bibliography-emacs)

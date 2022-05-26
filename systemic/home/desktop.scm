@@ -91,6 +91,7 @@ wintypes:
 (define picom-service-type
   (service-type
    (name 'picom)
+   (description "A basic picom service.")
    (extensions
     (list
      (service-extension
@@ -225,6 +226,7 @@ wintypes:
 (define exwm-service-type
   (service-type
    (name 'exwm)
+   (description "A basic exwm service.")
    (default-value #f)
    (extensions
     (list

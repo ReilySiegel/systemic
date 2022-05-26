@@ -202,6 +202,7 @@ tags = +agenda;-new
 (define systemic-mail-service-type
   (service-type
    (name 'systemic-mail)
+   (description "A basic mail service.")
    (default-value #f)
    (extensions
     (list

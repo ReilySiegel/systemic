@@ -55,6 +55,7 @@
 (define systemic-git-service-type
   (service-type
    (name 'systemic-git)
+   (description "A basic git service.")
    (default-value #f)
    (extensions
     (list
