@@ -46,6 +46,4 @@
      (with-eval-after-load 'consult
        (require 'embark-consult)))
     (emacs-consult
-     (advice-add (function completing-read-multiple) :override
-                 (function consult-completing-read-multiple))
      (keymap-global-set "C-s" 'consult-line)))))
