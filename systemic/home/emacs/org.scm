@@ -45,7 +45,11 @@
        
        ;; Save buffer after clocking
        (add-hook 'org-clock-in-hook 'save-buffer)
-       (add-hook 'org-clock-out-hook 'save-buffer)))
+       (add-hook 'org-clock-out-hook 'save-buffer)
+
+       ;; This keybind is not useful with many agenda files, and is used for
+       ;; avy-goto-char.
+       (keymap-unset org-mode-map "C-'" t)))
     (emacs-plantuml-mode
      (with-eval-after-load 'org
        (require 'plantuml-mode)
@@ -87,8 +91,8 @@
      (keymap-global-set "C-c n g" 'org-roam-graph)
      (keymap-global-set "C-c n i" 'org-roam-node-insert)
      (keymap-global-set "C-c n c" 'org-roam-capture)
-     (keymap-global-set "C-c n d" 'org-roam-dailies-capture-today)
      (keymap-global-set "C-c n t" 'org-roam-tag-add)
-     
+     (keymap-global-set "C-c n d" 'org-roam-dailies-map)
+
      (with-eval-after-load 'org-roam
        (org-roam-db-autosync-mode))))))
