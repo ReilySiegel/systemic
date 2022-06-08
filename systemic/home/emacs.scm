@@ -1,6 +1,7 @@
 (define-module (systemic home emacs)
   #:use-module (gnu home-services-utils)
   #:use-module (gnu home-services emacs)
+  #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages statistics)
   #:use-module (gnu services)
@@ -11,7 +12,6 @@
   #:use-module ((systemic home emacs completion) #:prefix completion:)
   #:use-module ((systemic home emacs org) #:prefix org:)
   #:use-module ((systemic home emacs pass) #:prefix pass:)
-  #:use-module (systemic packages emacs)
   #:use-module (systemic packages emacs-xyz)
   #:export (services))
 
@@ -76,7 +76,7 @@
 (define emacs
   (service home-emacs-service-type
            (home-emacs-configuration
-            (package emacs-next-no-pgtk)
+            (package emacs-next)
             (rebuild-elisp-packages? #f)
             (elisp-packages packages)
             (init-el
@@ -107,7 +107,7 @@
                ;; bothered to type 2 or 3 characters.
                (defalias 'yes-or-no-p 'y-or-n-p)
 
-               ;; FIXME: Waiting on upstream emacs-next-pgtk fix
+               ;; FIXME: Waiting on upstream emacs-next fix
                (require 'tramp)
                (setopt tramp-remote-path '(tramp-default-remote-path
                                            "~/.guix-profile/bin" "~/.guix-profile/sbin"
