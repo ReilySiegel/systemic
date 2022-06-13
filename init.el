@@ -39,15 +39,6 @@ Passes NAME and ARGS to use-package."
   :config
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (load custom-file))
-;;; Avy
-(use-package avy
-  :preface
-  (defun my-avy-goto-char (char)
-    (interactive (list (read-char "char: " t)))
-    (avy-goto-char char)
-    ;; Position cursor AFTER character
-    (forward-char))
-  :bind ("C-'" . my-avy-goto-char))
 ;;; Saving files
 ;; Don't make backup files.
 (setq make-backup-files nil)

@@ -10,6 +10,7 @@
   #:use-module (rrr packages emacs-xyz)
   #:use-module (systemic home emacs-utils)
   #:use-module ((systemic home emacs completion) #:prefix completion:)
+  #:use-module ((systemic home emacs editing) #:prefix editing:)
   #:use-module ((systemic home emacs org) #:prefix org:)
   #:use-module ((systemic home emacs pass) #:prefix pass:)
   #:use-module (systemic packages emacs-xyz)
@@ -133,6 +134,7 @@
   (list
    emacs
    theme-service
+   editing:service
    org:service
    completion:service
    pass:service))
