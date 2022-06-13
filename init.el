@@ -139,41 +139,6 @@ Passes NAME and ARGS to use-package."
   :config
   (yas-global-mode)) 
 ;;; Language Support
-;;;; Clojure
-(use-package clojure-mode
-  :custom
-  (clojure-align-forms-automatically t)
-  (clojure-toplevel-inside-comment-form t)
-  :config
-  ;; Define indentation for guardrails macros
-  (put-clojure-indent '>def :defn)
-  (put-clojure-indent '>defn :defn)
-  (put-clojure-indent '>defn- :defn)
-  (put-clojure-indent '>fdef :defn)
-
-  ;; Define docstring positions for guardrails macros
-  (put '>def 'clojure-doc-string-elt 2)
-  (put '>defn 'clojure-doc-string-elt 2)
-  (put '>defn- 'clojure-doc-string-elt 2))
-
-(use-package cider
-  :hook (cider-mode . eldoc-mode)
-  :custom
-  (cider-font-lock-dynamically '(macro core function var))
-  (cider-clojure-cli-global-options "-A:dev")
-  :config
-  (setq cider-scratch-initial-message
-        "(ns user\n  (:require [reilysiegel.scratch :refer :all]))\n\n"
-        cider-repl-pop-to-buffer-on-connect nil)
-  ;; Put *cider-scratch* buffers in a Clojure project, so that I get middleware.
-  (advice-add 'cider-scratch :after (lambda () (cd "~/.clojure/scratch/"))))
-
-(use-package clj-refactor
-  :init
-  (setq cljr-warn-on-eval t)
-  :config
-  (cljr-add-keybindings-with-prefix "C-c C-r")
-  (add-hook 'clojure-mode-hook #'clj-refactor-mode))
 ;;;; Gnuplot
 (use-package gnuplot)
 ;;;; Java
