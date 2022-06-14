@@ -11,7 +11,8 @@
   #:use-module ((systemic home base) #:prefix base:)
   #:use-module (systemic home bibliography)
   #:use-module ((systemic home clojure) #:prefix clojure:)
-  #:use-module (systemic home mail))
+  #:use-module (systemic home mail)
+  #:use-module ((systemic home javascript) #:prefix javascript:))
 
 (define-public environment
   (home-environment
@@ -46,4 +47,5 @@
                  '((match .
                      "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\""))))))
      clojure:services
+     javascript:services
      (home-environment-user-services base:environment)))))
