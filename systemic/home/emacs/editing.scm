@@ -14,5 +14,7 @@
      (add-hook 'prog-mode-hook #'flymake-mode))
     (emacs-flymake-proselint
      (add-hook 'text-mode-hook #'flymake-proselint-setup))
+    ('eldoc
+     (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
     (emacs-avy
      (keymap-global-set "C-'" 'avy-goto-char)))))
