@@ -104,13 +104,6 @@ Passes NAME and ARGS to use-package."
   :init
   (electric-indent-mode -1))
 
-;;;; Linting
-(use-package flycheck
-  :defer 10
-  :config
-  ;; Enable proselint for emails.
-  (flycheck-add-mode 'proselint 'mu4e-compose-mode)
-  (global-flycheck-mode))
 ;;;; LSP
 (use-package lsp-mode
   :commands lsp
