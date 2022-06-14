@@ -30,8 +30,8 @@
          `((core
             ((checkStat . "minimal")
              (trustctime . #f)
-             (filemode . #f)
-             (autocrlf . #t))))))))
+             (filemode . #f))))))))
+     csharp:services
      javascript:services
      (modify-services (home-environment-user-services base:environment)
        (systemic-git-service-type
