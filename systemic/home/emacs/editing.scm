@@ -21,5 +21,11 @@
      (add-hook 'text-mode-hook #'flymake-languagetool-load))
     ('eldoc
      (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
+    (emacs-eglot
+     (with-eval-after-load 'eglot
+       (add-hook 'eglot--managed-mode-hook
+                 (lambda nil
+                   (setq-local eldoc-documentation-strategy
+                               'eldoc-documentation-compose)))))
     (emacs-avy
      (keymap-global-set "C-'" 'avy-goto-char)))))
