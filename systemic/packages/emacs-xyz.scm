@@ -169,3 +169,25 @@ org-roam and yasnippet.")
       (description "magit-email provides facilities for sending git patches as
 emails using a valid emacs mail user agent.")
       (license license:mpl2.0))))
+
+(define-public emacs-flymake-languagetool
+  (let ((commit "5f9eef8fe3f342f17593e0caeaba906ba7cab24a")
+        (revision "1"))
+    (package
+      (name "emacs-flymake-languagetool")
+      (version (git-version "0.2.0" revision commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/emacs-languagetool/flymake-languagetool")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1mz18inlv78lg40jgq68qq3v62b6mgmz89lcgczg93lyfh81pjp3"))))
+      (build-system emacs-build-system)
+      (propagated-inputs (list emacs-s))
+      (home-page "https://github.com/emacs-languagetool/flymake-languagetool")
+      (synopsis "Flymake support for LanguageTool")
+      (description "Flymake support for LanguageTool.")
+      (license license:gpl3+))))
