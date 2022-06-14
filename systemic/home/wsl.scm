@@ -5,6 +5,7 @@
   #:use-module (gnu home services xdg)
   #:use-module (gnu services)
   #:use-module ((systemic home base) #:prefix base:)
+  #:use-module ((systemic home csharp) #:prefix csharp:)
   #:use-module (systemic home git)
   #:use-module ((systemic home javascript) #:prefix javascript:))
 
