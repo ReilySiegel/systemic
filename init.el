@@ -139,10 +139,6 @@ Passes NAME and ARGS to use-package."
   :hook (java-mode . lsp)
   :config
   (require 'dap-java))
-;;;; Prose
-(use-package flyspell
-  :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)))
 ;;;; Racket
 (use-package racket-mode)
 ;;;; Scheme

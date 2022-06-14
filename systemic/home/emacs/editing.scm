@@ -15,6 +15,7 @@
      (add-hook 'prog-mode-hook #'flymake-mode))
     (emacs-flymake-languagetool
      (setopt
+      flymake-languagetool-check-spelling t
       flymake-languagetool-server-jar
       (substitute-in-file-name "$XDG_DATA_HOME/languagetool/languagetool-server.jar"))
      (add-hook 'text-mode-hook #'flymake-languagetool-load))
