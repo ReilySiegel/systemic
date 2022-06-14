@@ -13,8 +13,8 @@
 (define (emacs-extension config)
   (emacs-configuration-extension
    ("git"
-    (setopt user-full-name "Reily Siegel")
-    (setopt user-mail-address "mail@reilysiegel.com"))
+    (setopt user-full-name ,(car config))
+    (setopt user-mail-address ,(cadr config)))
    (emacs-magit
     (keymap-global-set "C-x g" #'magit-status)
     (keymap-global-set "C-x M-g" #'magit-dispatch)
@@ -39,14 +39,14 @@
   (home-git-extension
    (config
     `((user
-       ((name . "Reily Siegel")
-        (email . "mail@reilysiegel.com")))
+       ((name . ,(car config))
+        (email . ,(cadr config))))
       (gpg
        ((program . ,(file-append gnupg "/bin/gpg"))))
       (sendmail
        ((annotate . #t)))
       (commit
-       ((gpgsign . #t)))
+       ((gpgsign . ,(caddr config))))
       (diff
        ((algorithm . "histogram")))
       (format
@@ -56,8 +56,11 @@
   (service-type
    (name 'systemic-git)
    (description "A basic git service.")
-   (default-value #f)
+   ;; TODO: Better config.
+   (default-value '("Reily Siegel" "mail@reilysiegel.com" #t))
    (extensions
     (list
      (service-extension home-emacs-service-type emacs-extension)
      (service-extension home-git-service-type git-extension)))))
+
+
