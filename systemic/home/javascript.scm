@@ -11,7 +11,7 @@
 
 (define services
   (list
-   (simple-service 'js-packages home-profile-service-type (list node))
+   (simple-service 'js-packages home-profile-service-type (list node-lts))
    (simple-service 'javascript-emacs home-emacs-service-type
                    (emacs-configuration-extension
                     (emacs-typescript-mode)
