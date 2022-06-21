@@ -15,6 +15,7 @@
    (simple-service 'javascript-emacs home-emacs-service-type
                    (emacs-configuration-extension
                     (emacs-typescript-mode)
+                    (emacs-web-mode)
                     (emacs-eglot
                      (add-hook 'js-mode-hook #'eglot-ensure)
                      (add-hook 'typescript-mode-hook #'eglot-ensure)
