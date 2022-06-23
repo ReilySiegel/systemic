@@ -12,6 +12,9 @@
 (define services
   (list
    (simple-service 'js-packages home-profile-service-type (list node-lts))
+   (simple-service 'js-env-vars home-environment-variables-service-type
+                   `(("npm_config_prefix" . "$HOME/.local")
+                     ("NODE_PATH" . "$HOME/.local/lib/node_modules:$NODE_PATH")))
    (simple-service 'javascript-emacs home-emacs-service-type
                    (emacs-configuration-extension
                     (emacs-typescript-mode)
