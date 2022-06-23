@@ -15,14 +15,17 @@
    (simple-service 'js-env-vars home-environment-variables-service-type
                    `(("npm_config_prefix" . "$HOME/.local")
                      ("NODE_PATH" . "$HOME/.local/lib/node_modules:$NODE_PATH")))
-   (simple-service 'javascript-emacs home-emacs-service-type
-                   (emacs-configuration-extension
-                    (emacs-typescript-mode)
-                    (emacs-web-mode)
-                    (emacs-eglot
-                     (add-hook 'js-mode-hook #'eglot-ensure)
-                     (add-hook 'typescript-mode-hook #'eglot-ensure)
-                     (with-eval-after-load 'eglot
-                       (add-to-list 'eglot-server-programs
-                                    `((js-mode typescript-mode) .
-                                      ("npx" "typescript-language-server" "--stdio")))))))))
+   (simple-service
+    'javascript-emacs home-emacs-service-type
+    (emacs-configuration-extension
+     (emacs-typescript-mode)
+     (emacs-web-mode)
+     (emacs-eglot
+      (add-hook 'js-mode-hook #'eglot-ensure)
+      (add-hook 'typescript-mode-hook #'eglot-ensure)
+      (with-eval-after-load 'eglot
+        (add-to-list 'eglot-server-programs
+                     (cons '(js-mode typescript-mode)
+                           (eglot-alternatives
+                            '(("typescript-language-server"  "--stdio")
+                              ("npx" "typescript-language-server" "--stdio")))))))))))
