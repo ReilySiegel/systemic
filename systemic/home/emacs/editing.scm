@@ -22,6 +22,7 @@
     ('eldoc
      (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
     (emacs-eglot
+     (setopt eglot-events-buffer-size 0)
      (with-eval-after-load 'eglot
        (add-hook 'eglot--managed-mode-hook
                  (lambda nil
