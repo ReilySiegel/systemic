@@ -103,24 +103,6 @@ Passes NAME and ARGS to use-package."
          (java-mode . (lambda nil (aggressive-indent-mode -1))))
   :init
   (electric-indent-mode -1))
-
-;;;; LSP
-(use-package lsp-mode
-  :commands lsp
-  :custom
-  (lsp-ui-doc-enable nil)
-  (lsp-ui-sideline-enable nil)
-  (lsp-prefer-flymake nil))
-
-(use-package lsp-ui
-  :after lsp
-  :config
-  (lsp-ui-flycheck-enable t))
-;;;; DAP
-(use-package dap-mode
-  :after lsp-mode
-  :config
-  (dap-mode 1))
 ;;;; Paredit
 (use-package paredit
   :hook (prog-mode . enable-paredit-mode))
