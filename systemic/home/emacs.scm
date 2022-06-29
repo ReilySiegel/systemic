@@ -108,6 +108,9 @@
                ;; bothered to type 2 or 3 characters.
                (defalias 'yes-or-no-p 'y-or-n-p)
 
+               ;; Unbind overwrite-mode
+               (keymap-global-unset "<insert>")
+
                ;; FIXME: Waiting on upstream emacs-next fix
                (require 'tramp)
                (setopt tramp-remote-path '(tramp-default-remote-path
