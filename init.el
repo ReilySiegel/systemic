@@ -164,9 +164,6 @@ Passes NAME and ARGS to use-package."
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")))
-  (setq org-src-fontify-natively t
-        org-latex-listings 'minted)
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
   :custom
   (org-format-latex-options '(:foreground default
                                           :background default

@@ -33,6 +33,14 @@
          (pcase-let ((`(,r1 ,r2 ,export-dir) r))
                     (list r1 r2 (or export-dir "/tmp"))))
 
+       ;; Ensure minted works with export
+       (setopt
+        org-latex-pdf-process
+        '("latexmk -f -pdf -%latex -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
+       (setopt org-src-fontify-natively t
+               org-latex-listings 'minted)
+       (add-to-list 'org-latex-packages-alist '("outputdir=/tmp" "minted"))
+
        (org-babel-do-load-languages
         'org-babel-load-languages
         '((plantuml . t)
@@ -66,18 +74,18 @@
        (setq
         org-super-agenda-groups '((:log t)  ; Automaticaally named "Log"
                                   (:name "Schedule"
-                                         :time-grid t)
+                                   :time-grid t)
                                   (:name "Today"
-                                         :scheduled today)
+                                   :scheduled today)
                                   (:habit t)
                                   (:name "Due today"
-                                         :deadline today)
+                                   :deadline today)
                                   (:name "Overdue"
-                                         :deadline past)
+                                   :deadline past)
                                   (:name "Due soon"
-                                         :deadline future)
+                                   :deadline future)
                                   (:name "Todo"
-	                                 :todo "TODO")))
+	                           :todo "TODO")))
 
        (defun org-class-days (y1 m1 d1 y2 m2 d2 days)
          (seq-filter (lambda (day) (org-class y1 m1 d1 y2 m2 d2 day))
