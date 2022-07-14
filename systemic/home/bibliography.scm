@@ -48,7 +48,9 @@
      (service-extension home-emacs-service-type bibliography-emacs)
      (service-extension home-profile-service-type
                         (lambda _
-                          (list emacs-citar emacs-org
+                          (list emacs-org
+                                ;; FIXME: Bug causing crashes in 0.9, remove
+                                ;; after next release.
                                 ((options->transformation
                                   '((with-branch . "emacs-citeproc-el=master")))
-                                 emacs-citeproc-el))))))))
+                                 emacs-citar))))))))
