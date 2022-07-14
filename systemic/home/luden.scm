@@ -1,7 +1,7 @@
 (define-module (systemic home luden)
   #:use-module (gnu home services shepherd)
   #:use-module (gnu home)
-  #:use-module (gnu home services channels)
+  #:use-module (gnu home services guix)
   #:use-module (gnu home-services gnupg)
   #:use-module (gnu home-services mail)
   #:use-module (gnu home-services password-utils)
