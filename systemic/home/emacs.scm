@@ -1,5 +1,4 @@
 (define-module (systemic home emacs)
-  #:use-module (gnu home-services-utils)
   #:use-module (gnu home-services emacs)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
@@ -7,6 +6,7 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (guix transformations)
+  #:use-module (rde gexp)
   #:use-module (rrr packages emacs-xyz)
   #:use-module (systemic home emacs-utils)
   #:use-module ((systemic home emacs completion) #:prefix completion:)
@@ -117,7 +117,7 @@
                                            "~/.guix-profile/bin" "~/.guix-profile/sbin"
                                            "/run/current-system/profile/bin"
                                            "/run/current-system/profile/sbin"))
-               ,(slurp-file-gexp (local-file "../../init.el"))))
+               ,(slurp-file-like (local-file "../../init.el"))))
             (early-init-el
              '((set 'gc-cons-threshold most-positive-fixnum)
                (run-at-time "20 sec" nil
