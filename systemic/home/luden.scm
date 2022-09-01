@@ -45,6 +45,9 @@
                   (pinentry-flavor 'emacs)))))
       (service home-ssh-service-type
                (home-ssh-configuration
+                (default-options
+                  '((forward-x11 . #t)
+                    (forward-x11-trusted . #t)))
                 (toplevel-options
                  '((match .
                      "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
