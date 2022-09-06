@@ -23,41 +23,30 @@
    (emacs-configuration-extension
     ("font"
      (set-frame-font "Hack-11"))
-    (emacs-doom-themes
-     (load-theme 'doom-nord t)
-     ;; Fix for issue with tab-bar-mode
-     (custom-set-faces
-      `(tab-bar
-        ((t (:background ,(doom-color 'bg-alt) :foreground ,(doom-color 'fg-alt)))))))
-    (emacs-doom-modeline
-     (require 'doom-modeline)
-
-     ;; Use default battery display.
-     (remove-hook 'display-battery-mode-hook #'doom-modeline-override-battery-modeline)
-     (remove-hook 'doom-modeline-mode-hook #'doom-modeline-override-battery-modeline)
+    ("tab-bar"
+     ;; Use tab-bar as global modeline.
+     (setopt tab-bar-format '(tab-bar-format-align-right tab-bar-format-global)
+             tab-bar-border nil
+             tab-bar-mode t)
 
      (setopt display-time-24hr-format t
              display-time-day-and-date t
              display-time-interval 5
              display-time-default-load-average nil
              battery-update-interval 5
-             battery-mode-line-format "[%p%% %b%t] "
-             doom-modeline-enable-word-count nil
-             doom-modeline-buffer-file-name-style 'truncate-with-project
-             doom-modeline-enable-word-count t
-             doom-modeline-percent-position nil
-             doom-modeline-buffer-encoding nil
-             doom-modeline-major-mode-icon nil
-             doom-modeline-buffer-modification-icon nil
-             doom-modeline-buffer-state-icon nil)
+             battery-mode-line-format "[%p%% %b%t] ")
 
-     ;; Use tab-bar as global modeline.
-     (setopt tab-bar-format '(tab-bar-format-align-right tab-bar-format-global)
-             tab-bar-mode t)
-
-     (doom-modeline-mode)
      (display-time-mode)
-     (display-battery-mode)))))
+     (display-battery-mode))
+    (emacs-nano-theme
+     (require 'nano-theme)
+     (nano-mode)
+     (setopt nano-fonts-use nil)
+     (load-theme 'nano-dark t))
+    (emacs-nano-modeline
+     (setopt nano-modeline-position 'bottom
+             nano-modeline-prefix-padding t)
+     (nano-modeline-mode)))))
 
 (define packages
   (list
