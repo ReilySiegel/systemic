@@ -191,3 +191,26 @@ emails using a valid emacs mail user agent.")
       (synopsis "Flymake support for LanguageTool")
       (description "Flymake support for LanguageTool.")
       (license license:gpl3+))))
+
+(define-public emacs-nano-theme
+  ;; No tagged release upstream.  The commit below matches latest version
+  ;; bump.
+  (let ((commit "c4f296d349cf5ef2efd88d68535a4dbf577b9a87"))
+    (package
+      (name "emacs-nano-theme")
+      (version "0.3.1")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/rougier/nano-theme")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "095n3cv0c900vgl9592ydwnln11cziz165ddx14hfp35yqjvw9y8"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/rougier/nano-theme")
+      (synopsis "A consistent theme for GNU Emacs.")
+      (description "Nano theme provides a light theme based on Material colors,
+and a dark theme based on Nord colors. The theme is based on a set of six faces.")
+      (license license:gpl3+))))
