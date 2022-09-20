@@ -14,49 +14,27 @@
 
 (define-public emacs-git-email
   (package
-   (name "emacs-git-email")
-   (version "0.2.0")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://git.sr.ht/~yoctocell/git-email")
-                  (commit (string-append "v" version))))
-            (snippet
-             ;; Not yet in Guix proper
-             '(delete-file "git-email-piem.el"))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32
-              "09vmh3x1rjxxl9g9p01afil1zlpk7rf0pjmzyvcbid9wczyllkhq"))))
-   (build-system emacs-build-system)
-   (propagated-inputs (list emacs-magit notmuch))
-   (home-page "https://sr.ht/~yoctocell/git-email/")
-   (synopsis "Integrates git and email with Emacs")
-   (description "git-email provides functions for formatting and sending Git patches
-via email, without leaving Emacs.")
-   (license license:gpl3+)))
-
-(define-public emacs-app-launcher
-  (let ((commit "80a9ed37892ee6e21fe44487ed11f66a15e3f440")
-        (revision "1"))
-    (package
-     (name "emacs-app-launcher")
-     (version (git-version "0.0" revision commit))
-     (source (origin
+    (name "emacs-git-email")
+    (version "0.2.0")
+    (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://github.com/SebastienWae/app-launcher")
-                    (commit commit)))
+                    (url "https://git.sr.ht/~yoctocell/git-email")
+                    (commit (string-append "v" version))))
+              (snippet
+               ;; Not yet in Guix proper
+               '(delete-file "git-email-piem.el"))
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "1ywhfx8604ifmvcy2397bmvq2wj03jyqnm0g7lmqqi5p97rjbdgc"))))
-     (build-system emacs-build-system)
-     (home-page "https://github.com/SebastienWae/app-launcher")
-     (synopsis "Launch system applications from emacs")
-     (description "Uses Emacs standard completion feature to select an
-application installed on your machine and launch it.")
-     (license license:gpl3+))))
+                "09vmh3x1rjxxl9g9p01afil1zlpk7rf0pjmzyvcbid9wczyllkhq"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-magit notmuch))
+    (home-page "https://sr.ht/~yoctocell/git-email/")
+    (synopsis "Integrates git and email with Emacs")
+    (description "git-email provides functions for formatting and sending Git patches
+via email, without leaving Emacs.")
+    (license license:gpl3+)))
 
 (define-public emacs-inflections
   (package
