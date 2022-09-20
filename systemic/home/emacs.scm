@@ -13,6 +13,7 @@
   #:use-module ((systemic home emacs editing) #:prefix editing:)
   #:use-module ((systemic home emacs org) #:prefix org:)
   #:use-module ((systemic home emacs pass) #:prefix pass:)
+  #:use-module ((systemic home emacs shell) #:prefix shell:)
   #:use-module (systemic packages emacs-xyz)
   #:export (services))
 
@@ -129,4 +130,5 @@
    editing:service
    org:service
    completion:service
-   pass:service))
+   pass:service
+   shell:service))

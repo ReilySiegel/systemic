@@ -103,22 +103,10 @@ Passes NAME and ARGS to use-package."
 (use-feature geiser
   :custom
   (geiser-default-implementation 'guile))
-;;; Eshell
-(use-feature eshell
-                              :bind ("C-c s" . eshell)
-                              :config
-                              (require 'esh-module)
-                              (add-to-list 'eshell-modules-list 'eshell-tramp)
-                              (setq eshell-destroy-buffer-when-process-dies t
-        eshell-history-size 1024
-        remote-file-name-inhibit-cache nil
-        vc-ignore-dir-regexp
-        (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp)
-        eshell-visual-commands '("htop" "nmtui" "vim" "watch")))
 ;;; ERC
 (use-feature erc
-        :config
-        (setq erc-prompt-for-password nil
+  :config
+  (setq erc-prompt-for-password nil
         erc-default-server "irc.libera.chat"))
 ;;; Pass
 (use-feature auth-source-pass

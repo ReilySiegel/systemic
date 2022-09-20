@@ -52,4 +52,6 @@
              tab-always-indent 'complete)
      (global-corfu-mode))
     (emacs-cape
-     (add-to-list 'completion-at-point-functions #'cape-file)))))
+     (add-to-list 'completion-at-point-functions #'cape-file))
+    (emacs-pcmpl-args
+     (require 'pcmpl-args)))))
