@@ -1,4 +1,4 @@
-;;; init.el --- Init File -*- lexical-binding: t; byte-compile-warnings: nil; eval: (outline-hide-body)-*-
+;;; init.el --- Init File -*- lexical-binding: t; byte-compile-warnings: nil;-*-
 
 ;;; Commentary:
 ;; Nothing to see here...
@@ -67,30 +67,6 @@ Passes NAME and ARGS to use-package."
 ;;;; Inter-program Killing
 (setq save-interprogram-paste-before-kill t)
 ;;; IDE Features
-;;;; Autocomplete
-(defvar company-mode/enable-yas t
-  "Enable yasnippet for all backends.")
-
-(defun company-mode/backend-with-yas (backend)
-  "Enables yasnippets for all company BACKENDs."
-  (if (or (not company-mode/enable-yas)
-          (and (listp backend)
-               (member 'company-yasnippet backend)))
-      backend
-    (append (if (consp backend) backend (list backend))
-            '(:with company-yasnippet))))
-
-(use-package company
-  :defer 5
-  :custom
-  (company-idle-delay t)
-  :config
-  ;; Add yasnippet support for all company backends
-  ;; https://github.com/syl20bnr/spacemacs/pull/179
-  (setq company-backends (mapcar #'company-mode/backend-with-yas
-                                 company-backends))
-  (global-company-mode))
-
 ;;;; Indentation
 ;; Don't use tabs for indentation. Use only spaces. Frankly, the fact
 ;; that `indent-tabs-mode' is even *available* as an *option* disgusts

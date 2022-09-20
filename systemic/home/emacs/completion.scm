@@ -46,4 +46,10 @@
      (with-eval-after-load 'consult
        (require 'embark-consult)))
     (emacs-consult
-     (keymap-global-set "C-s" 'consult-line)))))
+     (keymap-global-set "C-s" 'consult-line))
+    (emacs-corfu
+     (setopt corfu-auto t
+             tab-always-indent 'complete)
+     (global-corfu-mode))
+    (emacs-cape
+     (add-to-list 'completion-at-point-functions #'cape-file)))))

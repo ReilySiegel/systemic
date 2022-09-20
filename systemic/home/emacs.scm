@@ -52,7 +52,7 @@
   (list
    emacs-use-package emacs-esup
    emacs-avy emacs-no-littering
-   emacs-company emacs-outshine emacs-aggressive-indent
+   emacs-outshine emacs-aggressive-indent
    emacs-flycheck
    emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
