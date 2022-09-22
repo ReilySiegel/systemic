@@ -39,7 +39,7 @@ via email, without leaving Emacs.")
 (define-public emacs-inflections
   (package
     (name "emacs-inflections")
-    (version "2.5")
+    (version "2.6")
     (home-page "https://github.com/eschulte/jump.el")
     (source (origin
               (method git-fetch)
@@ -62,32 +62,32 @@ plural")
 
 (define-public emacs-clj-refactor
   (package
-   (name "emacs-clj-refactor")
-   (version "3.0.0")
-   (home-page "https://github.com/clojure-emacs/clj-refactor.el")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url home-page)
-                  (commit version)))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32
-              "0i759k6qm752lmdsxrgp0bh3akl01as8k8q6x1a7cpdh6yddwajs"))))
-   (build-system emacs-build-system)
-   (propagated-inputs (list emacs-yasnippet
-                            emacs-paredit
-                            emacs-multiple-cursors
-                            emacs-clojure-mode
-                            emacs-cider
-                            emacs-parseedn
-                            emacs-inflections
-                            emacs-hydra))
-   (synopsis "Support for refactoring Clojure code in Emacs.")
-   (description "@code{clj-refactor} provides refactoring support for Clojure
+    (name "emacs-clj-refactor")
+    (version "3.5.6")
+    (home-page "https://github.com/clojure-emacs/clj-refactor.el")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url home-page)
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1bvy3s953qlca9k8pvd1npl5nbpsbzbp8y41k3h6w588hjdwarsi"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-yasnippet
+                             emacs-paredit
+                             emacs-multiple-cursors
+                             emacs-clojure-mode
+                             emacs-cider
+                             emacs-parseedn
+                             emacs-inflections
+                             emacs-hydra))
+    (synopsis "Support for refactoring Clojure code in Emacs.")
+    (description "@code{clj-refactor} provides refactoring support for Clojure
 projects. It complements the refactoring functionality you'd find in
 clojure-mode and CIDER.")
-   (license license:gpl3+)))
+    (license license:gpl3+)))
 
 (define-public systemic-emacs-desktop-environment
   (package
