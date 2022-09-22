@@ -34,7 +34,8 @@
         (put '>defn 'clojure-doc-string-elt 2)
         (put '>defn- 'clojure-doc-string-elt 2)))
      (emacs-cider
-      (setopt cider-font-lock-dynammically t)
+      (setopt cider-font-lock-dynammically t
+              cider-clojure-cli-aliases ":cider/dev")
       ;; Cider does not play nice with orderless.
       (add-to-list 'completion-category-defaults '(cider (styles basic))))
      (emacs-clj-refactor
