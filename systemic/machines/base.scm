@@ -10,6 +10,7 @@
   #:use-module (gnu services base)
   #:use-module (gnu services dbus)
   #:use-module (gnu services desktop)
+  #:use-module (gnu services docker)
   #:use-module (gnu services cups)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
@@ -43,7 +44,7 @@
                    (group "users")
                    (home-directory "/home/reily")
                    (supplementary-groups
-                    '("wheel" "netdev" "audio" "video" "input")))
+                    '("wheel" "netdev" "audio" "video" "input" "docker")))
                   %base-user-accounts))
     (packages
      (append
@@ -59,6 +60,7 @@
       (list
        ;; Needed for emacs-password-store-otp
        (simple-service 'zbar-dbus-service dbus-root-service-type (list zbar))
+       (service docker-service-type)
        (service openssh-service-type)
        (service bluetooth-service-type
                 (bluetooth-configuration
