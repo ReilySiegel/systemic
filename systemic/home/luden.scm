@@ -15,7 +15,8 @@
   #:use-module (systemic home bibliography)
   #:use-module ((systemic home clojure) #:prefix clojure:)
   #:use-module (systemic home mail)
-  #:use-module ((systemic home javascript) #:prefix javascript:))
+  #:use-module ((systemic home javascript) #:prefix javascript:)
+  #:use-module ((systemic home kotlin) #:prefix kotlin:))
 
 (define-public environment
   (home-environment
@@ -67,4 +68,5 @@
             "0FA2 FE4C 164F 60C6 7F6B  EA7E 508A 5AD0 A50F 88AF")))))))
      clojure:services
      javascript:services
+     kotlin:services
      (home-environment-user-services base:environment)))))
