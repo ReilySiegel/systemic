@@ -1,7 +1,8 @@
 (define-module (systemic home luden)
+  #:use-module (gnu home services guix)
+  #:use-module (gnu home services shells)
   #:use-module (gnu home services shepherd)
   #:use-module (gnu home)
-  #:use-module (gnu home services guix)
   #:use-module (gnu home-services gnupg)
   #:use-module (gnu home-services mail)
   #:use-module (gnu home-services password-utils)
@@ -30,6 +31,7 @@
                                                                    "-no-browser"
                                                                    "-no-restart")))
                              (stop #~(make-kill-destructor)))))
+      (service home-bash-service-type (home-bash-configuration))
       (service systemic-mail-service-type)
       (service bibliography-service-type
                (bibliography-configuration

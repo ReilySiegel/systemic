@@ -1,6 +1,5 @@
 (define-module (systemic home base)
   #:use-module (gnu home)
-  #:use-module (gnu home services shells)
   #:use-module (gnu home services)
   #:use-module (gnu services)
   #:use-module (srfi srfi-26)
@@ -14,8 +13,6 @@
      emacs:services
      (list
       (service systemic-git-service-type)
-      (service home-bash-service-type
-               (home-bash-configuration))
       (simple-service
        'some-useful-env-vars-service
        home-environment-variables-service-type
