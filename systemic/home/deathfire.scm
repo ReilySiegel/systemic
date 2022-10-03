@@ -21,27 +21,13 @@
    (services
     (append
      (list
-      (service home-gnupg-service-type
-	       (home-gnupg-configuration
-                (gpg-agent-config
-                 (home-gpg-agent-configuration
-                  (ssh-agent? #t)
-                  (pinentry-flavor 'emacs)))))
-      (service home-ssh-service-type
-               (home-ssh-configuration
-                (default-options
-                  '((forward-x11 . #t)
-                    (forward-x11-trusted . #t)))
-                (toplevel-options
-                 '((match .
-                     "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
       (simple-service
        'systemic-channel
        home-channels-service-type
        (list
         (channel
          (name 'systemic)
-         (url "file:///home/reily/src/systemic")
+         (url "https://github.com/ReilySiegel/systemic")
          (introduction
           (make-channel-introduction
            "89ff5b4374e472194eff08f2a69153d5cde6784e"
