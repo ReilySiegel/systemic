@@ -168,7 +168,14 @@
                                     signature))
                                 signatures))))
 
-      (add-hook 'message-signature-setup-hook 'reily/message-signature-setup-hook)))))
+      (add-hook 'message-signature-setup-hook 'reily/message-signature-setup-hook)))
+   ("meow"
+    (with-eval-after-load 'meow
+      (dolist (mode '(notmuch-hello-mode
+                      notmuch-search-mode
+                      notmuch-tree-mode
+                      notmuch-show))
+              (add-to-list 'meow-mode-state-list (cons mode 'motion)))))))
 
 (define (add-afew-config-file config)
   `(("afew/config"

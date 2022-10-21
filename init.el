@@ -97,12 +97,6 @@ Passes NAME and ARGS to use-package."
   :hook (java-mode . lsp)
   :config
   (require 'dap-java))
-;;;; Racket
-(use-package racket-mode)
-;;;; Scheme
-(use-feature geiser
-  :custom
-  (geiser-default-implementation 'guile))
 ;;; ERC
 (use-feature erc
   :config
@@ -110,9 +104,9 @@ Passes NAME and ARGS to use-package."
         erc-default-server "irc.libera.chat"))
 ;;; Pass
 (use-feature auth-source-pass
-          :defer 1
-          :config
-          (auth-source-pass-enable))
+  :defer 1
+  :config
+  (auth-source-pass-enable))
 (use-feature ox-latex
   :config
   (add-to-list 'org-latex-classes

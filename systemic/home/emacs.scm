@@ -54,11 +54,10 @@
    emacs-use-package emacs-esup
    emacs-avy emacs-no-littering
    emacs-outshine emacs-aggressive-indent
-   emacs-flycheck
    emacs-paredit emacs-yasnippet
-   emacs-yasnippet-snippets emacs-clojure-mode emacs-cider emacs-gnuplot
+   emacs-yasnippet-snippets emacs-gnuplot
    emacs-ess
-   emacs-esup  emacs-flyspell-correct emacs-racket-mode emacs-geiser
+   emacs-esup emacs-flyspell-correct
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix
@@ -103,6 +102,11 @@
 
                ;; Don't pop up warning buffer unnecessarily.
                (setopt warning-minimum-level :error)
+
+               (setq guix-guile-program '("guix" "repl")
+                     guix-config-scheme-compiled-directory  nil
+                     guix-repl-use-latest  nil
+                     guix-repl-use-server  nil)
 
                ;; FIXME: Waiting on upstream emacs-next fix
                (require 'tramp)
