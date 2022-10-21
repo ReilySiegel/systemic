@@ -101,6 +101,9 @@
                ;; Unbind overwrite-mode
                (keymap-global-unset "<insert>")
 
+               ;; Don't pop up warning buffer unnecessarily.
+               (setopt warning-minimum-level :error)
+
                ;; FIXME: Waiting on upstream emacs-next fix
                (require 'tramp)
                (setopt tramp-remote-path '(tramp-default-remote-path
