@@ -12,9 +12,11 @@
    'emacs-pass-service
    home-emacs-service-type
    (home-emacs-extension
-    (elisp-packages (list emacs-pass
-                          emacs-password-store-otp
-                          pass-otp
-                          qrencode
-                          imagemagick
-                          zbar)))))
+    (elisp-packages (list
+                     password-store
+                     pass-otp
+                     emacs-pass
+                     emacs-password-store-otp
+                     qrencode
+                     imagemagick
+                     zbar)))))
