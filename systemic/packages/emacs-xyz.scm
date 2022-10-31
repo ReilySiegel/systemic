@@ -36,69 +36,16 @@
 via email, without leaving Emacs.")
     (license license:gpl3+)))
 
-(define-public emacs-inflections
-  (package
-    (name "emacs-inflections")
-    (version "2.6")
-    (home-page "https://github.com/eschulte/jump.el")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url home-page)
-                    (commit "55caa66a7cc6e0b1a76143fd40eff38416928941")))
-              (file-name (git-file-name name "55caa66a7cc6e0b1a76143fd40eff38416928941"))
-              (sha256
-               (base32
-                "03fh7i6blnbc0zbmp83fk095hr3q4fdvrvfxad74zghcbc2nk7b7"))
-              (snippet
-               '(begin (delete-file "jump.el")
-                       #t))))
-    (build-system emacs-build-system)
-    (synopsis "Emacs utility to convert english words between singular and
-plural")
-    (description "Emacs utility to convert english words between singular and
-plural")
-    (license license:gpl3+)))
-
-(define-public emacs-clj-refactor
-  (package
-    (name "emacs-clj-refactor")
-    (version "3.5.6")
-    (home-page "https://github.com/clojure-emacs/clj-refactor.el")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url home-page)
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "1bvy3s953qlca9k8pvd1npl5nbpsbzbp8y41k3h6w588hjdwarsi"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-yasnippet
-                             emacs-paredit
-                             emacs-multiple-cursors
-                             emacs-clojure-mode
-                             emacs-cider
-                             emacs-parseedn
-                             emacs-inflections
-                             emacs-hydra))
-    (synopsis "Support for refactoring Clojure code in Emacs.")
-    (description "@code{clj-refactor} provides refactoring support for Clojure
-projects. It complements the refactoring functionality you'd find in
-clojure-mode and CIDER.")
-    (license license:gpl3+)))
-
 (define-public systemic-emacs-desktop-environment
   (package
-   (inherit emacs-desktop-environment)
-   (propagated-inputs (list alsa-utils
-                            brightnessctl
-                            scrot
-                            slock
-                            upower
-                            tlp
-                            playerctl))))
+    (inherit emacs-desktop-environment)
+    (propagated-inputs (list alsa-utils
+                             brightnessctl
+                             scrot
+                             slock
+                             upower
+                             tlp
+                             playerctl))))
 
 (define-public emacs-org-minutes
   (package
