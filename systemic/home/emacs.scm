@@ -100,6 +100,9 @@
                ;; Unbind overwrite-mode
                (keymap-global-unset "<insert>")
 
+               ;; Unbind suspend-frame
+               (keymap-global-unset "C-z")
+
                ;; Don't pop up warning buffer unnecessarily.
                (setopt warning-minimum-level :error)
 
