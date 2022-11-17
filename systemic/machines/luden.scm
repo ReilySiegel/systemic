@@ -6,7 +6,8 @@
   #:use-module (gnu services pm)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
-  #:use-module (systemic machines base))
+  #:use-module (systemic machines base)
+  #:use-module (systemic system vpn))
 
 (define-public luden-operating-system
   (operating-system
@@ -22,7 +23,8 @@
                  (cpu-scaling-governor-on-ac '("performance"))
                  (cpu-scaling-governor-on-bat '("powersave"))
                  (cpu-boost-on-ac? #t)
-                 (sched-powersave-on-bat? #t))))
+                 (sched-powersave-on-bat? #t)))
+       (service netbird-service-type))
       (modify-services (operating-system-user-services base-operating-system)
         ;; TODO: Auto-power off on low battery
         (elogind-service-type
