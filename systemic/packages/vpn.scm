@@ -1,4 +1,5 @@
 (define-module (systemic packages vpn)
+  #:use-module (gnu packages dns)
   #:use-module (guix packages)
   #:use-module (guix build-system copy)
   #:use-module (guix download)
@@ -7,18 +8,28 @@
 (define-public netbird
   (package
     (name "netbird")
-    (version "0.10.8")
+    (version "0.11.3")
     (source
      (origin
        (method url-fetch)
        (uri
         (string-append
-         "https://github.com/netbirdio/netbird/releases/download/v0.10.8/netbird_"
-         version "_linux_amd64.tar.gz"))
-       (sha256 (base32 "1lhww9qam1k8bfpx92nx2ixa0j75fdhybdyfd6l1x1500vaq02ik"))))
+         "https://github.com/netbirdio/netbird/releases/download/v"
+         version "/netbird_" version "_linux_amd64.tar.gz"))
+       (sha256 (base32 "0rvzl9fk7zd2ixa5vqnqxxyg1ddchdzv5v7qzwp7kwz37vvbk8sp"))))
     (build-system copy-build-system)
-    (arguments '(#:install-plan
-                 '(("netbird" "bin/"))))
+    (arguments
+     '(#:install-plan '(("netbird" "bin/"))
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'install 'wrap-netbird
+           (lambda* (#:key inputs outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (openresolv (string-append (assoc-ref inputs "openresolv")
+                                               "/sbin")))
+               (wrap-program (string-append out "/bin/netbird")
+                 `("PATH" ":" prefix ,(list openresolv)))))))))
+    (inputs (list openresolv))
     (home-page "https://netbird.io/")
     (synopsis "Connect your devices into a single secure private WireGuard®-based
 mesh network with SSO/MFA and simple access controls")
