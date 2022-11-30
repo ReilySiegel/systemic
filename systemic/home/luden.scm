@@ -17,7 +17,8 @@
   #:use-module ((systemic home clojure) #:prefix clojure:)
   #:use-module (systemic home mail)
   #:use-module ((systemic home javascript) #:prefix javascript:)
-  #:use-module ((systemic home kotlin) #:prefix kotlin:))
+  #:use-module ((systemic home kotlin) #:prefix kotlin:)
+  #:use-module (systemic home scheme))
 
 (define-public environment
   (home-environment
@@ -55,6 +56,7 @@
                 (toplevel-options
                  '((match .
                      "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
+      (service scheme-service-type)
       (simple-service
        'systemic-channel
        home-channels-service-type

@@ -61,7 +61,7 @@
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major emacs-guix
-   emacs-clj-refactor emacs-origami-el))
+   emacs-origami-el))
 
 (define emacs
   (service home-emacs-service-type
@@ -105,11 +105,6 @@
 
                ;; Don't pop up warning buffer unnecessarily.
                (setopt warning-minimum-level :error)
-
-               (setq guix-guile-program '("guix" "repl")
-                     guix-config-scheme-compiled-directory  nil
-                     guix-repl-use-latest  nil
-                     guix-repl-use-server  nil)
 
                ;; FIXME: Waiting on upstream emacs-next fix
                (require 'tramp)
