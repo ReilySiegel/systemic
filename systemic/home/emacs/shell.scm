@@ -12,8 +12,6 @@
     ("eshell"
      (keymap-global-set "C-c s" #'eshell)
      (with-eval-after-load 'eshell
-       (require 'esh-module)
-       (add-to-list 'eshell-modules-list 'eshell-tramp)
        (setopt eshell-destroy-buffer-when-process-dies t
                eshell-history-size 1024
                remote-file-name-inhibit-cache nil
