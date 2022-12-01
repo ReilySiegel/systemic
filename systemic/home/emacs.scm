@@ -70,7 +70,8 @@
             (rebuild-elisp-packages? #f)
             (elisp-packages packages)
             (init-el
-             `(;; #' exports a scheme (syntax ...) form. Treat this as a
+             `(,#~";;; -*- lexical-binding: t -*-"
+               ;; #' exports a scheme (syntax ...) form. Treat this as a
                ;; (function ...) form.
                (defalias 'syntax 'function)
                
