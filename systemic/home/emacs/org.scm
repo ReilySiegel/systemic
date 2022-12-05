@@ -92,15 +92,18 @@
                      days))))
     (emacs-org-roam
      (setopt org-roam-directory ,org-directory
-             org-roam-v2-ack t)
+             org-roam-completion-everywhere t)
 
-     (keymap-global-set "C-c n l" 'org-roam-buffer-toggle)
-     (keymap-global-set "C-c n f" 'org-roam-node-find)
-     (keymap-global-set "C-c n g" 'org-roam-graph)
-     (keymap-global-set "C-c n i" 'org-roam-node-insert)
-     (keymap-global-set "C-c n c" 'org-roam-capture)
-     (keymap-global-set "C-c n t" 'org-roam-tag-add)
-     (keymap-global-set "C-c n d" 'org-roam-dailies-map)
+     (let ((map (make-keymap "Org Roam")))
+       (keymap-set map "l" 'org-roam-buffer-toggle)
+       (keymap-set map "f" 'org-roam-node-find)
+       (keymap-set map "g" 'org-roam-graph)
+       (keymap-set map "i" 'org-roam-node-insert)
+       (keymap-set map "c" 'org-roam-capture)
+       (keymap-set map "t" 'org-roam-tag-add)
+       (keymap-set map "d" 'org-roam-dailies-map)
+
+       (keymap-global-set "C-c n" map))
 
      (with-eval-after-load 'org-roam
        (org-roam-db-autosync-mode))))))
