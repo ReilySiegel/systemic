@@ -1,3 +1,4 @@
+
 (define-module (systemic home mail)
   #:use-module (gnu home services)
   #:use-module (gnu home-services emacs)
@@ -40,34 +41,7 @@
     (Channel personal-drafts)
     (Far ":personal-remote:Drafts")
     (Near ":personal-local:drafts")
-    ,#~""
-    (IMAPAccount school)
-    (Host "outlook.office365.com")
-    (User "rsiegel@wpi.edu")
-    (Pass ,(pass "wpi"))
-    (Port 993)
-    (SSLType "IMAPS")
-    ,#~""
-    (IMAPStore school-remote)
-    (Account school)
-    ,#~"" 
-    (MaildirStore school-local)
-    (Path "~/.mail/school/")
-    (Inbox "~/.mail/school/inbox")
-    (SubFolders Verbatim)
-    ,#~"" 
-    (Channel school-inbox)
-    (Far ":school-remote:INBOX")
-    (Near ":school-local:inbox")
-    ,#~"" 
-    (Channel school-sent)
-    (Far ":school-remote:Sent Items")
-    (Near ":school-local:sent")
-    ,#~"" 
-    (Channel school-drafts)
-    (Far ":school-remote:Drafts")
-    (Near ":school-local:drafts")))
-
+    ,#~""))
 
 (define (notmuch-extension config)
   (home-notmuch-extension
@@ -92,8 +66,7 @@
    (config
     '((user
        ((name "Reily Siegel")
-        (primary_email "mail@reilysiegel.com")
-        (other_email "rsiegel@wpi.edu")))
+        (primary_email "mail@reilysiegel.com")))
       (database
        ((path "/home/reily/.mail")
         (mail_root "/home/reily/.mail")))
@@ -107,24 +80,11 @@
   (emacs-configuration-extension
    (emacs-notmuch
     (keymap-global-set "C-c m" 'notmuch)
-    
-    (defun reily/select-smtp-send-it ()
-      (let* ((from (message-fetch-field "From"))
-             (smtp (cond
-                    ((string-match "mail@reilysiegel.com" from)
-                     '("smtp.mailbox.org" "mail@reilysiegel.com" 465 ssl))
-                    ((string-match "rsiegel@wpi.edu" from)
-                     '("smtp.office365.com" "rsiegel@wpi.edu" 587 starttls)))))
-        (setq smtpmail-smtp-server (car smtp)
-              smtpmail-smtp-user (cadr smtp)
-              smtpmail-smtp-service (caddr smtp)
-              smtpmail-stream-type (cadddr smtp))
-        (smtpmail-send-it)))
 
     (require 'notmuch-mua)
 
     (setopt mail-user-agent 'notmuch-user-agent
-            message-send-mail-function 'reily/select-smtp-send-it
+            message-send-mail-function 'smtpmail-send-it
             starttls-use-gnutls t
             message-cite-reply-position 'below
             message-kill-buffer-on-exit t
@@ -133,10 +93,12 @@
             notmuch-hello-sections '(notmuch-hello-insert-header
                                      notmuch-hello-insert-saved-searches)
             notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
+            smtpmail-smtp-server "smtp.mailbox.org"
+            smtpmail-smtp-user "mail@reilysiegel.com"
+            smtpmail-smtp-service 587
+            smtpmail-stream-type 'starttls
             notmuch-saved-searches
             '((:name "[i]nbox" :query "tag:unread AND tag:inbox" :key "i")
-              (:name "[e]xcuses" :query "tag:unread AND tag:excuse" :key "e")
-              (:name "a[g]enda items" :query "tag:unread AND tag:agenda" :key "g")
               (:name "[l]ists" :query "tag:unread AND tag:lists" :key "l")
               ;;Show unread automated messages
               (:name "auto[m]ated" :query "tag:unread AND tag:automated" :key "m")
@@ -152,29 +114,14 @@
     (advice-add (function notmuch-read-tag-changes)
                 :filter-return (lambda (x) (mapcar (function string-trim) x)))
 
-    ;; Set message signature based on files in config.
     (with-eval-after-load 'message
-      (setq message-signature-directory "~/.config/signatures")
-
-      (defun reily/message-signature-setup-hook ()
-        (let ((from (message-field-value "From"))
-              (signatures (when message-signature-directory
-                            (directory-files message-signature-directory))))
-          (setq-local message-signature-file
-                      (seq-some (lambda (signature)
-                                  (when (and (not (string-equal "." signature))
-                                             (not (string-equal ".." signature))
-                                             (string-match signature from))
-                                    signature))
-                                signatures))))
-
-      (add-hook 'message-signature-setup-hook 'reily/message-signature-setup-hook)))
+      (setq message-signature-file "~/.config/signature")))
    ("meow"
     (with-eval-after-load 'meow
       (dolist (mode '(notmuch-hello-mode
                       notmuch-search-mode
                       notmuch-tree-mode
-                      notmuch-show))
+                      notmuch-show-mode))
               (add-to-list 'meow-mode-state-list (cons mode 'motion)))))))
 
 (define (add-afew-config-file config)
