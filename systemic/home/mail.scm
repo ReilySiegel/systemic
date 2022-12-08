@@ -116,6 +116,11 @@
 
     (with-eval-after-load 'message
       (setq message-signature-file "~/.config/signature")))
+   ;; HACK: Notmuch uses deprecated completion API which is not supported by
+   ;; corfu.
+   ("corfu"
+    (with-eval-after-load 'corfu
+      (add-hook 'notmuch-message-mode-hook (lambda nil (corfu-mode 0)))))
    ("meow"
     (with-eval-after-load 'meow
       (dolist (mode '(notmuch-hello-mode
