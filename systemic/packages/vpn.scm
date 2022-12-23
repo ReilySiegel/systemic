@@ -8,7 +8,7 @@
 (define-public netbird
   (package
     (name "netbird")
-    (version "0.11.3")
+    (version "0.11.6")
     (source
      (origin
        (method url-fetch)
@@ -16,7 +16,7 @@
         (string-append
          "https://github.com/netbirdio/netbird/releases/download/v"
          version "/netbird_" version "_linux_amd64.tar.gz"))
-       (sha256 (base32 "0rvzl9fk7zd2ixa5vqnqxxyg1ddchdzv5v7qzwp7kwz37vvbk8sp"))))
+       (sha256 (base32 "080h8cgdkww508ngzr5p6dnk8hm2w9m4a977zka3ifh0bp52a374"))))
     (build-system copy-build-system)
     (arguments
      '(#:install-plan '(("netbird" "bin/"))
