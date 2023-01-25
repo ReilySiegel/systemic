@@ -107,12 +107,6 @@
                ;; Don't pop up warning buffer unnecessarily.
                (setopt warning-minimum-level :error)
 
-               ;; FIXME: Waiting on upstream emacs-next fix
-               (require 'tramp)
-               (setopt tramp-remote-path '(tramp-default-remote-path
-                                           "~/.guix-profile/bin" "~/.guix-profile/sbin"
-                                           "/run/current-system/profile/bin"
-                                           "/run/current-system/profile/sbin"))
                ,(slurp-file-like (local-file "../../init.el"))))
             (early-init-el
              '((set 'gc-cons-threshold most-positive-fixnum)
