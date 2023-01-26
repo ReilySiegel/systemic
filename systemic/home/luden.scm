@@ -63,7 +63,7 @@
        (list
         (channel
          (name 'systemic)
-         (url "file:///home/reily/src/systemic")
+         (url "https://github.com/ReilySiegel/systemic")
          (introduction
           (make-channel-introduction
            "89ff5b4374e472194eff08f2a69153d5cde6784e"
