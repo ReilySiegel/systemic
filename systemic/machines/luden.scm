@@ -14,28 +14,17 @@
     (inherit base-operating-system)
     (host-name "luden")
     (services
-     (append
-      (list
-       (udev-rules-service 'backlight brightnessctl)
-       (service tlp-service-type
-                (tlp-configuration
-                 (tlp-default-mode "BAT")
-                 (cpu-scaling-governor-on-ac '("performance"))
-                 (cpu-scaling-governor-on-bat '("powersave"))
-                 (cpu-boost-on-ac? #t)
-                 (sched-powersave-on-bat? #t)))
-       (service netbird-service-type))
-      (modify-services (operating-system-user-services base-operating-system)
-        ;; TODO: Auto-power off on low battery
-        (elogind-service-type
-         config =>
-         (elogind-configuration
-          (inherit config)
-          (handle-power-key 'suspend)
-          ;; FIXME: Laptop always reports OnExternalPower=yes
-          (handle-lid-switch-external-power 'suspend)
-          (idle-action 'suspend)
-          (idle-action-seconds (* 5 60)))))))
+     (cons*
+      (udev-rules-service 'backlight brightnessctl)
+      (service tlp-service-type
+               (tlp-configuration
+                (tlp-default-mode "BAT")
+                (cpu-scaling-governor-on-ac '("performance"))
+                (cpu-scaling-governor-on-bat '("powersave"))
+                (cpu-boost-on-ac? #t)
+                (sched-powersave-on-bat? #t)))
+      (service netbird-service-type)
+      (operating-system-user-services base-operating-system)))
     (file-systems
      (cons* (file-system
               (mount-point "/")
