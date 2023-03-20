@@ -45,4 +45,5 @@
      (emacs-flymake-kondor
       (with-eval-after-load 'clojure-mode
         (require 'flymake-kondor))
-      (add-hook 'clojure-mode-hook #'flymake-kondor-setup))))))
+      (add-hook 'clojure-mode-hook #'flymake-kondor-setup))
+     (emacs-clj-deps-new)))))
