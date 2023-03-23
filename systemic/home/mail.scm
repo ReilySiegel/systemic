@@ -12,15 +12,21 @@
   #:use-module (systemic pass)
   #:export (systemic-mail-service-type))
 
+
+(define %mail-address "mail@reilysiegel.com")
+(define %imap-address "imap.zoho.com")
+(define %smtp-address "smtppro.zoho.com")
+(define %pass-entry "zoho.com")
+
 (define (isync-extension config)
   `((Create Both)
     (Expunge Both)
     (SyncState *)
     ,#~""
     (IMAPAccount personal)
-    (Host "imap.mailbox.org")
-    (User "mail@reilysiegel.com")
-    (Pass ,(pass "mailbox.org"))
+    (Host ,%imap-address)
+    (User ,%mail-address)
+    (Pass ,(pass %pass-entry))
     (SSLType "IMAPS")
     ,#~""
     (IMAPStore personal-remote)
@@ -64,9 +70,9 @@
      ;; Messages to mailing lists should not be in inbox unless they are to me
      #~(system "notmuch tag -inbox tag:lists AND NOT tag:to-me")))
    (config
-    '((user
+    `((user
        ((name "Reily Siegel")
-        (primary_email "mail@reilysiegel.com")))
+        (primary_email ,%mail-address)))
       (database
        ((path "/home/reily/.mail")
         (mail_root "/home/reily/.mail")))
@@ -92,9 +98,9 @@
             notmuch-show-logo nil
             notmuch-hello-sections '(notmuch-hello-insert-header
                                      notmuch-hello-insert-saved-searches)
-            notmuch-fcc-dirs '(("mail@reilysiegel.com" . "personal/sent"))
-            smtpmail-smtp-server "smtp.mailbox.org"
-            smtpmail-smtp-user "mail@reilysiegel.com"
+            notmuch-fcc-dirs '((,%mail-address . "personal/sent"))
+            smtpmail-smtp-server ,%smtp-address
+            smtpmail-smtp-user ,%mail-address
             smtpmail-smtp-service 587
             smtpmail-stream-type 'starttls
             notmuch-saved-searches
