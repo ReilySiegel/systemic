@@ -25,11 +25,7 @@
     (assq-delete-all 'project-vc-dir project-switch-commands)
     ;; Add magit in its place.
     (keymap-set project-prefix-map "m" #'magit-project-status)
-    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
-
-
-    (setopt magit-display-buffer-function
-            (function magit-display-buffer-same-window-except-diff-v1)))
+    (add-to-list 'project-switch-commands '(magit-project-status "Magit") t))
    (emacs-magit-todos
     (with-eval-after-load 'magit
       (magit-todos-mode 1)))
