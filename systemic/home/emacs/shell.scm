@@ -1,5 +1,6 @@
 (define-module (systemic home emacs shell)
   #:use-module (gnu home-services emacs)
+  #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (systemic home emacs-utils)
   #:export (service))
@@ -21,5 +22,7 @@
                eshell-hist-ignoredups t
                remote-file-name-inhibit-cache nil
                vc-ignore-dir-regexp
-               (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp)
-               eshell-visual-commands '("htop" "nmtui" "vim" "watch")))))))
+               (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))))
+    (emacs-eat
+     (setopt eshell-visual-commands nil)
+     (add-hook 'eshell-load-hook #'eat-eshell-mode)))))
