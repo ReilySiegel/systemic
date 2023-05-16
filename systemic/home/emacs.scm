@@ -70,7 +70,8 @@
             (rebuild-elisp-packages? #f)
             (elisp-packages packages)
             (init-el
-             `(,#~";;; -*- lexical-binding: t -*-"
+             `(,#~
+               ";;; -*- lexical-binding: t -*-"
                ;; #' exports a scheme (syntax ...) form. Treat this as a
                ;; (function ...) form.
                (defalias 'syntax 'function)
@@ -85,8 +86,7 @@
                  (show-paren-mode 1))
 
                (setq-default fill-column 80
-                             undo-limit (* 10 1024 1024)
-                             browse-url-browser-function #'browse-url-chromium)
+                             undo-limit (* 10 1024 1024))
 
                ;; Bump the required security level for TLS to an acceptably
                ;; modern value.
