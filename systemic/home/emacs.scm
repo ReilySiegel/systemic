@@ -45,9 +45,9 @@
      (setopt nano-fonts-use nil)
      (load-theme 'nano-dark t))
     (emacs-nano-modeline
-     (setopt nano-modeline-position 'bottom
-             nano-modeline-prefix-padding t)
-     (nano-modeline-mode)))))
+     (require 'nano-modeline)
+     (setopt nano-modeline-position #'nano-modeline-footer)
+     (nano-modeline-text-mode t)))))
 
 (define packages
   (list
