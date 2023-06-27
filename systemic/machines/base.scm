@@ -50,6 +50,7 @@
      (append
       (list
        (with-emacs-next (specification->package "emacs-exwm"))
+       (specification->package "sway")
        (specification->package "nss-certs")
        (specification->package "pulseaudio")
        (specification->package "mesa")
