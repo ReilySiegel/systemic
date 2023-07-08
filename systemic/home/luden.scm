@@ -1,4 +1,7 @@
 (define-module (systemic home luden)
+  #:use-module (dwl-guile home-service)
+  #:use-module (dwl-guile packages)
+  #:use-module (dwl-guile patches)
   #:use-module (gnu home services)
   #:use-module (gnu home services guix)
   #:use-module (gnu home services shells)
@@ -11,7 +14,7 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (guix channels)
-  #:use-module (systemic home desktop)
+  #:use-module ((systemic home desktop) #:prefix desktop:)
   #:use-module ((systemic home base) #:prefix base:)
   #:use-module (systemic home bibliography)
   #:use-module ((systemic home clojure) #:prefix clojure:)
@@ -40,19 +43,14 @@
                (bibliography-configuration
                 (bibtex-file "~/org/references.bib")
                 (csl-directory "~/org/csl")))
-      (service picom-service-type #f)
-      (service exwm-service-type)
       (service home-gnupg-service-type
 	       (home-gnupg-configuration
                 (gpg-agent-config
                  (home-gpg-agent-configuration
                   (ssh-agent? #t)
-                  (pinentry-flavor 'emacs)))))
+                  (pinentry-flavor 'bemenu)))))
       (service home-ssh-service-type
-               (home-ssh-configuration
-                (default-options
-                  '((forward-x11 . #t)
-                    (forward-x11-trusted . #t)))
+               (home-ssh-configuration                
                 (toplevel-options
                  '((match .
                      "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
@@ -80,6 +78,7 @@
          ("PATH" . "$HOME/.local/bin:$PATH")
          ;; HACK: https://issues.guix.gnu.org/52672
          ("QTWEBENGINE_CHROMIUM_FLAGS" . "--disable-seccomp-filter-sandbox"))))
+     desktop:services
      clojure:services
      javascript:services
      kotlin:services

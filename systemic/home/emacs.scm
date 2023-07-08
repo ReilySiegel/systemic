@@ -24,21 +24,6 @@
    (emacs-configuration-extension
     ("font"
      (set-frame-font "Hack-11"))
-    ("tab-bar"
-     ;; Use tab-bar as global modeline.
-     (setopt tab-bar-format '(tab-bar-format-align-right tab-bar-format-global)
-             tab-bar-border nil
-             tab-bar-mode t)
-
-     (setopt display-time-24hr-format t
-             display-time-day-and-date t
-             display-time-interval 5
-             display-time-default-load-average nil
-             battery-update-interval 5
-             battery-mode-line-format "[%p%% %b%t] ")
-
-     (display-time-mode)
-     (display-battery-mode))
     (emacs-nano-theme
      (require 'nano-theme)
      (nano-mode)
@@ -66,8 +51,9 @@
 (define emacs
   (service home-emacs-service-type
            (home-emacs-configuration
-            (package emacs-next)
+            (package emacs-next-pgtk)
             (rebuild-elisp-packages? #f)
+            (server-mode? #t)
             (elisp-packages packages)
             (init-el
              `(,#~

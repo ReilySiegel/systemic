@@ -1,233 +1,115 @@
 (define-module (systemic home desktop)
-  #:use-module (gnu home-services emacs)
-  #:use-module (gnu home services shepherd)
+  #:use-module (dtao-guile home-service)
+  #:use-module (dwl-guile home-service)
+  #:use-module (dwl-guile packages)
+  #:use-module (dwl-guile patches)
   #:use-module (gnu home services)
-  #:use-module (gnu packages compton)
-  #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu packages emacs)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages package-management)
+  #:use-module (gnu packages terminals)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:use-module (systemic home emacs-utils)
-  #:use-module (systemic packages emacs-xyz)
-  #:export (picom-service-type
-            exwm-service-type))
+  #:use-module (guix packages)
+  #:use-module (ice-9 textual-ports)
+  #:use-module (srfi srfi-1)
+  #:export (services))
 
-(define picom-config
-  "backend = \"glx\";
+(define (guix:spawn pkg path . args)
+  `(quote ,(cons* 'dwl:spawn (file-append pkg path) args)))
 
-glx-no-stencil = true;
-glx-no-rebind-pixmap = true;
-use-damage = true;
-xrender-sync-fence = true;
-refresh-rate = 0;
-vsync = true;
- 
-mark-wmwin-focused = true;
-mark-ovredir-focused = true;
-use-ewmh-active-win = true;
+(define dwl-guile-service
+  (service home-dwl-guile-service-type
+           (home-dwl-guile-configuration
+            (package
+              (patch-dwl-guile-package
+               dwl-guile
+               #:patches
+               (list %patch-xwayland)))
+            (auto-start? #t)
+            (environment-variables
+             (alist-delete "GDK_BACKEND" %dwl-guile-base-env-variables))
+            (config
+             `(((setq inhibit-defaults? #t)
+                (dwl:start-repl-server)
+                (set-monitor-rules '((scale . 2)))
+                
+                (set-xkb-rules '((options . "ctrl:nocaps")))
 
-shadow = true;
-shadow-radius = 3;
-shadow-offset-x = -3;
-shadow-offset-y = -3;
-shadow-opacity = 0.5;
-shadow-exclude = [
- \"! name~=''\",
- \"name = 'Notification'\",
- \"name = 'xfce4-notifyd'\",
- \"name *= 'picom'\",
- \"name *= 'Chromium'\",
- \"class_g = 'Navigator' && argb\",
- \"class_g ?= 'Notify-osd'\",
- \"class_g ?= 'Cairo-dock'\",
- \"class_g ?= 'Xfce4-notifyd'\",
- \"class_g ?= 'Xfce4-power-manager'\",
- \"_GTK_FRAME_EXTENTS@:c\",
- \"bounding_shaped && !rounded_corners\"
-];
+                (setq natural-scrolling? #t
+                      tap-to-click? #f
+                      tap-and-drag? 0)
+                
+                (dwl:set-tty-keys "C-M")
+                (dwl:set-tag-keys "s" "s-S")
 
-fading = true;
-fade-delta = 5;
-fade-in-step = 0.03;
-fade-out-step = 0.03;
-no-fading-openclose = true;
-fade-exclude = [ ];
+                (set-keys
+                 "s-d" ,(guix:spawn bemenu "/bin/bemenu-run")
+                 "s-<return>" ,(guix:spawn emacs-next-pgtk "/bin/emacs")
+                 "s-j" '(dwl:focus-stack 1)
+                 "s-k" '(dwl:focus-stack -1)
+                 "s-l" '(dwl:change-master-factor 0.05)
+                 "s-h" '(dwl:change-master-factor -0.05)
+                 "s-S-j" '(dwl:change-masters 1)
+                 "s-S-k" '(dwl:change-masters -1)
+                 "s-t" '(dwl:cycle-layout 1)
+                 "s-<left>" '(dwl:focus-monitor 'DIRECTION-LEFT)
+                 "s-<right>" '(dwl:focus-monitor 'DIRECTION-RIGHT)
+                 "s-<up>" '(dwl:focus-monitor 'DIRECTION-UP)
+                 "s-<down>" '(dwl:focus-monitor 'DIRECTION-DOWN)
+                 "s-S-<left>" '(dwl:tag-monitor 'DIRECTION-LEFT)
+                 "s-S-<right>" '(dwl:tag-monitor 'DIRECTION-RIGHT)
+                 "s-S-<up>" '(dwl:tag-monitor 'DIRECTION-UP)
+                 "s-S-<down>" '(dwl:tag-monitor 'DIRECTION-DOWN)
+                 "s-q" 'dwl:kill-client
+                 "s-<space>" 'dwl:zoom
+                 "s-<tab>" 'dwl:view
+                 "s-S-0" '(dwl:view 0) ;; 0 will show all tags
+                 "s-f" 'dwl:toggle-fullscreen
+                 "S-s-<space>" 'dwl:toggle-floating
+                 "S-s-<escape>" 'dwl:quit
+                 "s-<mouse-left>" 'dwl:move
+                 "s-<mouse-middle>" 'dwl:toggle-floating
+                 "s-<mouse-right>" 'dwl:resize
+                 "<XF86MonBrightnessDown>"
+                 ,(guix:spawn light "/bin/light" "-U" "10")
+                 "<XF86MonBrightnessUp>"
+                 ,(guix:spawn light "/bin/light" "-A" "10"))))))))
+(define %time-block
+  (dtao-block
+   (interval 1)
+   (render `(strftime "%A, %d %b %T" (localtime (current-time))))))
 
-active-opacity = 1;
-inactive-opacity = 0.9;
-frame-opacity = 1;
-inactive-opacity-override = false;
+(define %battery-block
+  (dtao-block
+   (interval 5)
+   (render
+    `(string-append
+      (call-with-input-file
+          "/sys/class/power_supply/BAT0/capacity" get-line)
+      "% "
+      (call-with-input-file
+          "/sys/class/power_supply/BAT0/status" get-line)))))
 
-opacity-rule = [
- \"100:class_g = 'Termite' && _NET_WM_STATE@:32a\",
- \"95:class_g = 'Termite' && !_NET_WM_STATE@:32a\",
- \"0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'\"
-];
+(define dtao-guile-service
+  (service home-dtao-guile-service-type
+           (home-dtao-guile-configuration
+            (auto-start? #t)
+            (config
+             (dtao-config
+              (font "Hack:size=14")
+              (block-spacing 8)
+              (modules (list '(ice-9 textual-ports)))
+              (right-blocks
+               (list %battery-block %time-block)))))))
 
-# blur-background = true;
-# blur-background-frame = true;
-
-blur-background-fixed = false;
-blur-kern = \"3x3box\";
-blur-background-exclude = [
- \"window_type = 'dock'\",
- \"window_type = 'desktop'\",
- \"_GTK_FRAME_EXTENTS@:c\"
-];
-
-unredir-if-possible = false;
- 
-detect-rounded-corners = true;
-detect-client-opacity = true;
-detect-transient = true;
-detect-client-leader = true;
- 
-wintypes:
-{
- tooltip = { opacity = 0.95; shadow = false; fade = true; focus = true; };
- dock = { shadow = false; };
- dnd = { shadow = false; };
-};")
-
-(define picom-service-type
-  (service-type
-   (name 'picom)
-   (description "A basic picom service.")
-   (extensions
-    (list
-     (service-extension
-      home-xdg-configuration-files-service-type
-      (const `(("picom/picom.conf"
-                ,(mixed-text-file "picom.conf" picom-config)))))
-     (service-extension
-      home-profile-service-type
-      (const (list picom)))
-     (service-extension
-      home-shepherd-service-type
-      (const (list
-              (shepherd-service
-               (documentation "Run picom.")
-               (provision '(picom))
-               (start #~(make-system-constructor "picom -b"))
-               (stop #~(make-system-destructor "pkill picom -SIGKILL"))))))))))
-
-(define (exwm-emacs-extension config)
-  (home-emacs-extension
-   (elisp-packages (list emacs-app-launcher
-                         emacs-exec-path-from-shell
-                         emacs-exwm
-                         emacs-pinentry
-                         systemic-emacs-desktop-environment))
-   (init-el
-    `(;; Start a server for external processes to communicate with.
-      (server-start)
-      
-      (use-package
-       exwm
-       :demand t
-       :hook ((exwm-update-class
-               .
-               (lambda ()
-                 (unless (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-                             (string= "gimp" exwm-instance-name))
-                   (exwm-workspace-rename-buffer exwm-class-name))))
-              (exwm-update-title
-               .
-               (lambda ()
-                 (when (or (not exwm-instance-name)
-                           (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-                           (string= "gimp" exwm-instance-name))
-                   (exwm-workspace-rename-buffer exwm-title)))))
-       :config
-       (require 'exwm-config)
-       
-       ;; 's-r': Reset
-       (exwm-input-set-key (kbd "s-r") (function exwm-reset))
-
-       ;; Line-editing shortcuts
-       (setq
-        exwm-manage-force-tiling t
-        exwm-input-simulation-keys
-        '(
-          ;; movement
-          ([?\C-b] . [left])
-          ([?\M-b] . [C-left])
-          ([?\C-f] . [right])
-          ([?\M-f] . [C-right])
-          ([?\C-p] . [up])
-          ([?\C-n] . [down])
-          ([?\C-a] . [home])
-          ([?\C-e] . [end])
-          ([?\M-v] . [prior])
-          ([?\C-v] . [next])
-          ([?\C-d] . [delete])
-          ([?\C-k] . [S-end delete])
-          ;; cut/paste.
-          ([?\C-w] . [?\C-x])
-          ([?\M-w] . [?\C-c])
-          ([?\C-y] . [?\C-v])
-          ;; search
-          ([?\C-s] . [?\C-f])
-          ;; save
-          ([?\C-x?\C-s] . [?\C-s])
-          ;; quit
-          ([?\C-g] . [escape])))
-
-       ;; Enable EXWM
-       (exwm-enable))
-
-      (use-package
-       exwm-randr
-       :after (exwm)
-       :hook (exwm-randr-screen-change
-              .
-              (lambda ()
-                (start-process-shell-command
-                 "xrandr" nil "xrandr --output eDP-1 --right-of HDMI-1 --auto")))
-       :config
-       ;; EXWM Randr
-       (setq exwm-workspace-number 1)
-       (setq exwm-randr-workspace-output-plist '(1 "eDP-1"))
-       (exwm-randr-enable))
-
-      (use-package
-       desktop-environment
-       :after (exwm)
-       :bind (:map desktop-environment-mode-map
-              ;; Keyboard does not send x86 keys with shift
-              ("S-<f1>" . desktop-environment-brightness-decrement-slowly)
-              ("S-<f2>" . desktop-environment-brightness-increment-slowly)
-              ("S-<f5>" . desktop-environment-volume-decrement-slowly)
-              ("S-<f6>" . desktop-environment-volume-increment-slowly))
-       :defer 5
-       :config
-       (setq desktop-environment-update-exwm-global-keys :prefix)
-       (desktop-environment-mode))
-
-      (use-package
-       app-launcher
-       :after (exwm)
-       :bind (("s-SPC" . app-launcher-run-app)
-              ("C-c l" . app-launcher-run-app)))
-
-      (use-package
-       exec-path-from-shell
-       :hook ((after-init . exec-path-from-shell-initialize)
-              (after-init . pinentry-start))
-       :config
-       (setenv "PINENTRY_USER_DATA" "USE_CURSES=0")
-       (setenv "GPG_TTY" "/dev/pts/1")
-       (setq epa-pinentry-mode 'loopback
-             pinentry-popup-prompt-window nil)
-       (setq exec-path-from-shell-variables
-             (append
-              '("SSH_AUTH_SOCK" "SSH_AGENT_PID")
-              exec-path-from-shell-variables)))))))
-
-(define exwm-service-type
-  (service-type
-   (name 'exwm)
-   (description "A basic exwm service.")
-   (default-value #f)
-   (extensions
-    (list
-     (service-extension home-emacs-service-type exwm-emacs-extension)))))
+(define services
+  (list dwl-guile-service
+        dtao-guile-service
+        (simple-service
+         'flatpak-profile home-profile-service-type (list flatpak))
+        (simple-service
+         'flatpak-env home-environment-variables-service-type
+         '(("XDG_DATA_DIRS" .
+            "$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS")))))

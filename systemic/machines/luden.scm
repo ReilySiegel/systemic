@@ -9,7 +9,7 @@
   #:use-module (systemic machines base)
   #:use-module (systemic system vpn))
 
-(define-public luden-operating-system
+(define-public machine
   (operating-system
     (inherit base-operating-system)
     (host-name "luden")

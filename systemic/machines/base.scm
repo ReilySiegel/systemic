@@ -14,6 +14,7 @@
   #:use-module (gnu services cups)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
+  #:use-module (gnu services sound)
   #:use-module (gnu services xorg)
   #:use-module (gnu system)
   #:use-module (gnu system accounts)
@@ -25,9 +26,6 @@
   #:use-module (guix packages)
   #:use-module (nongnu packages linux))
 
-(define with-emacs-next
-  (package-input-rewriting `((,emacs . ,emacs-next))))
-
 (define-public base-operating-system
   (operating-system
     (kernel linux)
@@ -38,14 +36,15 @@
     (locale "en_US.utf8")
     (keyboard-layout (keyboard-layout "us" #:options '("ctrl:nocaps")))
     
-    (users (cons* (user-account
-                   (name "reily")
-                   (comment "Reily")
-                   (group "users")
-                   (home-directory "/home/reily")
-                   (supplementary-groups
-                    '("wheel" "netdev" "audio" "video" "input" "docker")))
-                  %base-user-accounts))
+    (users (cons*
+            (user-account
+             (name "reily")
+             (comment "Reily")
+             (group "users")
+             (home-directory "/home/reily")
+             (supplementary-groups
+              '("wheel" "netdev" "audio" "video" "input" "docker")))
+            %base-user-accounts))
     (packages
      (append
       (list
@@ -63,6 +62,14 @@
        (simple-service 'zbar-dbus-service dbus-root-service-type (list zbar))
        (service docker-service-type)
        (service openssh-service-type)
+       (service network-manager-service-type)
+       (service wpa-supplicant-service-type)
+       (service modem-manager-service-type)
+       (service usb-modeswitch-service-type)
+       (service ntp-service-type)
+       (service elogind-service-type)
+       (service pulseaudio-service-type)
+       (service alsa-service-type)
        (service bluetooth-service-type
                 (bluetooth-configuration
                  (auto-enable? #t)))
@@ -74,23 +81,32 @@
                  (extensions (list cups-filters
                                    epson-inkjet-printer-escpr
                                    hplip-minimal))))
-       (service slim-service-type
-                (slim-configuration
-                 (xorg-configuration
-                  (xorg-configuration
-                   (modules (delq (specification->package "xf86-input-synaptics")
-                                  %default-xorg-modules))
-                   (drivers '("modesetting" "intel"))
-                   (keyboard-layout keyboard-layout)
-                   (extra-config '("
-Section \"InputClass\"
-Identifier \"devname\"
-MatchIsTouchpad \"on\"
-Driver \"libinput\"
-Option \"NaturalScrolling\" \"true\"
-EndSection")))))))
-      (modify-services %desktop-services
-        (delete gdm-service-type)
+       ;; (service greetd-service-type
+       ;;          (greetd-configuration
+       ;;           (greeter-supplementary-groups (list "video" "input" "seat"))
+       ;;           (terminals
+       ;;            (list (greetd-terminal-configuration
+       ;;                   (terminal-vt "1")
+       ;;                   (terminal-switch #t)
+       ;;                   (default-session-command
+       ;;                     (greetd-wlgreet-sway-session)))))))
+       ;; (service slim-service-type
+       ;;                 (slim-configuration
+       ;;                  (xorg-configuration
+       ;;                   (xorg-configuration
+       ;;                    (modules (delq (specification->package "xf86-input-synaptics")
+       ;;                                   %default-xorg-modules))
+       ;;                    (drivers '("modesetting" "intel"))
+       ;;                    (keyboard-layout keyboard-layout)
+       ;;                    (extra-config '("
+       ;; Section \"InputClass\"
+       ;; Identifier \"devname\"
+       ;; MatchIsTouchpad \"on\"
+       ;; Driver \"libinput\"
+       ;; Option \"NaturalScrolling\" \"true\"
+       ;; EndSection"))))))
+       )
+      (modify-services %base-services
         (guix-service-type
          config =>
          (guix-configuration

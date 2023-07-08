@@ -29,6 +29,7 @@
                  (lambda nil
                    (setq-local eldoc-documentation-strategy
                                'eldoc-documentation-compose)))))
+    ;; FIXME: Release 1.4.2 broken, wait for update.
     (((options->transformation '((with-branch . "emacs-meow=master")))
       emacs-meow)
      (defun meow-setup ()
