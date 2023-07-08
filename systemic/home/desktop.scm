@@ -35,6 +35,7 @@
                 (dwl:start-repl-server)
                 
                 (set-xkb-rules '((options . "ctrl:nocaps")))
+                (setq accel-profile ACCEL-PROFILE-FLAT)
                 
                 (dwl:set-tty-keys "C-M")
                 (dwl:set-tag-keys "s" "s-S")
