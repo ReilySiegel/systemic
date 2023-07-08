@@ -1,4 +1,5 @@
 (define-module (systemic machines luden)
+  #:use-module (dwl-guile home-service)
   #:use-module (gnu home)
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
@@ -42,4 +43,14 @@
 
 (define-public home
   (home-environment
-   (inherit base:home)))
+   (inherit base:home)
+   (services
+    (cons*
+     (simple-service
+      'laptop
+      home-dwl-guile-service-type
+      '((set-monitor-rules '((scale . 2)))
+        (setq natural-scrolling? #t
+              tap-to-click? #f
+              tap-and-drag? 0)))
+     (home-environment-user-services base:home)))))

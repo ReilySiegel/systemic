@@ -33,13 +33,8 @@
             (config
              `(((setq inhibit-defaults? #t)
                 (dwl:start-repl-server)
-                (set-monitor-rules '((scale . 2)))
                 
                 (set-xkb-rules '((options . "ctrl:nocaps")))
-
-                (setq natural-scrolling? #t
-                      tap-to-click? #f
-                      tap-and-drag? 0)
                 
                 (dwl:set-tty-keys "C-M")
                 (dwl:set-tag-keys "s" "s-S")
