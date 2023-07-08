@@ -1,4 +1,4 @@
-(define-module (systemic machines base)
+(define-module (systemic system)
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
   #:use-module (gnu packages)
@@ -26,11 +26,10 @@
   #:use-module (guix packages)
   #:use-module (nongnu packages linux))
 
-(define-public base-operating-system
+(define-public system
   (operating-system
     (kernel linux)
     (firmware (list linux-firmware))
-    
     (host-name "base")
     (timezone "America/New_York")
     (locale "en_US.utf8")
@@ -48,8 +47,6 @@
     (packages
      (append
       (list
-       (with-emacs-next (specification->package "emacs-exwm"))
-       (specification->package "sway")
        (specification->package "nss-certs")
        (specification->package "pulseaudio")
        (specification->package "mesa")
@@ -80,32 +77,7 @@
                  (timeout 10)
                  (extensions (list cups-filters
                                    epson-inkjet-printer-escpr
-                                   hplip-minimal))))
-       ;; (service greetd-service-type
-       ;;          (greetd-configuration
-       ;;           (greeter-supplementary-groups (list "video" "input" "seat"))
-       ;;           (terminals
-       ;;            (list (greetd-terminal-configuration
-       ;;                   (terminal-vt "1")
-       ;;                   (terminal-switch #t)
-       ;;                   (default-session-command
-       ;;                     (greetd-wlgreet-sway-session)))))))
-       ;; (service slim-service-type
-       ;;                 (slim-configuration
-       ;;                  (xorg-configuration
-       ;;                   (xorg-configuration
-       ;;                    (modules (delq (specification->package "xf86-input-synaptics")
-       ;;                                   %default-xorg-modules))
-       ;;                    (drivers '("modesetting" "intel"))
-       ;;                    (keyboard-layout keyboard-layout)
-       ;;                    (extra-config '("
-       ;; Section \"InputClass\"
-       ;; Identifier \"devname\"
-       ;; MatchIsTouchpad \"on\"
-       ;; Driver \"libinput\"
-       ;; Option \"NaturalScrolling\" \"true\"
-       ;; EndSection"))))))
-       )
+                                   hplip-minimal)))))
       (modify-services %base-services
         (guix-service-type
          config =>
@@ -133,4 +105,3 @@
                      (type "tmpfs")
                      (check? #f))
                    %base-file-systems))))
-base-operating-system
