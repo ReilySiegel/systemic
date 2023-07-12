@@ -5,10 +5,11 @@
   #:use-module (dwl-guile patches)
   #:use-module (gnu home services)
   #:use-module (gnu home services desktop)
+  #:use-module (gnu home services shepherd)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
-  #:use-module (gnu packages terminals)
+  #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu services)
   #:use-module (guix gexp)
@@ -44,6 +45,7 @@
                 (set-keys
                  "s-d" ,(guix:spawn bemenu "/bin/bemenu-run")
                  "s-<return>" ,(guix:spawn emacs-next-pgtk "/bin/emacs")
+                 "s-n" ,(guix:spawn mako "/bin/makoctl" "dismiss")
                  "s-j" '(dwl:focus-stack 1)
                  "s-k" '(dwl:focus-stack -1)
                  "s-l" '(dwl:change-master-factor 0.05)
@@ -101,10 +103,28 @@
               (right-blocks
                (list %battery-block %time-block)))))))
 
+(define mako-service-type
+  (service-type
+   (name 'mako)
+   (default-value #f)
+   (extensions
+    (list (service-extension
+           home-shepherd-service-type
+           (lambda (_)
+             (list (shepherd-service
+                    (provision '(notification))
+                    (requirement '(dbus))
+                    (start #~(make-forkexec-constructor
+                              (list (string-append #$mako "/bin/mako")
+                                    "--ignore-timeout" "1")))
+                    (stop #~ (make-kill-destructor))))))))
+   (description "Mako notfification daemon.")))
+
 (define services
   (list dwl-guile-service
         dtao-guile-service
         (service home-dbus-service-type)
+        (service mako-service-type)
         (simple-service
          'flatpak-profile home-profile-service-type (list flatpak))
         (simple-service
