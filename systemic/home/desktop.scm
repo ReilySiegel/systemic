@@ -4,6 +4,7 @@
   #:use-module (dwl-guile packages)
   #:use-module (dwl-guile patches)
   #:use-module (gnu home services)
+  #:use-module (gnu home services desktop)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
@@ -103,6 +104,7 @@
 (define services
   (list dwl-guile-service
         dtao-guile-service
+        (service home-dbus-service-type)
         (simple-service
          'flatpak-profile home-profile-service-type (list flatpak))
         (simple-service
