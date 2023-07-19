@@ -17,6 +17,7 @@
 (define %imap-address "imap.zoho.com")
 (define %smtp-address "smtppro.zoho.com")
 (define %pass-entry "zoho.com")
+(define %secret-location "isync/secret")
 
 (define (isync-extension config)
   `((Create Both)
@@ -26,7 +27,7 @@
     (IMAPAccount personal)
     (Host ,%imap-address)
     (User ,%mail-address)
-    (Pass ,(pass %pass-entry))
+    (PassCmd ,(string-append "cat $XDG_STATE_HOME/" %secret-location))
     (SSLType "IMAPS")
     ,#~""
     (IMAPStore personal-remote)
@@ -178,4 +179,7 @@ tags = +agenda;-new
      (service-extension home-mcron-service-type
                         (lambda _ (list #~(job "*/5 * * * *" "notmuch new"))))
      (service-extension home-xdg-configuration-files-service-type
-                        add-afew-config-file)))))
+                        add-afew-config-file)
+     (service-extension home-activation-service-type
+                        (lambda _ ((pass-activation %pass-entry)
+                                   %secret-location)))))))
