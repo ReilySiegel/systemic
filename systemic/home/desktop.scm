@@ -112,8 +112,8 @@
            home-shepherd-service-type
            (lambda (_)
              (list (shepherd-service
-                    (provision '(notification))
-                    (requirement '(dbus))
+                    (provision '(mako))
+                    (requirement '(dbus dwl-guile))
                     (start #~(make-forkexec-constructor
                               (list (string-append #$mako "/bin/mako")
                                     "--ignore-timeout" "1")))
