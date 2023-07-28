@@ -27,19 +27,7 @@
                 (cpu-boost-on-ac? #t)
                 (sched-powersave-on-bat? #t)))
       (service netbird-service-type)
-      (operating-system-user-services base:system)))
-    (file-systems
-     (cons* (file-system
-              (mount-point "/")
-              (device
-               (uuid "6fad59fe-c558-4443-9662-16d3ec2fa863"
-                     'btrfs))
-              (type "btrfs"))
-            (file-system
-              (mount-point "/boot/efi")
-              (device (uuid "1F04-0E57" 'fat32))
-              (type "vfat"))
-            %base-file-systems))))
+      (operating-system-user-services base:system)))))
 
 (define-public home
   (home-environment

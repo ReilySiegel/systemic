@@ -98,10 +98,14 @@
      (bootloader-configuration
       (bootloader grub-efi-bootloader)
       (targets (list "/boot/efi"))))
-    (file-systems (cons*
-                   (file-system
-                     (mount-point "/")
-                     (device "none")
-                     (type "tmpfs")
-                     (check? #f))
-                   %base-file-systems))))
+    (file-systems
+     (cons* (file-system
+              (device (file-system-label "btrfs-pool"))
+              (mount-point "/")
+              (type "btrfs")
+              (options "subvol=rootfs"))
+            (file-system
+              (device (file-system-label "efi"))
+              (mount-point "/boot/efi")
+              (type "vfat"))
+            %base-file-systems))))

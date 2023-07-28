@@ -22,18 +22,7 @@
                ;; For Lutris / Wine esync
                (list (pam-limits-entry "*" 'hard 'nofile 524288)))
       (service netbird-service-type)
-      (operating-system-user-services base:system)))
-    (file-systems (cons* (file-system
-                           (mount-point "/boot/efi")
-                           (device (uuid "13F7-A75E"
-                                         'fat32))
-                           (type "vfat"))
-                         (file-system
-                           (mount-point "/")
-                           (device (uuid
-                                    "887bbf14-aca2-44cf-8ee2-f40b5112c587"
-                                    'ext4))
-                           (type "ext4")) %base-file-systems))))
+      (operating-system-user-services base:system)))))
 
 (define-public home
   (home-environment
