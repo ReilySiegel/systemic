@@ -7,47 +7,61 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages mail)
   #:use-module (gnu services)
+  #:use-module (gnu services configuration)
   #:use-module (guix gexp)
   #:use-module (systemic home emacs-utils)
-  #:use-module (systemic pass)
-  #:export (systemic-mail-service-type))
+  #:export (systemic-mail-service-type
 
+            systemic-mail-configuration
+            systemic-mail-configuration?
+            systemic-mail-configuration-imap
+            systemic-mail-configuration-smtp
+            systemic-mail-configuration-address
+            systemic-mail-configuration-secret))
 
-(define %mail-address "mail@reilysiegel.com")
-(define %imap-address "imap.zoho.com")
-(define %smtp-address "smtppro.zoho.com")
-(define %pass-entry "zoho.com")
-(define %secret-location "isync/secret")
+(define-configuration/no-serialization systemic-mail-configuration
+  (address
+   (string #f)
+   "Mail address to use.")
+  (imap
+   (string #f)
+   "IMAP address to use.")
+  (smtp
+   (string #f)
+   "SMTP address to use.")
+  (auth-mechs
+   (string "*")
+   "AuthMechs to use.")
+  (secret
+   (gexp #f)
+   "Command returning the secret to use."))
 
 (define (isync-extension config)
   `((Create Both)
     (Expunge Both)
     (SyncState *)
     ,#~""
-    (IMAPAccount personal)
-    (Host ,%imap-address)
-    (User ,%mail-address)
-    (PassCmd ,(string-append "cat $XDG_STATE_HOME/" %secret-location))
+    (IMAPAccount account)
+    (Host ,(systemic-mail-configuration-imap config))
+    (User ,(systemic-mail-configuration-address config))
+    ,#~(string-append "PassCmd \""
+                      #$(systemic-mail-configuration-secret config)
+                      "\"")
+    (AuthMechs ,(systemic-mail-configuration-auth-mechs config))
     (SSLType "IMAPS")
     ,#~""
-    (IMAPStore personal-remote)
-    (Account personal)
+    (IMAPStore remote)
+    (Account account)
     ,#~"" 
-    (MaildirStore personal-local)
-    (Path "~/.mail/personal/")
-    (Inbox "~/.mail/personal/inbox")
+    (MaildirStore local)
+    (Path "~/.mail/box/")
+    (Inbox "~/.mail/box/inbox")
+    (SubFolders Verbatim)
     ,#~"" 
-    (Channel personal-inbox)
-    (Far ":personal-remote:INBOX")
-    (Near ":personal-local:inbox")
-    ,#~"" 
-    (Channel personal-sent)
-    (Far ":personal-remote:Sent")
-    (Near ":personal-local:sent")
-    ,#~""
-    (Channel personal-drafts)
-    (Far ":personal-remote:Drafts")
-    (Near ":personal-local:drafts")
+    (Channel account)
+    (Far ":remote:")
+    (Near ":local:")
+    (Patterns *)
     ,#~""))
 
 (define (notmuch-extension config)
@@ -69,11 +83,12 @@
      #~(system "notmuch tag +automated -inbox from:noreply")
      #~(system "notmuch tag +automated -inbox from:donotreply")
      ;; Messages to mailing lists should not be in inbox unless they are to me
-     #~(system "notmuch tag -inbox tag:lists AND NOT tag:to-me")))
+     #~(system "notmuch tag -inbox tag:lists AND NOT tag:to-me")
+     #~(system "notmuch tag -inbox +lists +lists/potpourri to:dl-potpourri")))
    (config
     `((user
        ((name "Reily Siegel")
-        (primary_email ,%mail-address)))
+        (primary_email ,(systemic-mail-configuration-address config))))
       (database
        ((path "/home/reily/.mail")
         (mail_root "/home/reily/.mail")))
@@ -97,11 +112,12 @@
             message-kill-buffer-on-exit t
             notmuch-search-oldest-first nil
             notmuch-show-logo nil
+            notmuch-fcc-dirs nil
+            notmuch-draft-folder "Drafts"
             notmuch-hello-sections '(notmuch-hello-insert-header
                                      notmuch-hello-insert-saved-searches)
-            notmuch-fcc-dirs '((,%mail-address . "personal/sent"))
-            smtpmail-smtp-server ,%smtp-address
-            smtpmail-smtp-user ,%mail-address
+            smtpmail-smtp-server ,(systemic-mail-configuration-smtp config)
+            smtpmail-smtp-user ,(systemic-mail-configuration-address config)
             smtpmail-smtp-service 587
             smtpmail-stream-type 'starttls
             notmuch-saved-searches
@@ -169,7 +185,6 @@ tags = +agenda;-new
   (service-type
    (name 'systemic-mail)
    (description "A basic mail service.")
-   (default-value #f)
    (extensions
     (list
      (service-extension home-emacs-service-type emacs-extension)
@@ -179,7 +194,4 @@ tags = +agenda;-new
      (service-extension home-mcron-service-type
                         (lambda _ (list #~(job "*/5 * * * *" "notmuch new"))))
      (service-extension home-xdg-configuration-files-service-type
-                        add-afew-config-file)
-     (service-extension home-activation-service-type
-                        (lambda _ ((pass-activation %pass-entry)
-                                   %secret-location)))))))
+                        add-afew-config-file)))))

@@ -1,6 +1,8 @@
 (define-module (systemic machines luden)
   #:use-module (dwl-guile home-service)
   #:use-module (gnu home)
+  #:use-module (gnu home services)
+  #:use-module (gnu packages base)
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
   #:use-module (gnu services base)
@@ -8,9 +10,11 @@
   #:use-module (gnu services pm)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
+  #:use-module (guix gexp)
   #:use-module (systemic home bibliography)
   #:use-module (systemic home mail)
   #:use-module ((systemic machines base) #:prefix base:)
+  #:use-module (systemic pass)
   #:use-module (systemic system vpn))
 
 (define-public system
@@ -35,7 +39,17 @@
    (inherit base:home)
    (services
     (cons*
-     (service systemic-mail-service-type)
+     (simple-service 'zoho-pass home-activation-service-type
+                     (pass-activation "zoho.com" "isync/secret"))
+     (service systemic-mail-service-type
+              (systemic-mail-configuration
+               (address "mail@reilysiegel.com")
+               (imap "imap.zoho.com")
+               (smtp "smtppro.zoho.com")
+               (secret #~(string-append
+                          #$coreutils
+                          "/bin/cat"
+                          " $XDG_STATE_HOME/isync/secret"))))
      (service bibliography-service-type
               (bibliography-configuration
                (bibtex-file "~/org/references.bib")
