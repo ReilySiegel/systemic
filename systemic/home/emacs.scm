@@ -2,6 +2,7 @@
   #:use-module (gnu home-services emacs)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu packages fonts)
   #:use-module (gnu packages statistics)
   #:use-module (gnu services)
   #:use-module (guix gexp)
@@ -32,7 +33,8 @@
     (emacs-nano-modeline
      (require 'nano-modeline)
      (setopt nano-modeline-position #'nano-modeline-footer)
-     (nano-modeline-text-mode t)))))
+     (nano-modeline-text-mode t))
+    (font-hack))))
 
 (define packages
   (list
