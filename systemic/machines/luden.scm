@@ -8,8 +8,9 @@
   #:use-module (gnu services pm)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
-  #:use-module ((systemic home) #:prefix base:)
-  #:use-module ((systemic system) #:prefix base:)
+  #:use-module (systemic home bibliography)
+  #:use-module (systemic home mail)
+  #:use-module ((systemic machines base) #:prefix base:)
   #:use-module (systemic system vpn))
 
 (define-public system
@@ -34,6 +35,11 @@
    (inherit base:home)
    (services
     (cons*
+     (service systemic-mail-service-type)
+     (service bibliography-service-type
+              (bibliography-configuration
+               (bibtex-file "~/org/references.bib")
+               (csl-directory "~/org/csl")))
      (simple-service
       'laptop
       home-dwl-guile-service-type

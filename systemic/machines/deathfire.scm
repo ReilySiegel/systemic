@@ -8,8 +8,7 @@
   #:use-module (gnu services pm)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
-  #:use-module ((systemic home) #:prefix base:)
-  #:use-module ((systemic system) #:prefix base:)
+  #:use-module ((systemic machines base) #:prefix base:)
   #:use-module (systemic system vpn))
 
 (define-public system
