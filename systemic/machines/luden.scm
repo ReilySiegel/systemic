@@ -43,7 +43,7 @@
      (simple-service
       'laptop
       home-dwl-guile-service-type
-      '((set-monitor-rules '((scale . 2)))
+      `((set-monitor-rules '((scale . ,(/ 3000 1920))))
         (setq natural-scrolling? #t
               tap-to-click? #f
               tap-and-drag? 0)))

@@ -97,7 +97,7 @@
             (auto-start? #t)
             (config
              (dtao-config
-              (font "Hack:size=14")
+              (font "Hack:size=18")
               (block-spacing 8)
               (modules (list '(ice-9 textual-ports)))
               (right-blocks

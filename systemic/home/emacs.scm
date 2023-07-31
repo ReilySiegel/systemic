@@ -24,7 +24,7 @@
    home-emacs-service-type
    (emacs-configuration-extension
     ("font"
-     (set-frame-font "Hack-11"))
+     (set-frame-font "Hack-14"))
     (emacs-nano-theme
      (require 'nano-theme)
      (nano-mode)
