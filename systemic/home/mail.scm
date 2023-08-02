@@ -1,4 +1,3 @@
-
 (define-module (systemic home mail)
   #:use-module (gnu home services)
   #:use-module (gnu home-services emacs)
@@ -6,6 +5,7 @@
   #:use-module (gnu home services mcron)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages mail)
+  #:use-module (gnu packages python-web)
   #:use-module (gnu services)
   #:use-module (gnu services configuration)
   #:use-module (guix gexp)
@@ -104,6 +104,22 @@
     (keymap-global-set "C-c m" 'notmuch)
 
     (require 'notmuch-mua)
+
+    (defun fetch-access-token ()
+      (with-temp-buffer
+       (call-process ,(file-append oauth2ms "/bin/oauth2ms")
+                     nil t nil "--encode-xoauth2")
+       (buffer-string)))
+
+    (with-eval-after-load 'smtpmail
+      (cl-defmethod smtpmail-try-auth-method
+                    (process (_mech (eql xoauth2)) user password)
+                    (let* ((access-token (fetch-access-token)))
+	              (smtpmail-command-or-throw
+	               process
+	               (concat "AUTH XOAUTH2 " access-token)
+	               235)))
+      (add-to-list 'smtpmail-auth-supported 'xoauth2))
 
     (setopt mail-user-agent 'notmuch-user-agent
             message-send-mail-function 'smtpmail-send-it
