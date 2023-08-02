@@ -99,7 +99,9 @@
              (dtao-config
               (font "Hack:size=18")
               (block-spacing 8)
-              (modules (list '(ice-9 textual-ports)))
+              (modules (list '(ice-9 textual-ports)
+                             '(ice-9 rdelim)
+                             '(ice-9 popen)))
               (right-blocks
                (list %battery-block %time-block)))))))
 

@@ -1,4 +1,6 @@
 (define-module (systemic home mail)
+  #:use-module (dtao-guile configuration blocks)
+  #:use-module (dtao-guile home-service)
   #:use-module (gnu home services)
   #:use-module (gnu home-services emacs)
   #:use-module (gnu home-services mail)
@@ -197,6 +199,23 @@ pattern = AGENDA
 tags = +agenda;-new
 [InboxFilter]"))))
 
+
+(define render-block
+  #~(let ((unread (call-with-port (open-input-pipe
+                                   (string-append #$notmuch
+                                                  "/bin/notmuch"
+                                                  " count tag:unread"))
+                    (compose read-line))))
+      (if (zero? (string->number unread))
+          ""
+          (string-append "✉ " unread))))
+
+(define (dtao-extension config)
+  (list
+   (dtao-block
+    (interval 10)
+    (render render-block))))
+
 (define systemic-mail-service-type
   (service-type
    (name 'systemic-mail)
@@ -208,6 +227,8 @@ tags = +agenda;-new
      (service-extension home-notmuch-service-type notmuch-extension)
      (service-extension home-profile-service-type (lambda _ (list afew)))
      (service-extension home-mcron-service-type
-                        (lambda _ (list #~(job "*/5 * * * *" "notmuch new"))))
+                        (lambda _ (list #~(job "*/2 * * * *" "notmuch new"))))
      (service-extension home-xdg-configuration-files-service-type
-                        add-afew-config-file)))))
+                        add-afew-config-file)
+     (service-extension home-dtao-guile-service-type dtao-extension))))
+  )
