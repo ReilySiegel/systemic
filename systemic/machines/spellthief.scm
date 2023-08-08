@@ -18,6 +18,7 @@
   #:use-module (guix packages)
   #:use-module (systemic home mail)
   #:use-module ((systemic machines base) #:prefix base:)
+  #:use-module (systemic packages cyrus-sasl)
   #:use-module (systemic system vpn))
 
 (define-public system
