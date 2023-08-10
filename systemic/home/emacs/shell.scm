@@ -24,5 +24,7 @@
                vc-ignore-dir-regexp
                (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))))
     (emacs-eat
-     (setopt eshell-visual-commands nil)
+     (setopt eshell-visual-commands nil
+             ;; Better remote compatibility.
+             eat-term-name "xterm-256color")
      (add-hook 'eshell-load-hook #'eat-eshell-mode)))))
