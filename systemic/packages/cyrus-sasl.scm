@@ -9,16 +9,10 @@
 
 (define-public cyrus-sasl/search-paths
   (package/inherit cyrus-sasl
-    (native-search-paths
-     (list (search-path-specification
-            (variable "SASL_PATH")
-            (files (list "lib/sasl2")))))))
-
-(module-define!
- (resolve-module '(gnu packages cyrus-sasl))
- 'cyrus-sasl
- (package/inherit cyrus-sasl
-   (replacement cyrus-sasl/search-paths)))
+                   (native-search-paths
+                    (list (search-path-specification
+                           (variable "SASL_PATH")
+                           (files (list "lib/sasl2")))))))
 
 (define-public cyrus-sasl-xoauth2
   (package
@@ -44,7 +38,7 @@
                             (substitute* "autogen.sh"
                               ;; Add shebang to autogen.sh
                               (("libtoolize") "#!/bin/sh\nlibtoolize")))))))
-    (inputs (list cyrus-sasl))
+    (propagated-inputs (list cyrus-sasl/search-paths))
     (native-inputs (list autoconf automake libtool))
     (home-page "https://github.com/moriyoshi/cyrus-sasl-xoauth2")
     (synopsis "XOAUTH2 plugin for Cyrus SASL")
