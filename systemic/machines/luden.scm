@@ -31,7 +31,7 @@
                 (cpu-scaling-governor-on-bat '("powersave"))
                 (cpu-boost-on-ac? #t)
                 (sched-powersave-on-bat? #t)))
-      (service netbird-service-type)
+      (systemic-wireguard-service "10.10.50.1")
       (operating-system-user-services base:system)))))
 
 (define-public home

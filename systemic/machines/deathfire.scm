@@ -8,8 +8,7 @@
   #:use-module (gnu services pm)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
-  #:use-module ((systemic machines base) #:prefix base:)
-  #:use-module (systemic system vpn))
+  #:use-module ((systemic machines base) #:prefix base:))
 
 (define-public system
   (operating-system
@@ -20,7 +19,6 @@
       (service pam-limits-service-type
                ;; For Lutris / Wine esync
                (list (pam-limits-entry "*" 'hard 'nofile 524288)))
-      (service netbird-service-type)
       (operating-system-user-services base:system)))))
 
 (define-public home
