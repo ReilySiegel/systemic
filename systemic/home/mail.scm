@@ -11,6 +11,7 @@
   #:use-module (gnu services)
   #:use-module (gnu services configuration)
   #:use-module (guix gexp)
+  #:use-module (ice-9 match)
   #:use-module (systemic home emacs-utils)
   #:export (systemic-mail-service-type
 
@@ -36,7 +37,10 @@
    "AuthMechs to use.")
   (secret
    (gexp #f)
-   "Command returning the secret to use."))
+   "Command returning the secret to use.")
+  (notmuch-tags
+   (alist '())
+   "Alist of notmuch search to list of tags to add or remove."))
 
 (define (isync-extension config)
   `((Create Both)
@@ -82,18 +86,13 @@
      #~(system (string-append #$afew
                               "/bin/afew -tnC ~/.config/notmuch/default/config"))
 
-     (map (lambda (args)
-            #~(system (string-append #$notmuch "/bin/notmuch tag " #$cmd)))
-          (list 
-           ;; Tag messages with unsubscribe options as promotional
-           "+promotional -inbox unsubscribe"
-           ;; Tag messages from noreply as automated
-           ;; Use reply to catch all variations
-           "+automated -inbox from:reply"
-           ;; Messages to mailing lists should not be in inbox unless they are
-           ;; to me
-           "-inbox tag:lists AND NOT tag:to-me"
-           "-inbox +lists +lists/potpourri to:dl-potpourri"))))
+     (map (match-lambda
+            ((search tags)
+             #~(system (string-append #$notmuch "/bin/notmuch tag "
+
+                                      #$(string-join tags " ") " "
+                                      #$search))))
+          (systemic-mail-configuration-notmuch-tags config))))
    (config
     `((user
        ((name "Reily Siegel")

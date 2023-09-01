@@ -49,7 +49,16 @@
                (secret #~(string-append
                           #$coreutils
                           "/bin/cat"
-                          " $XDG_STATE_HOME/isync/secret"))))
+                          " $XDG_STATE_HOME/isync/secret"))
+               (notmuch-tags
+                '( ;; Tag messages with unsubscribe options as promotional
+                  ("unsubscribe" ("+promotional" "-inbox"))
+                  ;; Tag messages from noreply as automated
+                  ;; Use reply to catch all variations
+                  ("from:reply" ("+automated" "-inbox"))
+                  ;; Messages to mailing lists should not be in inbox unless
+                  ;; they are to me
+                  ("tag:lists AND NOT tag:to-me" ("-inbox"))))))
      (service bibliography-service-type
               (bibliography-configuration
                (bibtex-file "~/org/references.bib")
