@@ -66,27 +66,34 @@
     (Patterns *)
     ,#~""))
 
+
 (define (notmuch-extension config)
   (home-notmuch-extension
    (pre-new
     (list
-     #~(system (string-append "notmuch search --output=files --format=text0"
+     #~(system (string-append #$notmuch
+                              "/bin/notmuch search --output=files --format=text0"
                               " tag:deleted | "
                               "xargs -r0 rm"))
-     #~(system "mbsync -a")))
+     #~(system (string-append #$isync
+                              "/bin/mbsync -ac ~/.config/isync/mbsyncrc"))))
    (post-new
-    (list
-     #~(system "afew -tnC ~/.config/notmuch/default/config")
-     ;; Tag messages with unsubscribe options as promotional
-     #~(system "notmuch tag +promotional -inbox unsubscribe")
-     ;; Tag messages from noreply as automated
-     ;; Use reply to catch all variations
-     #~(system "notmuch tag +automated -inbox from:reply")
-     #~(system "notmuch tag +automated -inbox from:noreply")
-     #~(system "notmuch tag +automated -inbox from:donotreply")
-     ;; Messages to mailing lists should not be in inbox unless they are to me
-     #~(system "notmuch tag -inbox tag:lists AND NOT tag:to-me")
-     #~(system "notmuch tag -inbox +lists +lists/potpourri to:dl-potpourri")))
+    (cons*
+     #~(system (string-append #$afew
+                              "/bin/afew -tnC ~/.config/notmuch/default/config"))
+
+     (map (lambda (args)
+            #~(system (string-append #$notmuch "/bin/notmuch tag " #$cmd)))
+          (list 
+           ;; Tag messages with unsubscribe options as promotional
+           "+promotional -inbox unsubscribe"
+           ;; Tag messages from noreply as automated
+           ;; Use reply to catch all variations
+           "+automated -inbox from:reply"
+           ;; Messages to mailing lists should not be in inbox unless they are
+           ;; to me
+           "-inbox tag:lists AND NOT tag:to-me"
+           "-inbox +lists +lists/potpourri to:dl-potpourri"))))
    (config
     `((user
        ((name "Reily Siegel")
@@ -226,9 +233,10 @@ tags = +agenda;-new
      (service-extension home-isync-service-type isync-extension)
      (service-extension home-notmuch-service-type notmuch-extension)
      (service-extension home-profile-service-type (lambda _ (list afew)))
-     (service-extension home-mcron-service-type
-                        (lambda _ (list #~(job "*/2 * * * *" "notmuch new"))))
+     (service-extension
+      home-mcron-service-type
+      (lambda _ (list #~(job "*/2 * * * *"
+                             (string-append #$notmuch "/bin/notmuch new")))))
      (service-extension home-xdg-configuration-files-service-type
                         add-afew-config-file)
-     (service-extension home-dtao-guile-service-type dtao-extension))))
-  )
+     (service-extension home-dtao-guile-service-type dtao-extension)))))
