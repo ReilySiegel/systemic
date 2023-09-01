@@ -14,12 +14,10 @@
     ('flymake
      (add-hook 'text-mode-hook #'flymake-mode)
      (add-hook 'prog-mode-hook #'flymake-mode))
-    (emacs-flymake-languagetool
-     (setopt
-      flymake-languagetool-check-spelling t
-      flymake-languagetool-server-jar
-      (substitute-in-file-name "$XDG_DATA_HOME/languagetool/languagetool-server.jar"))
-     (add-hook 'text-mode-hook #'flymake-languagetool-load))
+    (emacs-eglot-grammarly
+     (add-hook 'text-mode-hook (lambda ()
+                                 (require 'eglot-grammarly)
+                                 (eglot-ensure))))
     ('eldoc
      (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
     (emacs-eglot

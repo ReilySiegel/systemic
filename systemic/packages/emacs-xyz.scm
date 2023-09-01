@@ -95,26 +95,26 @@ org-roam and yasnippet.")
 emails using a valid emacs mail user agent.")
       (license license:mpl2.0))))
 
-(define-public emacs-flymake-languagetool
-  (let ((commit "5f9eef8fe3f342f17593e0caeaba906ba7cab24a")
+(define-public emacs-eglot-grammarly
+  (let ((commit "c245f45b599504953d3936d897f1538e02d1ba5e")
         (revision "1"))
     (package
-      (name "emacs-flymake-languagetool")
-      (version (git-version "0.2.0" revision commit))
+      (name "emacs-eglot-grammarly")
+      (version (git-version "0.1.0" revision commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                      (url "https://github.com/emacs-languagetool/flymake-languagetool")
+                      (url "https://github.com/emacs-grammarly/eglot-grammarly")
                       (commit commit)))
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1mz18inlv78lg40jgq68qq3v62b6mgmz89lcgczg93lyfh81pjp3"))))
+                  "0xnzbahjbd8qa0j5qh4nb226wks0psw9kq28z4x29bvw7y1n73r8"))))
       (build-system emacs-build-system)
-      (propagated-inputs (list emacs-s))
-      (home-page "https://github.com/emacs-languagetool/flymake-languagetool")
-      (synopsis "Flymake support for LanguageTool")
-      (description "Flymake support for LanguageTool.")
+      (propagated-inputs (list emacs-eglot))
+      (home-page "https://github.com/emacs-grammarly/eglot-grammarly")
+      (synopsis "Eglot client for Grammarly")
+      (description "Eglot client for Grammarly.")
       (license license:gpl3+))))
 
 (define-public emacs-nano-theme
