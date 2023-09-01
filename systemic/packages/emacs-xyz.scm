@@ -12,30 +12,6 @@
   #:use-module (guix packages)
   #:use-module ((guix licenses) #:prefix license:))
 
-(define-public emacs-git-email
-  (package
-    (name "emacs-git-email")
-    (version "0.2.0")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://git.sr.ht/~yoctocell/git-email")
-                    (commit (string-append "v" version))))
-              (snippet
-               ;; Not yet in Guix proper
-               '(delete-file "git-email-piem.el"))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "09vmh3x1rjxxl9g9p01afil1zlpk7rf0pjmzyvcbid9wczyllkhq"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-magit notmuch))
-    (home-page "https://sr.ht/~yoctocell/git-email/")
-    (synopsis "Integrates git and email with Emacs")
-    (description "git-email provides functions for formatting and sending Git patches
-via email, without leaving Emacs.")
-    (license license:gpl3+)))
-
 (define-public systemic-emacs-desktop-environment
   (package
     (inherit emacs-desktop-environment)
@@ -47,30 +23,6 @@ via email, without leaving Emacs.")
                              tlp
                              playerctl))))
 
-(define-public emacs-org-minutes
-  (package
-   (name "emacs-org-minutes")
-   (version "0.0.1")
-   (home-page "https://github.com/ReilySiegel/org-minutes")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url home-page)
-                  (commit "d9ca4340061c9fe1dcd04e6a1320054f7506dc3a")))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32
-              "0l9r1i86xzdhifqn58xg1f6rndi8rqhzc3kgs3842kkwd31d9lp5"))))
-   (build-system emacs-build-system)
-   (arguments
-    `(#:include (cons* "^snippets\\/" %default-include))) 
-   (propagated-inputs (list emacs-org
-                            emacs-org-roam
-                            emacs-yasnippet))
-   (synopsis "Tools for taking minutes in org-mode")
-   (description "Tools for taking minutes in org-mode. Designed to work with
-org-roam and yasnippet.")
-   (license license:gpl3+)))
 
 (define-public emacs-magit-email
   (let ((commit "5ea5fc1bba5366c463ef41d41cd1f551f4008de4")
