@@ -53,7 +53,7 @@
 (define emacs
   (service home-emacs-service-type
            (home-emacs-configuration
-            (package emacs-next-pgtk)
+            (package emacs-pgtk)
             (rebuild-elisp-packages? #f)
             (server-mode? #t)
             (elisp-packages packages)
