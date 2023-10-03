@@ -43,7 +43,6 @@
    emacs-outshine emacs-aggressive-indent
    emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-gnuplot
-   emacs-ess
    emacs-esup emacs-flyspell-correct
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
