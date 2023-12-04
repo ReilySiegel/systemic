@@ -17,5 +17,5 @@
      (service-extension home-profile-service-type (const (list guile-3.0)))
      (service-extension home-emacs-service-type
                         (const (emacs-configuration-extension
-                                (emacs-geiser
+                                (emacs-guix
                                  (setopt geiser-repl-per-project-p t)))))))))

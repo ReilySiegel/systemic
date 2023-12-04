@@ -46,7 +46,7 @@
    emacs-esup emacs-flyspell-correct
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
-   emacs-discover-my-major emacs-guix
+   emacs-discover-my-major
    emacs-origami-el))
 
 (define emacs
