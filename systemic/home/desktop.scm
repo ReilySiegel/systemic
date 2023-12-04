@@ -16,6 +16,7 @@
   #:use-module (guix packages)
   #:use-module (ice-9 textual-ports)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
   #:export (services))
 
 (define (guix:spawn pkg path . args)
@@ -84,12 +85,18 @@
   (dtao-block
    (interval 5)
    (render
-    `(string-append
-      (call-with-input-file
-          "/sys/class/power_supply/BAT0/capacity" get-line)
-      "% "
-      (call-with-input-file
-          "/sys/class/power_supply/BAT0/status" get-line)))))
+    `(let ((path (first
+                  (filter file-exists?
+                          (map (cut string-append "/sys/class/power_supply/" <>)
+                               (list "BAT0" "BAT1"))))))
+       (or (when path
+             (string-append
+              (call-with-input-file
+                  (string-append path "/capacity") get-line)
+              "% "
+              (call-with-input-file
+                  (string-append path "/status") get-line)))
+           "")))))
 
 (define dtao-guile-service
   (service home-dtao-guile-service-type
@@ -101,7 +108,9 @@
               (block-spacing 8)
               (modules (list '(ice-9 textual-ports)
                              '(ice-9 rdelim)
-                             '(ice-9 popen)))
+                             '(ice-9 popen)
+                             '(srfi srfi-1)
+                             '(srfi srfi-26)))
               (right-blocks
                (list %battery-block %time-block)))))))
 
