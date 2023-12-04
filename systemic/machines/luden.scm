@@ -11,7 +11,6 @@
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
   #:use-module (guix gexp)
-  #:use-module (systemic home bibliography)
   #:use-module (systemic home mail)
   #:use-module ((systemic machines base) #:prefix base:)
   #:use-module (systemic pass)
@@ -59,10 +58,6 @@
                   ;; Messages to mailing lists should not be in inbox unless
                   ;; they are to me
                   ("tag:lists AND NOT tag:to-me" ("-inbox"))))))
-     (service bibliography-service-type
-              (bibliography-configuration
-               (bibtex-file "~/org/references.bib")
-               (csl-directory "~/org/csl")))
      (simple-service
       'laptop
       home-dwl-guile-service-type
