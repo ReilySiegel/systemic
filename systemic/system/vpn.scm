@@ -17,4 +17,8 @@
                (name "bard")
                (endpoint "bard.reilysiegel.com:51820")
                (public-key "uyhDxjDWrNP/HAcImeFWfeLHk4Io3nPnyY6lvQFoph8=")
-               (allowed-ips (list "10.10.0.0/16"))))))))
+               (allowed-ips (list "10.10.0.0/16"
+                                  "192.168.10.0/24"
+                                  "192.168.20.0/24"
+                                  "192.168.30.0/24"
+                                  "192.168.40.0/24"))))))))
