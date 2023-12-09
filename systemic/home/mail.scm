@@ -151,6 +151,7 @@
               (:name "auto[m]ated" :query "tag:unread AND tag:automated" :key "m")
               ;;Show unread promotional messages
               (:name "[p]romotional" :query "tag:unread AND tag:promotional" :key "p")
+              (:name "[b]od" :query "tag:unread AND tag:lists/bod" :key "b")
               (:name "[f]lagged" :query "tag:flagged" :key "f")
               (:name "[s]ent" :query "tag:sent" :key "s")
               (:name "[d]rafts" :query "tag:draft" :key "d")
