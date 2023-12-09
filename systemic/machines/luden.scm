@@ -11,6 +11,7 @@
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
   #:use-module (guix gexp)
+  #:use-module (nongnu packages linux)
   #:use-module (systemic home mail)
   #:use-module ((systemic machines base) #:prefix base:)
   #:use-module (systemic pass)
@@ -19,6 +20,8 @@
 (define-public system
   (operating-system
     (inherit base:system)
+    (kernel (corrupt-linux linux-libre #:configs '("CONFIG_MT7921E=m")))
+    
     (host-name "luden")
     (services
      (cons*
