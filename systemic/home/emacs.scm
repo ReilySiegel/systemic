@@ -90,6 +90,9 @@
                ;; Unbind suspend-frame
                (keymap-global-unset "C-z")
 
+               ;; Add global binding for revert-buffer
+               (keymap-global-set "C-x g" #'revert-buffer)
+
                ;; Don't pop up warning buffer unnecessarily.
                (setopt warning-minimum-level :error)
 

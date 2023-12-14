@@ -16,8 +16,7 @@
     (setopt user-full-name ,(car config))
     (setopt user-mail-address ,(cadr config)))
    (emacs-magit
-    (keymap-global-set "C-x g" #'magit-status)
-    (keymap-global-set "C-x M-g" #'magit-dispatch)
+    (keymap-global-set "C-x M-g" #'magit-status)
 
     (require 'project)
     ;; Remove VC-DIR from project keymap
