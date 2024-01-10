@@ -10,6 +10,7 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu services)
@@ -45,8 +46,8 @@
                 (dwl:set-tag-keys "s" "s-S")
 
                 (set-keys
-                 "s-d" ,(guix:spawn bemenu "/bin/bemenu-run" "-i")
-                 "s-<return>" ,(guix:spawn emacs-next-pgtk "/bin/emacs")
+                 "s-e" ,(guix:spawn emacs-next-pgtk "/bin/emacs")
+                 "s-<return>" ,(guix:spawn bemenu "/bin/bemenu-run" "-i")
                  "s-n" ,(guix:spawn mako "/bin/makoctl" "dismiss")
                  "s-j" '(dwl:focus-stack 1)
                  "s-k" '(dwl:focus-stack -1)
@@ -74,9 +75,13 @@
                  "s-<mouse-middle>" 'dwl:toggle-floating
                  "s-<mouse-right>" 'dwl:resize
                  "<XF86MonBrightnessDown>"
-                 ,(guix:spawn light "/bin/light" "-U" "10")
+                 ,(guix:spawn light "/bin/light" "-U" "5")
                  "<XF86MonBrightnessUp>"
-                 ,(guix:spawn light "/bin/light" "-A" "10"))))))))
+                 ,(guix:spawn light "/bin/light" "-A" "5")
+                 "<XF86AudioLowerVolume>"
+                 ,(guix:spawn pamixer "/bin/pamixer" "-d" "5")
+                 "<XF86AudioRaiseVolume>"
+                 ,(guix:spawn pamixer "/bin/pamixer" "-i" "5"))))))))
 (define %time-block
   (dtao-block
    (interval 1)
