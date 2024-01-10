@@ -17,6 +17,7 @@
     (setopt user-mail-address ,(cadr config)))
    (emacs-magit
     (keymap-global-set "C-x M-g" #'magit-status)
+    (setopt magit-clone-default-directory "~/src/")
 
     (require 'project)
     ;; Remove VC-DIR from project keymap
