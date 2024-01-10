@@ -113,9 +113,7 @@
      (append
       (list
        (specification->package "nss-certs")
-       (specification->package "pulseaudio")
-       (specification->package "mesa")
-       (specification->package "alsa-utils"))
+       (specification->package "mesa"))
       %base-packages))
     (services
      (append
@@ -130,8 +128,6 @@
        (service usb-modeswitch-service-type)
        (service ntp-service-type)
        (service elogind-service-type)
-       (service pulseaudio-service-type)
-       (service alsa-service-type)
        (service bluetooth-service-type
                 (bluetooth-configuration
                  (auto-enable? #t)))

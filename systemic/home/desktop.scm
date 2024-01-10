@@ -6,6 +6,7 @@
   #:use-module (gnu home services)
   #:use-module (gnu home services desktop)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu home services sound)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages package-management)
@@ -135,6 +136,7 @@
   (list dwl-guile-service
         dtao-guile-service
         (service home-dbus-service-type)
+        (service home-pipewire-service-type)
         (service mako-service-type)
         (simple-service
          'flatpak-profile home-profile-service-type (list flatpak))
