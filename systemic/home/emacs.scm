@@ -8,7 +8,6 @@
   #:use-module (guix gexp)
   #:use-module (guix transformations)
   #:use-module (rde gexp)
-  #:use-module (rrr packages emacs-xyz)
   #:use-module (systemic home emacs-utils)
   #:use-module ((systemic home emacs completion) #:prefix completion:)
   #:use-module ((systemic home emacs editing) #:prefix editing:)
