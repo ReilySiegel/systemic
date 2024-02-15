@@ -29,4 +29,11 @@
      (setopt eshell-visual-commands nil
              ;; Better remote compatibility.
              eat-term-name "xterm-256color")
-     (add-hook 'eshell-load-hook #'eat-eshell-mode)))))
+     (add-hook 'eshell-load-hook #'eat-eshell-mode))
+    (emacs-buffer-env
+     (setopt buffer-env-script-name "guix.scm")
+     (add-hook 'hack-local-variables-hook #'buffer-env-update)
+     (add-hook 'comint-mode-hook #'buffer-env-update))
+    (emacs-inheritenv
+     (with-eval-after-load 'comint
+       (inheritenv-add-advice #'make-comint))))))
