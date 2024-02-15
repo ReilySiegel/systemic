@@ -74,11 +74,6 @@ Passes NAME and ARGS to use-package."
 ;; *both* tabs and spaces are used at the same time).
 (setq-default indent-tabs-mode nil)
 
-(use-package aggressive-indent
-  :hook ((prog-mode . aggressive-indent-mode)
-         (java-mode . (lambda nil (aggressive-indent-mode -1))))
-  :init
-  (electric-indent-mode -1))
 ;;;; Paredit
 (use-package paredit
   :hook (prog-mode . enable-paredit-mode))

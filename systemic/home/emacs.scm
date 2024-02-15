@@ -39,7 +39,7 @@
   (list
    emacs-use-package emacs-esup
    emacs-avy emacs-no-littering
-   emacs-outshine emacs-aggressive-indent
+   emacs-outshine
    emacs-paredit emacs-yasnippet
    emacs-yasnippet-snippets emacs-gnuplot
    emacs-esup emacs-flyspell-correct

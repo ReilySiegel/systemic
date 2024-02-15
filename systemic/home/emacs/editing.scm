@@ -27,6 +27,8 @@
                  (lambda nil
                    (setq-local eldoc-documentation-strategy
                                'eldoc-documentation-compose)))))
+    (emacs-aggressive-indent
+     (global-aggressive-indent-mode 1))
     (emacs-meow
      (defun meow-setup ()
        (setopt meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
