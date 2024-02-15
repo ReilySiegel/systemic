@@ -40,6 +40,7 @@
   #:use-module ((systemic home clojure) #:prefix clojure:)
   #:use-module ((systemic home desktop) #:prefix desktop:)
   #:use-module ((systemic home emacs) #:prefix emacs:)
+  #:use-module ((systemic home haskell) #:prefix haskell:)
   #:use-module ((systemic home javascript) #:prefix javascript:)
   #:use-module ((systemic home kotlin) #:prefix kotlin:))
 
@@ -86,6 +87,7 @@
       (service systemic-git-service-type))
      desktop:services
      clojure:services
+     haskell:services
      javascript:services
      kotlin:services
      emacs:services))))
