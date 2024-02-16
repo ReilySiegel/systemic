@@ -196,14 +196,6 @@ tags = +patch
 header = Subject
 pattern = RFC
 tags = +rfc
-[HeaderMatchingFilter.3]
-header = Subject
-pattern = EXCUSE
-tags = +excuse;-new
-[HeaderMatchingFilter.4]
-header = Subject
-pattern = AGENDA
-tags = +agenda;-new
 [InboxFilter]"))))
 
 
