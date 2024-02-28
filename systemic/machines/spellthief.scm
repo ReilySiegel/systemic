@@ -70,7 +70,11 @@
                   ("to:dl-potpourri" ("+lists" "+lists/potpourri"))
                   ;; Hub annoyingly adds everyone in a list to the To field.
                   ;; Assume hub emails are never directly to me.
-                  ("from:hub@wpi.edu" ("+lists" "+lists/hub" "-to-me"))
+                  ("from:hub@wpi.edu" ("+lists" "+lists/hub" "-to-me" "-unread"))
+                  ("from:nutanix-smtp@wpi0.onmicrosoft.com"
+                   ("+lists" "+lists/nutanix" "-unread"))
+                  ("from:noreply@cloud.tenable.com"
+                   ("+lists" "+lists/tenable" "-unread"))
                   ;; Messages to mailing lists should not be in inbox unless
                   ;; they are to me
                   ("tag:lists AND NOT tag:to-me" ("-inbox"))))))
