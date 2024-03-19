@@ -13,6 +13,8 @@
     ("eshell"
      (keymap-global-set "C-c s" #'eshell)
      (with-eval-after-load 'eshell
+       (add-to-list 'eshell-modules-list 'eshell-smart)
+       (add-to-list 'eshell-modules-list 'eshell-elecslash)
        (setopt eshell-history-size 4096
                eshell-hist-ignoredups t
                remote-file-name-inhibit-cache nil
