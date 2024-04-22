@@ -113,9 +113,7 @@
             %base-user-accounts))
     (packages
      (append
-      (list
-       (specification->package "nss-certs")
-       (specification->package "mesa"))
+      (list (specification->package "mesa"))
       %base-packages))
     (services
      (append
