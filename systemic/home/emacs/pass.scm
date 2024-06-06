@@ -1,10 +1,10 @@
 (define-module (systemic home emacs pass)
-  #:use-module (gnu home-services emacs)
   #:use-module (gnu packages aidc)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages imagemagick)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu services)
+  #:use-module (rde home services emacs)
   #:export (service))
 
 (define service

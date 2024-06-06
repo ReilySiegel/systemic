@@ -1,5 +1,5 @@
 (define-module (systemic home emacs)
-  #:use-module (gnu home-services emacs)
+  #:use-module (rde home services emacs)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages fonts)
@@ -51,8 +51,7 @@
 (define emacs
   (service home-emacs-service-type
            (home-emacs-configuration
-            (package emacs-next-pgtk)
-            (rebuild-elisp-packages? #f)
+            (emacs emacs-next-pgtk)
             (elisp-packages packages)
             (init-el
              `(,#~

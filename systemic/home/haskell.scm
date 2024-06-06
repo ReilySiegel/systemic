@@ -1,9 +1,9 @@
 (define-module (systemic home haskell)
   #:use-module (gnu home services)
-  #:use-module (gnu home-services emacs)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (rde home services emacs)
   #:use-module (systemic home emacs-utils)
   #:export (services))
 

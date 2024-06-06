@@ -1,6 +1,6 @@
 (define-module (systemic home emacs-utils)
-  #:use-module (gnu home-services emacs)
   #:use-module (guix packages)
+  #:use-module (rde home services emacs)
   #:export (emacs-configuration-extension))
 
 (define-syntax-rule (emacs-configuration-extension (package exp ...) ...)

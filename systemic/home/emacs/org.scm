@@ -1,7 +1,7 @@
 (define-module (systemic home emacs org)
-  #:use-module (gnu home-services emacs)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
+  #:use-module (rde home services emacs)
   #:use-module (systemic home emacs-utils)
   #:use-module (systemic packages emacs-xyz)
   #:use-module (guix transformations)

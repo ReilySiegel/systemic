@@ -2,7 +2,6 @@
   #:use-module (dtao-guile configuration blocks)
   #:use-module (dtao-guile home-service)
   #:use-module (gnu home services)
-  #:use-module (gnu home-services emacs)
   #:use-module (gnu home-services mail)
   #:use-module (gnu home services mcron)
   #:use-module (gnu packages emacs-xyz)
@@ -12,6 +11,7 @@
   #:use-module (gnu services configuration)
   #:use-module (guix gexp)
   #:use-module (ice-9 match)
+  #:use-module (rde home services emacs)
   #:use-module (systemic home emacs-utils)
   #:export (systemic-mail-service-type
 
