@@ -41,6 +41,7 @@
   #:use-module ((systemic home desktop) #:prefix desktop:)
   #:use-module ((systemic home emacs) #:prefix emacs:)
   #:use-module ((systemic home haskell) #:prefix haskell:)
+  #:use-module ((systemic home idris) #:prefix idris:)
   #:use-module ((systemic home javascript) #:prefix javascript:)
   #:use-module ((systemic home kotlin) #:prefix kotlin:))
 
@@ -88,6 +89,7 @@
      desktop:services
      clojure:services
      haskell:services
+     idris:services
      javascript:services
      kotlin:services
      emacs:services))))
