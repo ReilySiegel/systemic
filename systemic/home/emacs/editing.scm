@@ -28,6 +28,7 @@
                    (setq-local eldoc-documentation-strategy
                                'eldoc-documentation-compose)))))
     (emacs-aggressive-indent
+     (electric-indent-mode -1)
      (global-aggressive-indent-mode 1))
     (emacs-meow
      (defun meow-setup ()
