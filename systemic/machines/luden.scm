@@ -8,14 +8,14 @@
   #:use-module (gnu services base)
   #:use-module (gnu services desktop)
   #:use-module (gnu services pm)
+  #:use-module (gnu services vpn)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
   #:use-module (guix gexp)
   #:use-module (nongnu packages linux)
   #:use-module (systemic home mail)
   #:use-module ((systemic machines base) #:prefix base:)
-  #:use-module (systemic pass)
-  #:use-module (systemic system vpn))
+  #:use-module (systemic pass))
 
 (define-public system
   (operating-system
@@ -33,7 +33,22 @@
                 (cpu-scaling-governor-on-bat '("powersave"))
                 (cpu-boost-on-ac? #t)
                 (sched-powersave-on-bat? #t)))
-      (systemic-wireguard-service "10.10.50.1")
+      (service wireguard-service-type
+               (wireguard-configuration
+                (addresses '("10.10.50.1"))
+                (dns '("10.10.0.1"))
+                (interface "bard")
+                (peers
+                 (list
+                  (wireguard-peer
+                   (name "bard")
+                   (endpoint "bard.reilysiegel.com:51820")
+                   (public-key "uyhDxjDWrNP/HAcImeFWfeLHk4Io3nPnyY6lvQFoph8=")
+                   (allowed-ips (list "10.10.0.0/16"
+                                      "192.168.10.0/24"
+                                      "192.168.20.0/24"
+                                      "192.168.30.0/24"
+                                      "192.168.40.0/24")))))))
       (operating-system-user-services base:system)))))
 
 (define-public home
