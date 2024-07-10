@@ -113,3 +113,30 @@ and a dark theme based on Nord colors. The theme is based on a set of six faces.
 mode line as @samp{[ status | name (primary) secondary ]}.  It can be
 displayed at the bottom or at the top.")
       (license license:gpl3+))))
+
+(define-public emacs-idris-mode
+  (let ((commit "09de86a8f056c61de72c678386039894779a9375")
+        (revision "1"))
+    (package
+      (name "emacs-idris-mode")
+      (version (git-version "1.1" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/idris-hackers/idris-mode")
+               (commit commit)))
+         (file-name (git-file-name name commit))
+         (sha256
+          (base32
+           "1kdsrbh32dr3j0icnplpd4wjyp0n6d0kp7gfgbz1xcvh21gn8rdb"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       (list emacs-prop-menu emacs-flycheck))
+      (home-page
+       "https://github.com/idris-hackers/idris-mode")
+      (synopsis "Major mode for editing Idris code")
+      (description
+       "This is an Emacs mode for editing Idris code.  It is compatible with
+the latest versions of Idris 1.")
+      (license license:gpl3+))))
