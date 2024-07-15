@@ -18,9 +18,7 @@
        (setopt eshell-history-size 4096
                eshell-hist-ignoredups t
                remote-file-name-inhibit-cache nil
-               eshell-scroll-to-bottom-on-input t
-               vc-ignore-dir-regexp
-               (format "%s\\|%s" vc-ignore-dir-regexp tramp-file-name-regexp))))
+               eshell-scroll-to-bottom-on-input t)))
     ("tramp"
      (with-eval-after-load 'tramp
        (setopt tramp-show-ad-hoc-proxies t
