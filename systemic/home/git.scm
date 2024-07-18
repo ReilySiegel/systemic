@@ -45,6 +45,8 @@
        ((gpgsign . ,(caddr config))))
       (diff
        ((algorithm . "histogram")))
+      (pull
+       ((rebase . #t)))
       (format
        ((signature . "")))))))
 
