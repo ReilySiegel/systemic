@@ -46,7 +46,7 @@
                 (dwl:set-tag-keys "s" "s-S")
 
                 (set-keys
-                 "s-e" ,(guix:spawn emacs-next-pgtk "/bin/emacs")
+                 "s-e" ,(guix:spawn emacs-pgtk "/bin/emacs")
                  "s-<return>" ,(guix:spawn bemenu "/bin/bemenu-run" "-i")
                  "s-n" ,(guix:spawn mako "/bin/makoctl" "dismiss")
                  "s-j" '(dwl:focus-stack 1)

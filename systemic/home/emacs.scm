@@ -51,7 +51,7 @@
 (define emacs
   (service home-emacs-service-type
            (home-emacs-configuration
-            (emacs emacs-next-pgtk)
+            (emacs emacs-pgtk)
             (elisp-packages packages)
             (init-el
              `(,#~
@@ -105,6 +105,7 @@
                
                (defvar my/file-name-handler-alist file-name-handler-alist)
                (setq file-name-handler-alist nil)
+
                (add-hook 'emacs-startup-hook
                          (lambda ()
                            (setq file-name-handler-alist
