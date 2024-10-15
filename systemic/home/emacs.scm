@@ -53,6 +53,7 @@
            (home-emacs-configuration
             (emacs emacs-next-pgtk)
             (elisp-packages packages)
+            (native-comp? #t)
             (init-el
              `(,#~
                ";;; -*- lexical-binding: t -*-"
@@ -105,6 +106,9 @@
                
                (defvar my/file-name-handler-alist file-name-handler-alist)
                (setq file-name-handler-alist nil)
+
+               ;; Disable JIT compilation, currently broken with GUIX
+               (setq native-comp-jit-compilation nil)
                (add-hook 'emacs-startup-hook
                          (lambda ()
                            (setq file-name-handler-alist
