@@ -54,7 +54,8 @@
                       #$(systemic-mail-configuration-secret config)
                       "\"")
     (AuthMechs ,(systemic-mail-configuration-auth-mechs config))
-    (SSLType "IMAPS")
+    (TLSType "IMAPS")
+    (PipelineDepth 50)
     ,#~""
     (IMAPStore remote)
     (Account account)

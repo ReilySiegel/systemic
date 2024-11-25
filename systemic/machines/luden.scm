@@ -62,7 +62,7 @@
               (systemic-mail-configuration
                (address "mail@reilysiegel.com")
                (imap "imap.zoho.com")
-               (smtp "smtppro.zoho.com")
+               (smtp "smtp.zoho.com")
                (secret #~(string-append
                           #$coreutils
                           "/bin/cat"
