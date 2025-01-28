@@ -2,6 +2,7 @@
   #:use-module (dwl-guile home-service)
   #:use-module (gnu home)
   #:use-module (gnu home services)
+  #:use-module (gnu home services syncthing)
   #:use-module (gnu packages base)
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
@@ -57,6 +58,7 @@
     (cons*
      (simple-service 'zoho-pass home-activation-service-type
                      (pass-activation "zoho.com" "isync/secret"))
+     (service home-syncthing-service-type)
      (service systemic-mail-service-type
               (systemic-mail-configuration
                (address "mail@reilysiegel.com")
