@@ -35,17 +35,16 @@
                 (sched-powersave-on-bat? #t)))
       (service wireguard-service-type
                (wireguard-configuration
-                (addresses '("10.10.50.1"))
-                (dns '("10.10.0.1"))
-                (interface "bard")
+                (addresses '("192.168.50.18"))
+                (dns '("192.168.10.1"))
+                (interface "crowlab")
                 (peers
                  (list
                   (wireguard-peer
                    (name "bard")
-                   (endpoint "bard.reilysiegel.com:51820")
-                   (public-key "uyhDxjDWrNP/HAcImeFWfeLHk4Io3nPnyY6lvQFoph8=")
-                   (allowed-ips (list "10.10.0.0/16"
-                                      "192.168.10.0/24"
+                   (endpoint "ext.axpdsp.org:51820")
+                   (public-key "B3ksprX400fUNk2iMjsWic7IniUb8l12pCMaKeMqn3M=")
+                   (allowed-ips (list "192.168.10.0/24"
                                       "192.168.20.0/24"
                                       "192.168.30.0/24"
                                       "192.168.40.0/24")))))))
