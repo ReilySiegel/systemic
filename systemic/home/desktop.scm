@@ -29,7 +29,12 @@
            (home-dwl-guile-configuration
             (package
               (patch-dwl-guile-package
-               dwl-guile
+               (package
+                 (inherit dwl-guile)
+                 (inputs
+                  ;; Fix broken upstream package definition
+                  (modify-inputs (package-inputs dwl-guile)
+                                 (replace "wlroots" wlroots-0.16))))
                #:patches
                (list %patch-xwayland)))
             (auto-start? #t)
