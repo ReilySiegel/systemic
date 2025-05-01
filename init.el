@@ -76,9 +76,9 @@ Passes NAME and ARGS to use-package."
 
 ;;;; Paredit
 (use-package paredit
-  :hook (prog-mode . enable-paredit-mode))
+  :hook (lisp-mode . enable-paredit-mode))
 ;;;; Yasnippet
-(use-package yasnippet-snippets) 
+(use-package yasnippet-snippets)
 
 (use-package yasnippet
   :defer 5
