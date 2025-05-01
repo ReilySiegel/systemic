@@ -121,4 +121,5 @@
        (keymap-set meow-insert-state-keymap "C-j" #'meow-insert-exit))
      (require 'meow)
      (meow-setup)
-     (meow-global-mode 1)))))
+     ;; (meow-global-mode 1)
+     ))))
