@@ -11,7 +11,7 @@
    home-emacs-service-type
    (emacs-configuration-extension
     ("eshell"
-     (keymap-global-set "C-c s" #'eshell)
+     (keymap-global-set "C-c s" #'eat)
      (with-eval-after-load 'eshell
        (add-to-list 'eshell-modules-list 'eshell-smart)
        (add-to-list 'eshell-modules-list 'eshell-elecslash)
