@@ -19,6 +19,7 @@
   #:use-module (ice-9 textual-ports)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
+  #:use-module (systemic packages wm)
   #:export (services))
 
 (define (guix:spawn pkg path . args)
