@@ -39,6 +39,7 @@
                #:patches
                (list %patch-xwayland)))
             (auto-start? #t)
+            (native-qt? #f)
             (environment-variables
              (alist-delete "GDK_BACKEND" %dwl-guile-base-env-variables))
             (config
