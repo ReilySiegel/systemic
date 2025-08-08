@@ -54,4 +54,6 @@
     (emacs-cape
      (add-to-list 'completion-at-point-functions #'cape-file))
     (emacs-pcmpl-args
-     (require 'pcmpl-args)))))
+     (require 'pcmpl-args))
+    (emacs-rfc-mode
+     (setopt rfc-mode-browse-input-function #'completing-read)))))
