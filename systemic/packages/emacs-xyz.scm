@@ -69,51 +69,6 @@ emails using a valid emacs mail user agent.")
       (description "Eglot client for Grammarly.")
       (license license:gpl3+))))
 
-(define-public emacs-nano-theme
-  ;; No tagged release upstream.  The commit below matches latest version
-  ;; bump.
-  (let ((commit "3cb00fdc6d4e46809287a81d4c43cee63f5938f4"))
-    (package
-      (name "emacs-nano-theme")
-      (version "0.3.3")
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/rougier/nano-theme")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "1wwp54z0jqwzw09203kc2qqpk603jlbfs99ib5jwdsabj1217pnk"))))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/rougier/nano-theme")
-      (synopsis "A consistent theme for GNU Emacs.")
-      (description "Nano theme provides a light theme based on Material colors,
-and a dark theme based on Nord colors. The theme is based on a set of six faces.")
-      (license license:gpl3+))))
-
-(define-public emacs-nano-modeline
-  (let ((commit "04676d57a1e602123a593836745a744d1b2028fb")) ;version bump
-    (package
-      (name "emacs-nano-modeline")
-      (version "1.1.0")
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/rougier/nano-modeline")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "1q10zd8aiq5xm7p4sm1mrfmw0sfgfyznyk4lvh2rl9pqh9kh700a"))))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/rougier/nano-modeline")
-      (synopsis "Emacs minor mode controlling mode line")
-      (description "Nano modeline is a minor mode for Emacs that modifies the
-mode line as @samp{[ status | name (primary) secondary ]}.  It can be
-displayed at the bottom or at the top.")
-      (license license:gpl3+))))
-
 (define-public emacs-idris-mode
   (let ((commit "09de86a8f056c61de72c678386039894779a9375")
         (revision "1"))
