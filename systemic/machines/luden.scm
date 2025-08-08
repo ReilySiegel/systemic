@@ -45,7 +45,10 @@
                    (name "bard")
                    (endpoint "ext.axpdsp.org:51820")
                    (public-key "B3ksprX400fUNk2iMjsWic7IniUb8l12pCMaKeMqn3M=")
-                   (allowed-ips (list "192.168.10.0/24"
+                   (allowed-ips (list "10.8.0.0/16"
+                                      "192.168.5.0/24"
+                                      "192.168.10.0/24"
+                                      "192.168.15.0/24"
                                       "192.168.20.0/24"
                                       "192.168.30.0/24"
                                       "192.168.40.0/24")))))))
