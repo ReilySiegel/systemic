@@ -1,7 +1,4 @@
 (define-module (systemic machines base)
-  #:use-module (dwl-guile home-service)
-  #:use-module (dwl-guile packages)
-  #:use-module (dwl-guile patches)
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader grub)
   #:use-module (gnu home)
@@ -16,6 +13,7 @@
   #:use-module (gnu packages cups)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages wm)
   #:use-module (gnu services)
   #:use-module (gnu services base)
   #:use-module (gnu services cups)
@@ -24,6 +22,7 @@
   #:use-module (gnu services networking)
   #:use-module (gnu services sound)
   #:use-module (gnu services ssh)
+  #:use-module (gnu services xorg)
   #:use-module (gnu system)
   #:use-module (gnu system accounts)
   #:use-module (gnu system file-systems)
@@ -122,6 +121,12 @@
        (service bluetooth-service-type
                 (bluetooth-configuration
                  (auto-enable? #t)))
+       (service screen-locker-service-type
+                (screen-locker-configuration
+                 (name "swaylock")
+                 (program (file-append swaylock "/bin/swaylock"))
+                 (using-pam? #t)
+                 (using-setuid? #f)))
        (service cups-service-type
                 (cups-configuration
                  (web-interface? #t)
