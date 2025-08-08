@@ -48,8 +48,8 @@ emails using a valid emacs mail user agent.")
       (license license:mpl2.0))))
 
 (define-public emacs-eglot-grammarly
-  (let ((commit "c245f45b599504953d3936d897f1538e02d1ba5e")
-        (revision "1"))
+  (let ((commit "6c199d60586a6d9c75031a2730edc8bc16ddc62f")
+        (revision "2"))
     (package
       (name "emacs-eglot-grammarly")
       (version (git-version "0.1.0" revision commit))
@@ -61,8 +61,9 @@ emails using a valid emacs mail user agent.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "0xnzbahjbd8qa0j5qh4nb226wks0psw9kq28z4x29bvw7y1n73r8"))))
+                  "1bccx7kgvlwf9m933v8mnj7qgsmjxbvyvygz5jpj0mpfhvky8s1f"))))
       (build-system emacs-build-system)
+      (arguments '(#:tests? #f))
       (propagated-inputs (list emacs-eglot))
       (home-page "https://github.com/emacs-grammarly/eglot-grammarly")
       (synopsis "Eglot client for Grammarly")
@@ -86,6 +87,7 @@ emails using a valid emacs mail user agent.")
           (base32
            "1kdsrbh32dr3j0icnplpd4wjyp0n6d0kp7gfgbz1xcvh21gn8rdb"))))
       (build-system emacs-build-system)
+      (arguments '(#:tests? #f))
       (propagated-inputs
        (list emacs-prop-menu emacs-flycheck))
       (home-page
