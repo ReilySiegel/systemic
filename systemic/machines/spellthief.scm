@@ -1,5 +1,4 @@
 (define-module (systemic machines spellthief)
-  #:use-module (dwl-guile home-service)
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu packages cyrus-sasl)
@@ -77,10 +76,4 @@
                   ;; Messages to mailing lists should not be in inbox unless
                   ;; they are to me
                   ("tag:lists AND NOT tag:to-me" ("-inbox"))))))
-     (simple-service
-      'laptop
-      home-dwl-guile-service-type
-      '((setq natural-scrolling? #t
-              tap-to-click? #f
-              tap-and-drag? 0)))
      (home-environment-user-services base:home)))))

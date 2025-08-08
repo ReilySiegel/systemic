@@ -1,5 +1,4 @@
 (define-module (systemic machines luden)
-  #:use-module (dwl-guile home-service)
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu home services syncthing)
@@ -80,11 +79,4 @@
                   ;; Messages to mailing lists should not be in inbox unless
                   ;; they are to me
                   ("tag:lists AND NOT tag:to-me" ("-inbox"))))))
-     (simple-service
-      'laptop
-      home-dwl-guile-service-type
-      `((set-monitor-rules '((scale . ,(/ 3000 2000))))
-        (setq natural-scrolling? #t
-              tap-to-click? #f
-              tap-and-drag? 0)))
      (home-environment-user-services base:home)))))

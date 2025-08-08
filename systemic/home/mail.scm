@@ -1,6 +1,4 @@
 (define-module (systemic home mail)
-  #:use-module (dtao-guile configuration blocks)
-  #:use-module (dtao-guile home-service)
   #:use-module (gnu home services)
   #:use-module (gnu home-services mail)
   #:use-module (gnu home services mcron)
@@ -199,23 +197,6 @@ pattern = RFC
 tags = +rfc
 [InboxFilter]"))))
 
-
-(define render-block
-  #~(let ((unread (call-with-port (open-input-pipe
-                                   (string-append #$notmuch
-                                                  "/bin/notmuch"
-                                                  " count tag:unread"))
-                    (compose read-line))))
-      (if (zero? (string->number unread))
-          ""
-          (string-append "✉ " unread))))
-
-(define (dtao-extension config)
-  (list
-   (dtao-block
-    (interval 10)
-    (render render-block))))
-
 (define systemic-mail-service-type
   (service-type
    (name 'systemic-mail)
@@ -231,5 +212,4 @@ tags = +rfc
       (lambda _ (list #~(job "*/2 * * * *"
                              (string-append #$notmuch "/bin/notmuch new")))))
      (service-extension home-xdg-configuration-files-service-type
-                        add-afew-config-file)
-     (service-extension home-dtao-guile-service-type dtao-extension)))))
+                        add-afew-config-file)))))
