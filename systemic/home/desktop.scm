@@ -46,12 +46,24 @@
                            (layout
                             (keyboard-layout "us" #:options '("ctrl:nocaps"))))
                (sway-input (identifier "type:touchpad")
-                           (extra-content (list "natural_scroll enabled")))))
+                           (extra-content (list "natural_scroll enabled"
+                                                "accel_profile flat")))))
              (outputs
               (list (sway-output
                      (identifier '*)
                      (background (file-append sway "/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png"))
                      (extra-content (list "scale 1.5")))))
+             (bar
+              (sway-bar
+               (position 'top)
+               (status-command (file-append i3status "/bin/i3status"))
+               (colors
+                (sway-color
+                 (background "#2e3440")
+                 (statusline "#eceff4")))
+               (extra-content (list "status_padding 8"
+                                    "status_edge_padding 8"
+                                    "separator_symbol \" | \""))))
              (extra-content
               (list "default_border none"))))
    (service home-dbus-service-type)
