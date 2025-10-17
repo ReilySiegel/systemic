@@ -62,8 +62,6 @@ Passes NAME and ARGS to use-package."
    (set-char-table-range auto-fill-chars c t))
  "!-=+]};:'\",.?")
 
-;; Enable auto-fill-mode in text-mode.
-(add-hook 'text-mode-hook #'auto-fill-mode)
 ;;;; Inter-program Killing
 (setq save-interprogram-paste-before-kill t)
 ;;; IDE Features

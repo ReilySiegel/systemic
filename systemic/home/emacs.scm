@@ -72,6 +72,9 @@
                (setq-default fill-column 80
                              undo-limit (* 10 1024 1024))
 
+               ;; Enable visual-line-mode in text-mode.
+               (add-hook 'text-mode-hook #'visual-line-mode)
+
                ;; Bump the required security level for TLS to an acceptably
                ;; modern value.
                (require 'gnutls)
