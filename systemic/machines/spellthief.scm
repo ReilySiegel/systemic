@@ -16,8 +16,7 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (systemic home mail)
-  #:use-module ((systemic machines base) #:prefix base:)
-  #:use-module (systemic packages cyrus-sasl))
+  #:use-module ((systemic machines base) #:prefix base:))
 
 (define-public system
   (operating-system
