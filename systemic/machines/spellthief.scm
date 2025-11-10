@@ -30,7 +30,7 @@
              (group "users")
              (home-directory "/home/reily")
              (supplementary-groups
-              '("wheel" "netdev" "audio" "video" "input" "docker")))
+              '("wheel" "netdev" "audio" "video" "input")))
             %base-user-accounts))
 
     (services
