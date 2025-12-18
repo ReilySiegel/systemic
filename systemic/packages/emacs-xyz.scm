@@ -71,7 +71,7 @@ emails using a valid emacs mail user agent.")
       (license license:gpl3+))))
 
 (define-public emacs-idris-mode
-  (let ((commit "09de86a8f056c61de72c678386039894779a9375")
+  (let ((commit "85928dc4cc2c22010fa91661abd55e6bd3dbacee")
         (revision "1"))
     (package
       (name "emacs-idris-mode")
@@ -85,7 +85,7 @@ emails using a valid emacs mail user agent.")
          (file-name (git-file-name name commit))
          (sha256
           (base32
-           "1kdsrbh32dr3j0icnplpd4wjyp0n6d0kp7gfgbz1xcvh21gn8rdb"))))
+           "169a19x861yj18wrkjx4mxm12lvfdzw320f9lddsc2xcsdlrmm5v"))))
       (build-system emacs-build-system)
       (arguments '(#:tests? #f))
       (propagated-inputs

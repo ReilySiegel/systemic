@@ -46,7 +46,7 @@
    emacs-yaml-mode
    emacs-org-fragtog emacs-pdf-tools emacs-auctex
    emacs-discover-my-major
-   emacs-origami-el))
+   emacs-origami))
 
 (define emacs
   (service home-emacs-service-type
