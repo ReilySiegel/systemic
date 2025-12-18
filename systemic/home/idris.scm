@@ -23,5 +23,6 @@
               idris-warnings-printing (list 'warnings-repl)
               idris-stay-in-current-window-on-compiler-error t)
       (remove-hook 'idris-mode-hook 'turn-on-eldoc-mode)
-      (add-hook 'idris-mode-hook (lambda () (eldoc-mode -1))))))))
+      (add-hook 'idris-mode-hook (lambda () (eldoc-mode -1)))
+      (add-hook 'idris-mode-hook 'idris-simple-indent-mode))))))
 
