@@ -15,14 +15,16 @@
      (emacs-idris-mode
       (with-eval-after-load 'aggressive-indent
         (add-to-list 'aggressive-indent-excluded-modes 'idris-mode))
-      (setopt idris-interpreter-path "idris2"
+      (setopt idris-interpreter-path nil
               idris-repl-show-repl-on-startup nil
               idris-hole-show-on-load nil
               idris-show-help-text nil
               idris-completion-via-compiler nil
               idris-warnings-printing (list 'warnings-repl)
               idris-stay-in-current-window-on-compiler-error t)
-      (remove-hook 'idris-mode-hook 'turn-on-eldoc-mode)
-      (add-hook 'idris-mode-hook (lambda () (eldoc-mode -1)))
+      (with-eval-after-load 'eglot
+        (add-to-list 'eglot-server-programs
+                     '(idris-mode . ("idris2-lsp"))))
+      (add-hook 'idris-mode-hook 'eglot-ensure)
       (add-hook 'idris-mode-hook 'idris-simple-indent-mode))))))
 
