@@ -11,6 +11,8 @@
   (simple-service
    'emacs-edititng home-emacs-service-type
    (emacs-configuration-extension
+    ('whitespace
+     (add-hook 'before-save-hook #'delete-trailing-whitespace))
     ('flymake
      (add-hook 'text-mode-hook #'flymake-mode)
      (add-hook 'prog-mode-hook #'flymake-mode))
