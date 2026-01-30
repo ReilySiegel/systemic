@@ -118,6 +118,9 @@
        (service usb-modeswitch-service-type)
        (service ntp-service-type)
        (service elogind-service-type)
+       (service upower-service-type
+                (upower-configuration
+                 (critical-power-action 'power-off)))
        (service bluetooth-service-type
                 (bluetooth-configuration
                  (auto-enable? #t)))
