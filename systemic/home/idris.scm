@@ -24,7 +24,8 @@
               idris-stay-in-current-window-on-compiler-error t)
       (with-eval-after-load 'eglot
         (add-to-list 'eglot-server-programs
-                     '(idris-mode . ("idris2-lsp"))))
+                     '(idris-mode . ("idris2-lsp" :initializationOptions
+                                     (:briefCompletions t)))))
       (add-hook 'idris-mode-hook 'eglot-ensure)
       (add-hook 'idris-mode-hook 'idris-simple-indent-mode))))))
 
