@@ -22,10 +22,15 @@
               idris-completion-via-compiler nil
               idris-warnings-printing (list 'warnings-repl)
               idris-stay-in-current-window-on-compiler-error t)
+      (add-to-list 'project-vc-extra-root-markers "*.ipkg")
       (with-eval-after-load 'eglot
         (add-to-list 'eglot-server-programs
                      '(idris-mode . ("idris2-lsp" :initializationOptions
                                      (:briefCompletions t)))))
+
+      ;; TODO: Remvoe once https://github.com/idris-hackers/idris-mode/pull/656
+      ;; is merged
+      (advice-add 'idris-syntax-propertize-function
+                  :after (syntax-propertize-rules ("\\(|||\\)" (1 "<"))))
       (add-hook 'idris-mode-hook 'eglot-ensure)
       (add-hook 'idris-mode-hook 'idris-simple-indent-mode))))))
-
