@@ -28,7 +28,10 @@
        (add-hook 'eglot--managed-mode-hook
                  (lambda nil
                    (setq-local eldoc-documentation-strategy
-                               'eldoc-documentation-compose)))))
+                               'eldoc-documentation-compose)))
+       (keymap-set eglot-mode-map "C-c l a" #'eglot-code-actions)
+       (keymap-set eglot-mode-map "C-c l r" #'eglot-rename)
+       (keymap-set eglot-mode-map "C-c l R" #'eglot-reconnect)))
     (emacs-aggressive-indent
      (electric-indent-mode -1)
      (global-aggressive-indent-mode 1))
