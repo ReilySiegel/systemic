@@ -4,6 +4,7 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages gl)
+  #:use-module (gnu packages glib)
   #:use-module (gnu packages qt)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages xdisorg)
@@ -15,7 +16,7 @@
 (define-public winbox
   (package
     (name "winbox")
-    (version "4.0beta23")
+    (version "4.1")
     (source
      (origin
        (method url-fetch)
@@ -24,12 +25,13 @@
              "/WinBox_Linux.zip"))
        (file-name (string-append "winbox-" version ".zip"))
        (sha256
-        (base32 "12plrdmwx3hm8am705xgabjdn6d5lhcdzq5mkd8ypjxa8c0pq0wx"))))
+        (base32 "13sdllwzzbcdg229ajpd94jjk4v5vxz6nm1ni5hmn7rj3ik5plr8"))))
     (build-system binary-build-system)
     (arguments
      `(#:patchelf-plan `(("../WinBox"
                           ("gcc"
                            "glibc"
+                           "dbus"
                            "libxcb"
                            "xcb-util"
                            "xcb-util-renderutil"
@@ -47,6 +49,7 @@
     (native-inputs (list unzip))
     (inputs (list glibc
                   `(,gcc "lib")
+                  dbus
                   libxcb
                   xcb-util
                   xcb-util-renderutil
@@ -67,5 +70,3 @@
      "Yazi is a terminal file manager written in Rust, based on non-blocking async I/O. It aims to provide an efficient, user-friendly, and customizable file management experience.")
     (home-page "https://yazi-rs.github.io/")
     (license license:expat)))
-
-winbox
