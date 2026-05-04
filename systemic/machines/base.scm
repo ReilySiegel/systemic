@@ -57,7 +57,7 @@
                   (pinentry-flavor 'bemenu)))))
       (service
        home-ssh-service-type
-       (home-ssh-configuration                
+       (home-ssh-configuration
         (toplevel-options
          '((match .
              "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
@@ -92,7 +92,7 @@
     (locale "en_US.utf8")
     (keyboard-layout (keyboard-layout "us" #:options '("ctrl:nocaps")))
     (skeletons (channel-skel (default-skeletons)))
-    
+
     (users (cons*
             (user-account
              (name "reily")
@@ -144,12 +144,16 @@
          (guix-configuration
           (inherit config)
           (substitute-urls
-           (append (list "https://substitutes.nonguix.org")
+           (append (list
+                    "https://cache-cdn.guix.moe"
+                    ;; TODO: Re-enable when working
+                    ;; "https://substitutes.nonguix.org"
+                    "https://nonguix-proxy.ditigal.xyz")
                    %default-substitute-urls))
           (authorized-keys
            (append (list (plain-file "nonguix.pub"
-                                     "(public-key 
- (ecc 
+                                     "(public-key
+ (ecc
   (curve Ed25519)
   (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))"))
                    %default-authorized-guix-keys)))))))
