@@ -11,7 +11,6 @@
    home-emacs-service-type
    (emacs-configuration-extension
     ("eshell"
-     (keymap-global-set "C-c s" #'eat)
      (with-eval-after-load 'eshell
        (add-to-list 'eshell-modules-list 'eshell-smart)
        (add-to-list 'eshell-modules-list 'eshell-elecslash)
@@ -27,10 +26,12 @@
                 "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
                 "-o ControlMaster=auto -o ControlPersist=yes"))))
     (emacs-eat
+     (keymap-global-set "C-c s" #'eat)
      (setopt eshell-visual-commands nil
              ;; Better remote compatibility.
              eat-term-name "xterm-256color")
-     (add-hook 'eshell-load-hook #'eat-eshell-mode))
+     (add-hook 'eshell-load-hook #'eat-eshell-mode)
+     (add-hook 'eat-mode-hook (lambda () (setq-local scroll-conservatively 101))))
     (emacs-buffer-env
      (setopt buffer-env-script-name "guix.scm")
      (add-hook 'hack-local-variables-hook #'buffer-env-update)
