@@ -20,8 +20,7 @@
 (define-public system
   (operating-system
     (inherit base:system)
-    (kernel (corrupt-linux linux-libre #:configs '("CONFIG_MT7921E=m")))
-    
+
     (host-name "luden")
     (services
      (cons*
