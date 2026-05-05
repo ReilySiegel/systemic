@@ -22,18 +22,18 @@
    'emacs-theme-service
    home-emacs-service-type
    (emacs-configuration-extension
-    ("font"
+    (font-hack
      (set-frame-font "Hack-14"))
-    (emacs-nano-theme
-     (require 'nano-theme)
-     (nano-mode)
-     (setopt nano-fonts-use nil)
-     (load-theme 'nano-dark t))
+    (emacs-ef-themes
+     (ef-themes-take-over-modus-themes-mode 1)
+     (setopt modus-themes-mixed-fonts t
+             modus-themes-italic-constructs t)
+     (add-to-list 'default-frame-alist '(undecorated . t))
+     (modus-themes-load-theme 'ef-owl))
     (emacs-nano-modeline
      (require 'nano-modeline)
      (setopt nano-modeline-position #'nano-modeline-footer)
-     (nano-modeline-text-mode t))
-    (font-hack))))
+     (nano-modeline-text-mode t)))))
 
 (define packages
   (list
@@ -59,7 +59,7 @@
                ;; #' exports a scheme (syntax ...) form. Treat this as a
                ;; (function ...) form.
                (defalias 'syntax 'function)
-               
+
                (setq inhibit-startup-screen t)
                (when (display-graphic-p)
                  (menu-bar-mode -1)
@@ -103,9 +103,9 @@
                (run-at-time "20 sec" nil
                             (lambda ()
                               (set 'gc-cons-threshold 800000)))
-               
+
                (setq package-enable-at-startup nil)
-               
+
                (defvar my/file-name-handler-alist file-name-handler-alist)
                (setq file-name-handler-alist nil)
 
