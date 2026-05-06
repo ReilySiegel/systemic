@@ -32,7 +32,13 @@
     (setopt eat-enable-shell-prompt-annotation nil
             eat-kill-buffer-on-exit t)
     (add-hook 'eat-mode-hook
-              (lambda () (setq-local scroll-conservatively 101))))
+              (lambda () (setq-local scroll-conservatively 101)))
+
+    (with-eval-after-load 'project
+      (keymap-unset project-prefix-map "e")
+      (assq-delete-all 'project-eshell project-switch-commands)
+      (keymap-set project-prefix-map "s" #'eat-project)
+      (add-to-list 'project-switch-commands '(eat-project "Shell") t)))
    (emacs-buffer-env
     (setopt buffer-env-script-name "guix.scm")
     (add-hook 'hack-local-variables-hook #'buffer-env-update)
