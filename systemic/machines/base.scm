@@ -35,6 +35,7 @@
   #:use-module (systemic channels)
   #:use-module (systemic home git)
   #:use-module (systemic home scheme)
+  #:use-module (systemic home shell)
   #:use-module ((systemic home clojure) #:prefix clojure:)
   #:use-module ((systemic home desktop) #:prefix desktop:)
   #:use-module ((systemic home emacs) #:prefix emacs:)
@@ -45,43 +46,43 @@
 
 (define-public home
   (home-environment
-   (services
-    (append
-     (list
-      (service home-bash-service-type (home-bash-configuration))
-      (service home-gnupg-service-type
-	       (home-gnupg-configuration
-                (gpg-agent-config
-                 (home-gpg-agent-configuration
-                  (ssh-agent? #t)
-                  (pinentry-flavor 'bemenu)))))
-      (service
-       home-ssh-service-type
-       (home-ssh-configuration
-        (toplevel-options
-         '((match .
-             "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
-      (service scheme-service-type)
-      (simple-service
-       'some-useful-env-vars-service
-       home-environment-variables-service-type
-       `(("GUILE_LOAD_PATH" .
-          "$XDG_CONFIG_HOME/guix/current/share/guile/site/3.0:$GUILE_LOAD_PATH")
-         ("GUILE_LOAD_COMPILED_PATH" .
-          "$XDG_CONFIG_HOME/guix/current/lib/guile/3.0/site-ccache:$GUILE_LOAD_COMPILED_PATH")
-         ("GUILE_AUTO_COMPILE" . "0")
-         ("CC" . "gcc")
-         ("PATH" . "$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin/:$PATH")
-         ;; HACK: https://issues.guix.gnu.org/52672
-         ("QTWEBENGINE_CHROMIUM_FLAGS" . "--disable-seccomp-filter-sandbox")))
-      (service systemic-git-service-type))
-     desktop:services
-     clojure:services
-     haskell:services
-     idris:services
-     javascript:services
-     kotlin:services
-     emacs:services))))
+    (services
+     (append
+      (list
+       (service systemic-shell-service-type)
+       (service home-gnupg-service-type
+	        (home-gnupg-configuration
+                 (gpg-agent-config
+                  (home-gpg-agent-configuration
+                    (ssh-agent? #t)
+                    (pinentry-flavor 'bemenu)))))
+       (service
+        home-ssh-service-type
+        (home-ssh-configuration
+         (toplevel-options
+          '((match .
+              "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
+       (service scheme-service-type)
+       (simple-service
+        'some-useful-env-vars-service
+        home-environment-variables-service-type
+        `(("GUILE_LOAD_PATH" .
+           "$XDG_CONFIG_HOME/guix/current/share/guile/site/3.0:$GUILE_LOAD_PATH")
+          ("GUILE_LOAD_COMPILED_PATH" .
+           "$XDG_CONFIG_HOME/guix/current/lib/guile/3.0/site-ccache:$GUILE_LOAD_COMPILED_PATH")
+          ("GUILE_AUTO_COMPILE" . "0")
+          ("CC" . "gcc")
+          ("PATH" . "$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin/:$PATH")
+          ;; HACK: https://issues.guix.gnu.org/52672
+          ("QTWEBENGINE_CHROMIUM_FLAGS" . "--disable-seccomp-filter-sandbox")))
+       (service systemic-git-service-type))
+      desktop:services
+      clojure:services
+      haskell:services
+      idris:services
+      javascript:services
+      kotlin:services
+      emacs:services))))
 
 (define-public system
   (operating-system
