@@ -121,5 +121,4 @@
    editing:service
    org:service
    completion:service
-   pass:service
-   shell:service))
+   pass:service))
