@@ -60,5 +60,3 @@
     (list
      (service-extension home-emacs-service-type emacs-extension)
      (service-extension home-git-service-type git-extension)))))
-
-
