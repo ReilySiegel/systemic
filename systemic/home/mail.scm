@@ -57,12 +57,12 @@
     ,#~""
     (IMAPStore remote)
     (Account account)
-    ,#~"" 
+    ,#~""
     (MaildirStore local)
     (Path "~/.mail/box/")
     (Inbox "~/.mail/box/inbox")
     (SubFolders Verbatim)
-    ,#~"" 
+    ,#~""
     (Channel account)
     (Far ":remote:")
     (Near ":local:")
@@ -108,7 +108,7 @@
 (define (emacs-extension config)
   (emacs-configuration-extension
    (emacs-notmuch
-    (keymap-global-set "C-c m" 'notmuch)
+    (keymap-global-set "C-x m" 'notmuch)
 
     (require 'notmuch-mua)
 
@@ -155,7 +155,7 @@
               (:name "[s]ent" :query "tag:sent" :key "s")
               (:name "[d]rafts" :query "tag:draft" :key "d")
               (:name "[a]ll mail" :query "*" :key "a")))
-    
+
     ;; Notmuch abuses internal details of the CRM API, which breaks 3rd party
     ;; implementations. This should eventually be fixed upstream.
     (advice-add (function notmuch-read-tag-changes)

@@ -46,7 +46,21 @@
      (with-eval-after-load 'consult
        (require 'embark-consult)))
     (emacs-consult
-     (keymap-global-set "C-s" 'consult-line))
+     (define-keymap :keymap global-map
+       "C-x b"   #'consult-buffer
+       "M-g M-g" #'consult-goto-line
+       "C-c m"   #'consult-man
+       "C-c i"   #'consult-info
+
+       "M-s d" #'consult-find
+       "M-s c" #'consult-locate
+       "M-s g" #'consult-grep
+       "M-s G" #'consult-git-grep
+       "M-s r" #'consult-ripgrep
+       "M-s l" #'consult-line
+       "M-s L" #'consult-line-multi
+       "M-s k" #'consult-keep-lines
+       "M-s u" #'consult-focus-lines))
     (emacs-corfu
      (setopt corfu-auto t
              tab-always-indent 'complete)
