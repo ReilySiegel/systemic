@@ -30,10 +30,13 @@
              modus-themes-italic-constructs t)
      (add-to-list 'default-frame-alist '(undecorated . t))
      (modus-themes-load-theme 'ef-owl))
-    (emacs-nano-modeline
-     (require 'nano-modeline)
-     (setopt nano-modeline-position #'nano-modeline-footer)
-     (nano-modeline-text-mode t)))))
+    ("mode-line"
+     (setopt project-mode-line t
+             mode-line-format
+             '("%e" mode-line-front-space
+               mode-line-frame-identification mode-line-buffer-identification "   "
+               (project-mode-line project-mode-line-format) "  "
+               mode-line-modes mode-line-misc-info mode-line-end-spaces))))))
 
 (define packages
   (list
