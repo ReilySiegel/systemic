@@ -35,6 +35,16 @@
     (emacs-aggressive-indent
      (electric-indent-mode -1)
      (global-aggressive-indent-mode 1))
+    (emacs-multiple-cursors
+     (define-keymap :keymap global-map
+       "C-c M-l"   #'mc/edit-lines
+       "C-c M-n"   #'mc/mark-next-like-this
+       "C-c M-p"   #'mc/mark-previous-like-this
+       "C-c M-a"   #'mc/mark-all-like-this
+       "C-c M-d"   #'mc/mark-all-dwim
+       "C-c M-v"   #'mc/vertical-align
+       "C-c M-i n" #'mc/insert-numbers
+       "C-c M-i l" #'mc/insert-letter))
     (emacs-meow
      (defun meow-setup ()
        (setopt meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
