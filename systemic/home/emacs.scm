@@ -29,6 +29,8 @@
              modus-themes-italic-constructs t)
      (add-to-list 'default-frame-alist '(undecorated . t))
      (modus-themes-load-theme 'ef-owl))
+    (emacs-spacious-padding
+     (spacious-padding-mode 1))
     ("mode-line"
      (setopt project-mode-line t
              mode-line-format
