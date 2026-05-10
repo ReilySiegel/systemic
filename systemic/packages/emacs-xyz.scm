@@ -33,8 +33,8 @@
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                      (url "https://github.com/ReilySiegel/magit-email")
-                      (commit commit)))
+                       (url "https://github.com/ReilySiegel/magit-email")
+                       (commit commit)))
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
@@ -47,29 +47,6 @@
 emails using a valid emacs mail user agent.")
       (license license:mpl2.0))))
 
-(define-public emacs-eglot-grammarly
-  (let ((commit "6c199d60586a6d9c75031a2730edc8bc16ddc62f")
-        (revision "2"))
-    (package
-      (name "emacs-eglot-grammarly")
-      (version (git-version "0.1.0" revision commit))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/emacs-grammarly/eglot-grammarly")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "1bccx7kgvlwf9m933v8mnj7qgsmjxbvyvygz5jpj0mpfhvky8s1f"))))
-      (build-system emacs-build-system)
-      (arguments '(#:tests? #f))
-      (propagated-inputs (list emacs-eglot))
-      (home-page "https://github.com/emacs-grammarly/eglot-grammarly")
-      (synopsis "Eglot client for Grammarly")
-      (description "Eglot client for Grammarly.")
-      (license license:gpl3+))))
-
 (define-public emacs-idris-mode
   (let ((commit "85928dc4cc2c22010fa91661abd55e6bd3dbacee")
         (revision "1"))
@@ -80,8 +57,8 @@ emails using a valid emacs mail user agent.")
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://github.com/idris-hackers/idris-mode")
-               (commit commit)))
+                (url "https://github.com/idris-hackers/idris-mode")
+                (commit commit)))
          (file-name (git-file-name name commit))
          (sha256
           (base32
