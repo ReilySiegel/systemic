@@ -34,6 +34,7 @@
   #:use-module (nongnu packages linux)
   #:use-module (systemic channels)
   #:use-module (systemic home git)
+  #:use-module (systemic home rust)
   #:use-module (systemic home scheme)
   #:use-module (systemic home shell)
   #:use-module ((systemic home clojure) #:prefix clojure:)
@@ -49,6 +50,7 @@
     (services
      (append
       (list
+       (service systemic-rust-service-type)
        (service systemic-shell-service-type)
        (service home-gnupg-service-type
 	        (home-gnupg-configuration
