@@ -37,6 +37,7 @@
   #:use-module (systemic home rust)
   #:use-module (systemic home scheme)
   #:use-module (systemic home shell)
+  #:use-module (systemic home typst)
   #:use-module ((systemic home clojure) #:prefix clojure:)
   #:use-module ((systemic home desktop) #:prefix desktop:)
   #:use-module ((systemic home emacs) #:prefix emacs:)
@@ -52,6 +53,7 @@
       (list
        (service systemic-rust-service-type)
        (service systemic-shell-service-type)
+       (service systemic-typst-service-type)
        (service home-gnupg-service-type
 	        (home-gnupg-configuration
                  (gpg-agent-config
