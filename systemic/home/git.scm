@@ -29,7 +29,11 @@
    (emacs-magit-todos
     (with-eval-after-load 'magit
       (magit-todos-mode 1)))
-   (emacs-magit-email)))
+   (emacs-magit-email)
+   (emacs-agitjo
+    ;; TODO: Make `agitjo-setup` autoloaded upstream
+    (require 'agitjo)
+    (agitjo-setup "#"))))
 
 (define (git-extension config)
   (home-git-extension
