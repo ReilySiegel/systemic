@@ -16,22 +16,27 @@
     ('flymake
      (add-hook 'text-mode-hook #'flymake-mode)
      (add-hook 'prog-mode-hook #'flymake-mode))
-    (emacs-eglot-grammarly
-     (add-hook 'text-mode-hook (lambda ()
-                                 (require 'eglot-grammarly)
-                                 (eglot-ensure))))
     ('eldoc
      (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
     (emacs-eglot
-     (setopt eglot-events-buffer-size 0)
      (with-eval-after-load 'eglot
        (add-hook 'eglot--managed-mode-hook
                  (lambda nil
                    (setq-local eldoc-documentation-strategy
                                'eldoc-documentation-compose)))
-       (keymap-set eglot-mode-map "C-c l a" #'eglot-code-actions)
-       (keymap-set eglot-mode-map "C-c l r" #'eglot-rename)
-       (keymap-set eglot-mode-map "C-c l R" #'eglot-reconnect)))
+
+       (define-keymap :keymap eglot-mode-map
+         "C-c a" #'eglot-code-actions
+         "C-c r" #'eglot-rename
+         "C-c R" #'eglot-reconnect)
+
+
+       (add-to-list
+        'eglot-server-programs
+        '((text-mode org-mode markdown-mode message-mode) .
+          ("harper-ls" "--stdio")))
+
+       (add-hook 'text-mode-hook #'eglot-ensure)))
     (emacs-aggressive-indent
      (electric-indent-mode -1)
      (global-aggressive-indent-mode 1))
