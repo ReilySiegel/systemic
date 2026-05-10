@@ -32,8 +32,7 @@
     (emacs-spacious-padding
      (spacious-padding-mode 1))
     ("mode-line"
-     (setopt project-mode-line t
-             mode-line-format
+     (setopt mode-line-format
              '("%e" mode-line-front-space
                mode-line-frame-identification mode-line-buffer-identification "   "
                (project-mode-line project-mode-line-format) "  "
