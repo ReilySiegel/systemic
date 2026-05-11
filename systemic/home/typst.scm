@@ -15,7 +15,10 @@
   (emacs-configuration-extension
    (emacs-typst-ts-mode
     (setopt typst-ts-enable-raw-blocks-highlight t
+            typst-ts-indent-offset 2
             typst-ts-preview-function #'find-file-other-window
+            ;; Timestamps are reset by Guix
+            typst-ts--grammar-minimum-version-timestamp 0
             typst-ts-grammar-location
             ,(file-append tree-sitter-typst
                           "/lib/tree-sitter/libtree-sitter-typst.so"))
