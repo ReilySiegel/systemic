@@ -18,6 +18,12 @@
      (add-hook 'prog-mode-hook #'flymake-mode))
     ('eldoc
      (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
+    (emacs-visual-fill-column
+     (setopt visual-fill-column-center-text t)
+
+     (add-hook 'text-mode-hook #'visual-line-mode)
+     (global-visual-wrap-prefix-mode)
+     (global-visual-fill-column-mode))
     (emacs-eglot
      (with-eval-after-load 'eglot
        (add-hook 'eglot--managed-mode-hook
