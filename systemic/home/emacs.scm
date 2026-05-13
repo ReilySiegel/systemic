@@ -84,6 +84,7 @@
                ;; Replace `yes-or-no-p' with `y-or-n-p`, as I cannot be
                ;; bothered to type 2 or 3 characters.
                (defalias 'yes-or-no-p 'y-or-n-p)
+               (setopt use-dialog-box nil)
 
                ;; Unbind overwrite-mode
                (keymap-global-unset "<insert>")
