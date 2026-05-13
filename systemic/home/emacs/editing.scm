@@ -22,7 +22,8 @@
     ('eldoc
      (setopt eldoc-documentation-strategy 'eldoc-documentation-compose))
     (emacs-visual-fill-column
-     (setopt visual-fill-column-center-text t)
+     (setopt visual-fill-column-center-text t
+             visual-fill-column-enable-sensible-window-split t)
 
      (add-hook 'text-mode-hook #'visual-line-mode)
      (global-visual-wrap-prefix-mode)

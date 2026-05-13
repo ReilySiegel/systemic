@@ -22,11 +22,7 @@
   (emacs-configuration-extension
    ("tramp"
     (with-eval-after-load 'tramp
-      (setopt tramp-show-ad-hoc-proxies t
-              tramp-ssh-controlmaster-options
-              (concat
-               "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
-               "-o ControlMaster=auto -o ControlPersist=yes"))))
+      (setopt tramp-show-ad-hoc-proxies t)))
    (emacs-eat
     (keymap-global-set "C-c s" #'eat)
     (setopt eat-enable-shell-prompt-annotation nil
