@@ -3,6 +3,7 @@
   #:use-module (gnu bootloader grub)
   #:use-module (gnu home)
   #:use-module (gnu home services)
+  #:use-module (gnu home services guix)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services shepherd)
   #:use-module (gnu home-services gnupg)
@@ -29,10 +30,10 @@
   #:use-module (gnu system keyboard)
   #:use-module (gnu system nss)
   #:use-module (gnu system shadow)
+  #:use-module (guix channels)
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (nongnu packages linux)
-  #:use-module (systemic channels)
   #:use-module (systemic home git)
   #:use-module (systemic home rust)
   #:use-module (systemic home scheme)
@@ -48,45 +49,57 @@
 
 (define-public home
   (home-environment
-    (services
-     (append
-      (list
-       (service systemic-rust-service-type)
-       (service systemic-shell-service-type)
-       (service systemic-typst-service-type)
-       (service home-gnupg-service-type
-	        (home-gnupg-configuration
-                 (gpg-agent-config
-                  (home-gpg-agent-configuration
-                    (ssh-agent? #t)
-                    (pinentry-flavor 'bemenu)))))
-       (service
-        home-ssh-service-type
-        (home-ssh-configuration
-         (toplevel-options
-          '((match .
-              "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
-       (service scheme-service-type)
-       (simple-service
-        'some-useful-env-vars-service
-        home-environment-variables-service-type
-        `(("GUILE_LOAD_PATH" .
-           "$XDG_CONFIG_HOME/guix/current/share/guile/site/3.0:$GUILE_LOAD_PATH")
-          ("GUILE_LOAD_COMPILED_PATH" .
-           "$XDG_CONFIG_HOME/guix/current/lib/guile/3.0/site-ccache:$GUILE_LOAD_COMPILED_PATH")
-          ("GUILE_AUTO_COMPILE" . "0")
-          ("CC" . "gcc")
-          ("PATH" . "$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin/:$PATH")
-          ;; HACK: https://issues.guix.gnu.org/52672
-          ("QTWEBENGINE_CHROMIUM_FLAGS" . "--disable-seccomp-filter-sandbox")))
-       (service systemic-git-service-type))
-      desktop:services
-      clojure:services
-      haskell:services
-      idris:services
-      javascript:services
-      kotlin:services
-      emacs:services))))
+   (services
+    (append
+     (list
+      (service systemic-rust-service-type)
+      (service systemic-shell-service-type)
+      (service systemic-typst-service-type)
+      (service home-gnupg-service-type
+	       (home-gnupg-configuration
+                (gpg-agent-config
+                 (home-gpg-agent-configuration
+                  (ssh-agent? #t)
+                  (pinentry-flavor 'bemenu)))))
+      (service
+       home-ssh-service-type
+       (home-ssh-configuration
+        (toplevel-options
+         '((match .
+             "host * exec \"gpg-connect-agent UPDATESTARTUPTTY /bye\"")))))
+      (service scheme-service-type)
+      (simple-service
+       'systemic-channel-service
+       home-channels-service-type
+       (list
+        (channel
+         (name 'systemic)
+         (url "https://github.com/ReilySiegel/systemic")
+         (introduction
+          (make-channel-introduction
+           "89ff5b4374e472194eff08f2a69153d5cde6784e"
+           (openpgp-fingerprint
+            "0FA2 FE4C 164F 60C6 7F6B  EA7E 508A 5AD0 A50F 88AF"))))))
+      (simple-service
+       'some-useful-env-vars-service
+       home-environment-variables-service-type
+       `(("GUILE_LOAD_PATH" .
+          "$XDG_CONFIG_HOME/guix/current/share/guile/site/3.0:$GUILE_LOAD_PATH")
+         ("GUILE_LOAD_COMPILED_PATH" .
+          "$XDG_CONFIG_HOME/guix/current/lib/guile/3.0/site-ccache:$GUILE_LOAD_COMPILED_PATH")
+         ("GUILE_AUTO_COMPILE" . "0")
+         ("CC" . "gcc")
+         ("PATH" . "$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin/:$PATH")
+         ;; HACK: https://issues.guix.gnu.org/52672
+         ("QTWEBENGINE_CHROMIUM_FLAGS" . "--disable-seccomp-filter-sandbox")))
+      (service systemic-git-service-type))
+     desktop:services
+     clojure:services
+     haskell:services
+     idris:services
+     javascript:services
+     kotlin:services
+     emacs:services))))
 
 (define-public system
   (operating-system
@@ -96,7 +109,6 @@
     (timezone "America/New_York")
     (locale "en_US.utf8")
     (keyboard-layout (keyboard-layout "us" #:options '("ctrl:nocaps")))
-    (skeletons (channel-skel (default-skeletons)))
 
     (users (cons*
             (user-account
