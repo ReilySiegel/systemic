@@ -16,7 +16,7 @@
 (define-public winbox
   (package
     (name "winbox")
-    (version "4.1")
+    (version "4.4")
     (source
      (origin
        (method url-fetch)
@@ -25,7 +25,7 @@
              "/WinBox_Linux.zip"))
        (file-name (string-append "winbox-" version ".zip"))
        (sha256
-        (base32 "13sdllwzzbcdg229ajpd94jjk4v5vxz6nm1ni5hmn7rj3ik5plr8"))))
+        (base32 "1hfd6vbc383ng369hxnzadfq2rz9mpxpx552394lr02mmfmzmca9"))))
     (build-system binary-build-system)
     (arguments
      `(#:patchelf-plan `(("../WinBox"
