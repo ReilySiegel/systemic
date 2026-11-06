@@ -17,10 +17,10 @@
    (emacs-ghostel
     (keymap-global-set
      "C-c s"
-     (lambda ()
-       (interactive)
+     (lambda (&optional arg)
+       (interactive "P")
        (let* ((default-directory "~"))
-         (ghostel))))
+         (ghostel arg))))
 
     (with-eval-after-load 'project
       (keymap-unset project-prefix-map "e")
