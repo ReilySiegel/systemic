@@ -28,7 +28,7 @@
       (keymap-set project-prefix-map "s" #'ghostel-project)
       (add-to-list 'project-switch-commands '(ghostel-project "Shell") t)))
    (emacs-buffer-env
-    (setopt buffer-env-script-name "guix.scm")
+    (setopt buffer-env-scriptxb-name '(".env" "guix.scm"))
     (add-hook 'hack-local-variables-hook #'buffer-env-update)
     (add-hook 'comint-mode-hook #'buffer-env-update))
    (emacs-inheritenv
